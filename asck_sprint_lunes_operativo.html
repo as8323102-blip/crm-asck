@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ASCK Sprint Operativo - Hasta Lunes</title>
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --panel: #ffffff;
+      --text: #1f2933;
+      --muted: #667085;
+      --line: #e5e7eb;
+      --soft: #f2f4f7;
+      --accent: #111827;
+      --ok: #0f766e;
+      --warn: #92400e;
+      --danger: #991b1b;
+      --note: #fff8cc;
+      --note2: #eaf7ff;
+      --note3: #f1edff;
+      --note4: #ecfdf3;
+      --shadow: 0 8px 28px rgba(17, 24, 39, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+    }
+
+    .page {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1.4fr 0.6fr;
+      gap: 16px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+
+    .hero, .mini-panel, .section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 22px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    h1 {
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.05;
+      margin: 0 0 10px;
+      letter-spacing: -0.04em;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      max-width: 760px;
+    }
+
+    .mini-panel {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .focus-label {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .focus-value {
+      font-size: 28px;
+      font-weight: 850;
+      letter-spacing: -0.05em;
+    }
+
+    .focus-small {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .section {
+      padding: 18px;
+      margin-top: 16px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 4px 0 0;
+    }
+
+    .kpi {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      min-height: 92px;
+    }
+
+    .kpi span {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .kpi strong {
+      display: block;
+      font-size: 26px;
+      margin-top: 8px;
+      letter-spacing: -0.04em;
+    }
+
+    label {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    input[type="number"], input[type="text"], select, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 11px;
+      background: #fff;
+      color: var(--text);
+      font: inherit;
+      outline: none;
+    }
+
+    input[type="number"]:focus, input[type="text"]:focus, select:focus, textarea:focus {
+      border-color: #111827;
+      box-shadow: 0 0 0 3px rgba(17,24,39,0.08);
+    }
+
+    .control-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 6px 0 16px;
+    }
+
+    button {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      border-radius: 999px;
+      padding: 9px 13px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.15s ease;
+    }
+
+    button:hover { transform: translateY(-1px); box-shadow: 0 5px 18px rgba(17, 24, 39, 0.08); }
+    button.active { background: var(--accent); color: white; border-color: var(--accent); }
+    button.secondary { border-radius: 12px; background: var(--soft); }
+    button.danger { color: var(--danger); }
+
+    .day-board {
+      display: grid;
+      gap: 14px;
+    }
+
+    .day-block {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      padding: 14px;
+    }
+
+    .day-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 10px;
+    }
+
+    .day-head h3 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .day-head small { color: var(--muted); font-weight: 700; }
+
+    .postits {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .postit {
+      border: 1px solid rgba(17, 24, 39, 0.09);
+      border-radius: 16px;
+      padding: 13px;
+      min-height: 164px;
+      box-shadow: 0 5px 14px rgba(17, 24, 39, 0.05);
+    }
+
+    .postit[data-person="Kevin"] { background: var(--note); }
+    .postit[data-person="Alberto"] { background: var(--note2); }
+    .postit[data-person="Sebas"] { background: var(--note4); }
+    .postit[data-person="Centeno"] { background: var(--note3); }
+
+    .person-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .person {
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .hours-pill {
+      font-size: 12px;
+      font-weight: 850;
+      border: 1px solid rgba(17, 24, 39, 0.12);
+      background: rgba(255,255,255,0.55);
+      border-radius: 999px;
+      padding: 4px 8px;
+      white-space: nowrap;
+    }
+
+    .task {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 8px;
+      align-items: start;
+      padding: 8px 0;
+      border-top: 1px dashed rgba(17, 24, 39, 0.15);
+    }
+
+    .task:first-of-type { border-top: 0; }
+
+    .task input { width: 18px; height: 18px; margin-top: 2px; }
+
+    .task-title {
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .task-meta {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .task.done .task-title {
+      text-decoration: line-through;
+      opacity: 0.55;
+    }
+
+    .member-row {
+      display: grid;
+      grid-template-columns: 120px 1fr 62px 72px;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .bar {
+      height: 10px;
+      background: var(--soft);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+
+    .bar > div {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+    }
+
+    .prospects {
+      display: grid;
+      gap: 10px;
+    }
+
+    .prospect-card {
+      display: grid;
+      grid-template-columns: 1.1fr 0.5fr 0.55fr 1fr;
+      gap: 10px;
+      align-items: center;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px;
+    }
+
+    .prospect-name {
+      font-weight: 900;
+      letter-spacing: -0.01em;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 900;
+      border-radius: 999px;
+      padding: 5px 8px;
+      background: var(--soft);
+      color: var(--muted);
+      width: fit-content;
+    }
+
+    .tag.a { background: #ecfdf3; color: var(--ok); }
+    .tag.b { background: #fff7ed; color: var(--warn); }
+    .tag.c { background: #fef2f2; color: var(--danger); }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .note-box {
+      background: #fff;
+      border: 1px dashed #cbd5e1;
+      border-radius: 14px;
+      padding: 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer-note {
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+      margin-top: 24px;
+    }
+
+    @media (max-width: 980px) {
+      header { grid-template-columns: 1fr; }
+      .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr 1fr; }
+      .postits { grid-template-columns: 1fr 1fr; }
+      .prospect-card { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .page { padding: 18px 10px 40px; }
+      .grid-4, .grid-3, .grid-2, .postits, .prospect-card { grid-template-columns: 1fr; }
+      .member-row { grid-template-columns: 1fr; }
+      .day-head { align-items: flex-start; flex-direction: column; }
+      button { width: 100%; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { max-width: none; padding: 0; }
+      button, .actions, .tabs, .section.controls { display: none !important; }
+      .hero, .mini-panel, .section, .day-block { box-shadow: none; break-inside: avoid; }
+      .postits { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="hero">
+        <div class="eyebrow">ASCK · Sprint operativo</div>
+        <h1>Plan de aquí al lunes</h1>
+        <p class="subtitle">Prioridad central: cerrar dinero esta semana. Este tablero funciona como to-do tipo Notion/post-it: marca avances, ajusta horas, calcula carga de trabajo, ingresos proyectados y reparto 20/20/20/20 + 20% reserva.</p>
+      </div>
+      <div class="mini-panel">
+        <div>
+          <div class="focus-label">Foco número 1</div>
+          <div class="focus-value">3–4 cierres</div>
+          <div class="focus-small">14 prospectos registrados · mínimo 10 priorizados · Kevin lidera cierres.</div>
+        </div>
+        <div class="note-box">Alberto quedó con 36 h temporales porque no se confirmó su disponibilidad. Puedes editarlo arriba.</div>
+      </div>
+    </header>
+
+    <section class="section controls">
+      <div class="section-title">
+        <div>
+          <h2>Calculadora rápida</h2>
+          <p class="hint">Edita horas, cierres meta y ticket promedio. Todo se recalcula automáticamente.</p>
+        </div>
+      </div>
+      <div class="grid grid-4">
+        <div class="control-card"><label>Horas Kevin</label><input id="hours-Kevin" type="number" min="0" step="1" value="52" /></div>
+        <div class="control-card"><label>Horas Alberto</label><input id="hours-Alberto" type="number" min="0" step="1" value="36" /></div>
+        <div class="control-card"><label>Horas Sebas</label><input id="hours-Sebas" type="number" min="0" step="1" value="36" /></div>
+        <div class="control-card"><label>Horas Centeno</label><input id="hours-Centeno" type="number" min="0" step="1" value="52" /></div>
+      </div>
+      <div class="grid grid-3" style="margin-top: 12px;">
+        <div class="control-card"><label>Cierres meta</label><input id="targetCloses" type="number" min="0" step="1" value="4" /></div>
+        <div class="control-card"><label>Ticket promedio MXN</label><input id="avgTicket" type="number" min="0" step="500" value="6500" /></div>
+        <div class="control-card"><label>Prospectos contactados reales</label><input id="contacted" type="number" min="0" step="1" value="0" /></div>
+      </div>
+      <div class="grid grid-4" style="margin-top: 12px;">
+        <div class="kpi"><span>Horas disponibles</span><strong id="kpiAvailable">0 h</strong></div>
+        <div class="kpi"><span>Horas planeadas</span><strong id="kpiPlanned">0 h</strong></div>
+        <div class="kpi"><span>Avance checklist</span><strong id="kpiProgress">0%</strong></div>
+        <div class="kpi"><span>Ingreso proyectado</span><strong id="kpiRevenue">$0</strong></div>
+      </div>
+      <div class="grid grid-3" style="margin-top: 12px;">
+        <div class="kpi"><span>Reserva 20%</span><strong id="kpiReserve">$0</strong></div>
+        <div class="kpi"><span>Cada integrante 20%</span><strong id="kpiShare">$0</strong></div>
+        <div class="kpi"><span>Contacto sobre prospectos</span><strong id="kpiContactRate">0%</strong></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <div>
+          <h2>Carga por integrante</h2>
+          <p class="hint">Mide si la semana está balanceada contra las horas disponibles.</p>
+        </div>
+      </div>
+      <div id="memberLoad"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <div>
+          <h2>To-do por día</h2>
+          <p class="hint">Usa los botones para ver solo el día que toca. Cada post-it trae la tarea puntual de cada integrante.</p>
+        </div>
+      </div>
+      <div class="tabs" id="dayTabs"></div>
+      <div class="day-board" id="board"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <div>
+          <h2>Prospectos</h2>
+          <p class="hint">La lista tiene 14 prospectos, aunque el pendiente decía 11. Prioridad A = atacar primero para cierre.</p>
+        </div>
+      </div>
+      <div class="prospects" id="prospects"></div>
+      <div class="actions">
+        <button class="secondary" onclick="exportProspectsCSV()">Exportar prospectos CSV</button>
+        <button class="secondary" onclick="copySummary()">Copiar resumen</button>
+        <button class="secondary danger" onclick="resetBoard()">Reiniciar tablero</button>
+      </div>
+    </section>
+
+    <p class="footer-note">Archivo local. Los avances se guardan en este navegador usando localStorage.</p>
+  </div>
+
+  <script>
+    const people = ["Kevin", "Alberto", "Sebas", "Centeno"];
+    const days = [
+      { key: "mie", label: "Miércoles", date: "Día 1" },
+      { key: "jue", label: "Jueves", date: "Día 2" },
+      { key: "vie", label: "Viernes", date: "Día 3" },
+      { key: "sab", label: "Sábado", date: "Día 4" },
+      { key: "dom", label: "Domingo", date: "Día 5" },
+      { key: "lun", label: "Lunes", date: "Cierre" }
+    ];
+
+    const tasks = [
+      { id: "k1", day: "mie", person: "Kevin", hours: 6, title: "Clasificar 14 prospectos A/B/C y elegir top 5", evidence: "Top 5 definido + oferta base" },
+      { id: "a1", day: "mie", person: "Alberto", hours: 5, title: "Estructura técnica del CRM web", evidence: "Campos, rutas y modelo base" },
+      { id: "s1", day: "mie", person: "Sebas", hours: 5, title: "Registrar 14 prospectos en CRM", evidence: "Nombre, nicho, contacto, estado" },
+      { id: "c1", day: "mie", person: "Centeno", hours: 7, title: "Rescatar Dental Printal y Finanzas", evidence: "Carpetas/proyectos base ubicados" },
+
+      { id: "k2", day: "jue", person: "Kevin", hours: 9, title: "Contactar directamente top 5", evidence: "Mensajes enviados + citas intentadas" },
+      { id: "a2", day: "jue", person: "Alberto", hours: 8, title: "CRM web simple: prospectos, tareas y estados", evidence: "Pantalla funcional local" },
+      { id: "s2", day: "jue", person: "Sebas", hours: 7, title: "Buscar datos completos y mandar primer contacto", evidence: "WhatsApp/IG/Maps/capturas" },
+      { id: "c2", day: "jue", person: "Centeno", hours: 10, title: "Página genérica Dental Printal sin marca", evidence: "Demo limpia para clínicas" },
+
+      { id: "k3", day: "vie", person: "Kevin", hours: 10, title: "Llamadas/demos y cotizaciones", evidence: "Cotizaciones enviadas" },
+      { id: "a3", day: "vie", person: "Alberto", hours: 8, title: "Guía Telegram + AGY + Codex + BotFather", evidence: "Flujo seguro paso a paso" },
+      { id: "s3", day: "vie", person: "Sebas", hours: 8, title: "Seguimiento y calificación frío/tibio/caliente", evidence: "CRM actualizado" },
+      { id: "c3", day: "vie", person: "Centeno", hours: 10, title: "Rediseño página Finanzas adaptable", evidence: "Demo responsive" },
+
+      { id: "k4", day: "sab", person: "Kevin", hours: 10, title: "Cierres, anticipos y objeciones", evidence: "3–4 cierres/citas calientes" },
+      { id: "a4", day: "sab", person: "Alberto", hours: 7, title: "Pruebas CRM, exportación y deploy local", evidence: "CRM sin bugs críticos" },
+      { id: "s4", day: "sab", person: "Sebas", hours: 7, title: "Agendar interesados con Kevin", evidence: "Citas/seguimientos confirmados" },
+      { id: "c4", day: "sab", person: "Centeno", hours: 10, title: "HTML/landing de venta y docs visuales", evidence: "Archivo vendible" },
+
+      { id: "k5", day: "dom", person: "Kevin", hours: 8, title: "Revisión final + decisión La Marquesa/reemplazo", evidence: "Decisión tomada" },
+      { id: "a5", day: "dom", person: "Alberto", hours: 5, title: "Cursos gratis de negocios filtrados", evidence: "Lista útil y corta" },
+      { id: "s5", day: "dom", person: "Sebas", hours: 5, title: "Evidencias, objeciones y notas en CRM", evidence: "Reporte limpio" },
+      { id: "c5", day: "dom", person: "Centeno", hours: 8, title: "WhatsApp pendientes + documentación general", evidence: "Pendientes ordenados" },
+
+      { id: "k6", day: "lun", person: "Kevin", hours: 9, title: "Cierre final y próximos pasos", evidence: "Reporte + dinero/citas" },
+      { id: "a6", day: "lun", person: "Alberto", hours: 3, title: "Soporte final y bugs rápidos", evidence: "Correcciones aplicadas" },
+      { id: "s6", day: "lun", person: "Sebas", hours: 4, title: "Reporte final de prospectos", evidence: "Frío/tibio/caliente/cierre" },
+      { id: "c6", day: "lun", person: "Centeno", hours: 7, title: "Pulir demos y screenshots", evidence: "Material listo para vender" }
+    ];
+
+    const defaultProspects = [
+      { name: "Clínica Dental Advance", niche: "Dental", priority: "A" },
+      { name: "Dr. Enrique Caxnajoy", niche: "Dental", priority: "A" },
+      { name: "Leal Dental / Dra. Leticia", niche: "Dental", priority: "A" },
+      { name: "Barbería El Olivo", niche: "Barbería", priority: "A" },
+      { name: "The Arthur Barber Shop", niche: "Barbería", priority: "A" },
+      { name: "Barber Ik", niche: "Barbería", priority: "A" },
+      { name: "Studio By Diane", niche: "Estética", priority: "A" },
+      { name: "Estética Antony", niche: "Estética", priority: "A" },
+      { name: "Skin Store", niche: "Belleza / tienda", priority: "B" },
+      { name: "Costuras Perronas", niche: "Costura", priority: "B" },
+      { name: "Cafetería La Tradición", niche: "Cafetería", priority: "B" },
+      { name: "Taller Mecánico Automotriz García", niche: "Automotriz", priority: "B" },
+      { name: "Hub Gaming", niche: "Gaming", priority: "B" },
+      { name: "Servicio Palo Solo", niche: "Servicio local", priority: "B" }
+    ];
+
+    const storageKey = "asckSprintLunes_v1";
+    let state = JSON.parse(localStorage.getItem(storageKey) || "{}");
+    if (!state.done) state.done = {};
+    if (!state.prospects) {
+      state.prospects = defaultProspects.map(p => ({...p, status: "Por contactar", note: ""}));
+    }
+    if (!state.inputs) state.inputs = {};
+    let currentDay = "mie";
+
+    function money(n) {
+      return new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", maximumFractionDigits: 0 }).format(Number(n || 0));
+    }
+
+    function save() {
+      localStorage.setItem(storageKey, JSON.stringify(state));
+    }
+
+    function readInputs() {
+      people.forEach(p => {
+        const el = document.getElementById(`hours-${p}`);
+        state.inputs[`hours-${p}`] = Number(el.value || 0);
+      });
+      ["targetCloses", "avgTicket", "contacted"].forEach(id => {
+        state.inputs[id] = Number(document.getElementById(id).value || 0);
+      });
+      save();
+    }
+
+    function loadInputs() {
+      Object.entries(state.inputs || {}).forEach(([id, value]) => {
+        const el = document.getElementById(id);
+        if (el) el.value = value;
+      });
+    }
+
+    function renderTabs() {
+      const tabs = document.getElementById("dayTabs");
+      tabs.innerHTML = "";
+      days.forEach(day => {
+        const btn = document.createElement("button");
+        btn.textContent = `${day.label} · ${day.date}`;
+        btn.className = currentDay === day.key ? "active" : "";
+        btn.onclick = () => { currentDay = day.key; render(); };
+        tabs.appendChild(btn);
+      });
+      const all = document.createElement("button");
+      all.textContent = "Ver todo";
+      all.className = currentDay === "all" ? "active" : "";
+      all.onclick = () => { currentDay = "all"; render(); };
+      tabs.appendChild(all);
+    }
+
+    function renderBoard() {
+      const board = document.getElementById("board");
+      board.innerHTML = "";
+      const daysToShow = currentDay === "all" ? days : days.filter(d => d.key === currentDay);
+      daysToShow.forEach(day => {
+        const block = document.createElement("div");
+        block.className = "day-block";
+        const dayTasks = tasks.filter(t => t.day === day.key);
+        const done = dayTasks.filter(t => state.done[t.id]).length;
+        block.innerHTML = `<div class="day-head"><div><h3>${day.label}</h3><small>${day.date} · ${done}/${dayTasks.length} tareas completas</small></div><small>Meta: mover cierres, demos y CRM</small></div><div class="postits"></div>`;
+        const postits = block.querySelector(".postits");
+        people.forEach(person => {
+          const personTasks = dayTasks.filter(t => t.person === person);
+          const totalH = personTasks.reduce((s,t) => s + t.hours, 0);
+          const card = document.createElement("div");
+          card.className = "postit";
+          card.dataset.person = person;
+          card.innerHTML = `<div class="person-row"><div class="person">${person}</div><div class="hours-pill">${totalH} h</div></div>`;
+          personTasks.forEach(t => {
+            const item = document.createElement("div");
+            item.className = `task ${state.done[t.id] ? "done" : ""}`;
+            item.innerHTML = `<input type="checkbox" ${state.done[t.id] ? "checked" : ""} aria-label="Completar ${t.title}"><div><div class="task-title">${t.title}</div><div class="task-meta">${t.hours} h · Evidencia: ${t.evidence}</div></div>`;
+            item.querySelector("input").onchange = (e) => {
+              state.done[t.id] = e.target.checked;
+              save();
+              render();
+            };
+            card.appendChild(item);
+          });
+          postits.appendChild(card);
+        });
+        board.appendChild(block);
+      });
+    }
+
+    function renderMemberLoad() {
+      const box = document.getElementById("memberLoad");
+      box.innerHTML = "";
+      people.forEach(person => {
+        const planned = tasks.filter(t => t.person === person).reduce((s,t) => s + t.hours, 0);
+        const doneH = tasks.filter(t => t.person === person && state.done[t.id]).reduce((s,t) => s + t.hours, 0);
+        const available = Number(document.getElementById(`hours-${person}`).value || 0);
+        const usage = available ? Math.min(100, Math.round((planned / available) * 100)) : 0;
+        const progress = planned ? Math.round((doneH / planned) * 100) : 0;
+        const row = document.createElement("div");
+        row.className = "member-row";
+        row.innerHTML = `<strong>${person}</strong><div><div class="bar"><div style="width:${usage}%"></div></div><small class="hint">Planeado: ${planned} h · Completado: ${doneH} h · Avance: ${progress}%</small></div><strong>${usage}%</strong><small class="hint">uso</small>`;
+        box.appendChild(row);
+      });
+    }
+
+    function renderProspects() {
+      const box = document.getElementById("prospects");
+      box.innerHTML = "";
+      state.prospects.forEach((p, idx) => {
+        const card = document.createElement("div");
+        card.className = "prospect-card";
+        card.innerHTML = `
+          <div>
+            <div class="prospect-name">${p.name}</div>
+            <div class="tag ${String(p.priority).toLowerCase()}">Prioridad ${p.priority}</div>
+          </div>
+          <div><label>Nicho</label><input type="text" value="${escapeHtml(p.niche)}" data-field="niche" /></div>
+          <div><label>Prioridad</label><select data-field="priority"><option>A</option><option>B</option><option>C</option></select></div>
+          <div><label>Estado</label><select data-field="status"><option>Por contactar</option><option>Contactado</option><option>Respondió</option><option>Caliente</option><option>Cotizado</option><option>Cierre</option><option>Reemplazar</option></select></div>
+          <div style="grid-column: 1 / -1;"><label>Nota rápida</label><input type="text" value="${escapeHtml(p.note || "")}" data-field="note" placeholder="Ej. dueño, objeción, precio, siguiente paso" /></div>`;
+        card.querySelector('select[data-field="priority"]').value = p.priority;
+        card.querySelector('select[data-field="status"]').value = p.status;
+        card.querySelectorAll("input, select").forEach(el => {
+          el.oninput = () => {
+            state.prospects[idx][el.dataset.field] = el.value;
+            save();
+            updateCalculations();
+          };
+        });
+        box.appendChild(card);
+      });
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"]/g, s => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[s]));
+    }
+
+    function updateCalculations() {
+      readInputs();
+      const available = people.reduce((sum,p) => sum + Number(document.getElementById(`hours-${p}`).value || 0), 0);
+      const planned = tasks.reduce((sum,t) => sum + t.hours, 0);
+      const doneCount = tasks.filter(t => state.done[t.id]).length;
+      const progress = Math.round((doneCount / tasks.length) * 100);
+      const closes = Number(document.getElementById("targetCloses").value || 0);
+      const ticket = Number(document.getElementById("avgTicket").value || 0);
+      const contacted = Number(document.getElementById("contacted").value || 0);
+      const revenue = closes * ticket;
+      document.getElementById("kpiAvailable").textContent = `${available} h`;
+      document.getElementById("kpiPlanned").textContent = `${planned} h`;
+      document.getElementById("kpiProgress").textContent = `${progress}%`;
+      document.getElementById("kpiRevenue").textContent = money(revenue);
+      document.getElementById("kpiReserve").textContent = money(revenue * 0.20);
+      document.getElementById("kpiShare").textContent = money(revenue * 0.20);
+      document.getElementById("kpiContactRate").textContent = `${Math.round((contacted / state.prospects.length) * 100) || 0}%`;
+      renderMemberLoad();
+    }
+
+    function exportProspectsCSV() {
+      const headers = ["Prospecto", "Nicho", "Prioridad", "Estado", "Nota"];
+      const rows = state.prospects.map(p => [p.name, p.niche, p.priority, p.status, p.note || ""]);
+      const csv = [headers, ...rows].map(row => row.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "prospectos_asck_sprint.csv";
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    function copySummary() {
+      const doneCount = tasks.filter(t => state.done[t.id]).length;
+      const closes = document.getElementById("targetCloses").value;
+      const ticket = document.getElementById("avgTicket").value;
+      const contacted = document.getElementById("contacted").value;
+      const text = `ASCK Sprint hasta lunes\nAvance: ${doneCount}/${tasks.length} tareas\nProspectos contactados: ${contacted}/${state.prospects.length}\nCierres meta: ${closes}\nTicket promedio: $${ticket} MXN\nPrioridad: cerrar dinero esta semana.`;
+      navigator.clipboard?.writeText(text).then(() => alert("Resumen copiado."), () => alert(text));
+    }
+
+    function resetBoard() {
+      if (!confirm("¿Reiniciar avances, estados y notas?")) return;
+      localStorage.removeItem(storageKey);
+      location.reload();
+    }
+
+    function render() {
+      renderTabs();
+      renderBoard();
+      renderProspects();
+      updateCalculations();
+    }
+
+    document.querySelectorAll("input").forEach(el => el.addEventListener("input", updateCalculations));
+    loadInputs();
+    render();
+  </script>
+</body>
+</html>

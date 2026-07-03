@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-notion-bg-light dark:bg-notion-bg-dark text-notion-text-light dark:text-notion-text-dark font-sans antialiased transition-colors duration-200;
+  }
+}
+
+/* Scrollbar estilizado estilo Notion/Linear */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #2e2e2e;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e2e2e0;
+  border-radius: 3px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3e3e3e;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d3d3d0;
+}
+
+/* Clases utilitarias adicionales para look premium */
+.notion-shadow {
+  box-shadow: 0 1px 2px rgba(15, 15, 15, 0.05), 0 2px 4px rgba(15, 15, 15, 0.03);
+}
+
+.dark .notion-shadow {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.notion-glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+}
+
+.dark .notion-glass {
+  background: rgba(32, 32, 32, 0.8);
+  backdrop-filter: blur(8px);
+}

@@ -1,0 +1,94 @@
+PLAN OPERATIVO ASCK - DE AQUÍ AL LUNES
+Prioridad principal: CERRAR DINERO esta semana.
+Meta: 3 a 4 cierres o anticipos, con 14 prospectos registrados y mínimo 10 priorizados.
+
+HORAS DISPONIBLES
+- Kevin: 52 h
+- Alberto: PENDIENTE. En el HTML quedó como 36 h editable.
+- Sebas: 36 h
+- Centeno: 52 h
+
+REGLA DE TRABAJO
+1. Kevin no debe cargar todo: lidera cierres, validación final y decisiones.
+2. Sebas alimenta el CRM, consigue datos, da seguimiento y agenda.
+3. Centeno rescata y ordena demos: Dental Printal, Finanzas, documentación y WhatsApp.
+4. Alberto sostiene CRM web, automatización, pruebas y guías técnicas.
+5. Primero ventas, después perfección visual.
+
+PROSPECTOS LISTADOS
+1. Costuras Perronas
+2. Hub Gaming
+3. Cafetería La Tradición
+4. Skin Store
+5. Barbería El Olivo
+6. Estética Antony
+7. Taller Mecánico Automotriz García
+8. Studio By Diane
+9. The Arthur Barber Shop
+10. Barber Ik
+11. Servicio Palo Solo
+12. Clínica Dental Advance
+13. Dr. Enrique Caxnajoy
+14. Leal Dental / Dra. Leticia
+
+PRIORIDAD A PARA ATACAR PRIMERO
+- Clínica Dental Advance
+- Dr. Enrique Caxnajoy
+- Leal Dental / Dra. Leticia
+- Barbería El Olivo
+- The Arthur Barber Shop
+- Barber Ik
+- Studio By Diane
+- Estética Antony
+
+MIÉRCOLES - DÍA 1
+Kevin: Clasificar 14 prospectos A/B/C y elegir top 5. Evidencia: top 5 definido + oferta base. 6 h.
+Alberto: Estructura técnica del CRM web. Evidencia: campos, rutas y modelo base. 5 h.
+Sebas: Registrar 14 prospectos en CRM. Evidencia: nombre, nicho, contacto, estado. 5 h.
+Centeno: Rescatar Dental Printal y Finanzas. Evidencia: carpetas/proyectos base ubicados. 7 h.
+
+JUEVES - DÍA 2
+Kevin: Contactar directamente top 5. Evidencia: mensajes enviados + citas intentadas. 9 h.
+Alberto: CRM web simple: prospectos, tareas y estados. Evidencia: pantalla funcional local. 8 h.
+Sebas: Buscar datos completos y mandar primer contacto. Evidencia: WhatsApp/IG/Maps/capturas. 7 h.
+Centeno: Página genérica Dental Printal sin marca. Evidencia: demo limpia para clínicas. 10 h.
+
+VIERNES - DÍA 3
+Kevin: Llamadas/demos y cotizaciones. Evidencia: cotizaciones enviadas. 10 h.
+Alberto: Guía Telegram + AGY + Codex + BotFather. Evidencia: flujo seguro paso a paso. 8 h.
+Sebas: Seguimiento y calificación frío/tibio/caliente. Evidencia: CRM actualizado. 8 h.
+Centeno: Rediseño página Finanzas adaptable. Evidencia: demo responsive. 10 h.
+
+SÁBADO - DÍA 4
+Kevin: Cierres, anticipos y objeciones. Evidencia: 3-4 cierres/citas calientes. 10 h.
+Alberto: Pruebas CRM, exportación y deploy local. Evidencia: CRM sin bugs críticos. 7 h.
+Sebas: Agendar interesados con Kevin. Evidencia: citas/seguimientos confirmados. 7 h.
+Centeno: HTML/landing de venta y docs visuales. Evidencia: archivo vendible. 10 h.
+
+DOMINGO - DÍA 5
+Kevin: Revisión final + decisión La Marquesa/reemplazo. Evidencia: decisión tomada. 8 h.
+Alberto: Cursos gratis de negocios filtrados. Evidencia: lista útil y corta. 5 h.
+Sebas: Evidencias, objeciones y notas en CRM. Evidencia: reporte limpio. 5 h.
+Centeno: WhatsApp pendientes + documentación general. Evidencia: pendientes ordenados. 8 h.
+
+LUNES - CIERRE
+Kevin: Cierre final y próximos pasos. Evidencia: reporte + dinero/citas. 9 h.
+Alberto: Soporte final y bugs rápidos. Evidencia: correcciones aplicadas. 3 h.
+Sebas: Reporte final de prospectos. Evidencia: frío/tibio/caliente/cierre. 4 h.
+Centeno: Pulir demos y screenshots. Evidencia: material listo para vender. 7 h.
+
+MÉTRICAS DEL LUNES
+- Prospectos registrados: 14/14
+- Prospectos contactados: mínimo 10/14
+- Prospectos calientes: mínimo 3 o 4
+- Demos listas: Dental Printal y Finanzas
+- CRM web: funcional aunque sea versión simple
+- WhatsApp: pendientes separados por prospectos, clientes, internos y urgente
+- Documentación: generalizada para vender sin explicar todo desde cero
+
+REPARTO SI ENTRA DINERO
+- Kevin: 20%
+- Alberto: 20%
+- Sebas: 20%
+- Centeno: 20%
+- Reserva/reinversión: 20%
