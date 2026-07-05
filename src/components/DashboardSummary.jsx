@@ -78,58 +78,58 @@ export default function DashboardSummary({
     <div className="space-y-6">
       
       {/* Fila de Métricas Principales */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         
-        <div className="p-5 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow hover-glow">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-bold text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-wider">Clientes Totales</span>
-            <div className="w-8 h-8 rounded-lg bg-blue-500/10 dark:bg-blue-500/20 flex items-center justify-center text-blue-500">
-              <Users size={16} />
+        <div className="p-3.5 sm:p-5 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow hover-glow flex flex-col justify-between">
+          <div className="flex items-center justify-between gap-1">
+            <span className="text-[9px] sm:text-[10px] font-bold text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-wider truncate">Clientes Totales</span>
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-blue-500/10 dark:bg-blue-500/20 flex items-center justify-center text-blue-500 flex-shrink-0">
+              <Users size={14} className="sm:size-[16px]" />
             </div>
           </div>
-          <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-2xl font-extrabold text-notion-text-light dark:text-notion-text-dark tracking-tight">{totalClients}</span>
-            <span className="text-[10px] text-emerald-500 font-semibold uppercase tracking-wider">Registrados</span>
+          <div className="mt-3 sm:mt-4 flex items-baseline gap-1 sm:gap-2 flex-wrap">
+            <span className="text-xl sm:text-2xl font-extrabold text-notion-text-light dark:text-notion-text-dark tracking-tight">{totalClients}</span>
+            <span className="text-[8px] sm:text-[10px] text-emerald-500 font-semibold uppercase tracking-wider">Registrados</span>
           </div>
         </div>
 
-        <div className="p-5 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow hover-glow">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-bold text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-wider">Pipeline Activo</span>
-            <div className="w-8 h-8 rounded-lg bg-indigo-500/10 dark:bg-indigo-500/20 flex items-center justify-center text-indigo-500">
-              <DollarSign size={16} />
+        <div className="p-3.5 sm:p-5 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow hover-glow flex flex-col justify-between">
+          <div className="flex items-center justify-between gap-1">
+            <span className="text-[9px] sm:text-[10px] font-bold text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-wider truncate">Pipeline Activo</span>
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-indigo-500/10 dark:bg-indigo-500/20 flex items-center justify-center text-indigo-500 flex-shrink-0">
+              <DollarSign size={14} className="sm:size-[16px]" />
             </div>
           </div>
-          <div className="mt-4 flex flex-col justify-end">
-            <span className="text-xl font-extrabold text-notion-text-light dark:text-notion-text-dark tracking-tight">
+          <div className="mt-3 sm:mt-4 flex flex-col justify-end">
+            <span className="text-base sm:text-xl font-extrabold text-notion-text-light dark:text-notion-text-dark tracking-tight truncate">
               {formatMXN(activePipelineValue)}
             </span>
           </div>
         </div>
 
-        <div className="p-5 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow hover-glow">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-bold text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-wider">Tus Pendientes</span>
-            <div className="w-8 h-8 rounded-lg bg-amber-500/10 dark:bg-amber-500/20 flex items-center justify-center text-amber-500">
-              <Clock size={16} />
+        <div className="p-3.5 sm:p-5 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow hover-glow flex flex-col justify-between">
+          <div className="flex items-center justify-between gap-1">
+            <span className="text-[9px] sm:text-[10px] font-bold text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-wider truncate">Tus Pendientes</span>
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-amber-500/10 dark:bg-amber-500/20 flex items-center justify-center text-amber-500 flex-shrink-0">
+              <Clock size={14} className="sm:size-[16px]" />
             </div>
           </div>
-          <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-2xl font-extrabold text-notion-text-light dark:text-notion-text-dark tracking-tight">{pendingUserTasks.length}</span>
-            <span className="text-[10px] text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-wider">Tareas</span>
+          <div className="mt-3 sm:mt-4 flex items-baseline gap-1 sm:gap-2 flex-wrap">
+            <span className="text-xl sm:text-2xl font-extrabold text-notion-text-light dark:text-notion-text-dark tracking-tight">{pendingUserTasks.length}</span>
+            <span className="text-[8px] sm:text-[10px] text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-wider">Tareas</span>
           </div>
         </div>
 
-        <div className="p-5 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow hover-glow">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-bold text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-wider">Cierres Exitosos</span>
-            <div className="w-8 h-8 rounded-lg bg-emerald-500/10 dark:bg-emerald-500/20 flex items-center justify-center text-emerald-500">
-              <CheckCircle size={16} />
+        <div className="p-3.5 sm:p-5 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow hover-glow flex flex-col justify-between">
+          <div className="flex items-center justify-between gap-1">
+            <span className="text-[9px] sm:text-[10px] font-bold text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-wider truncate">Cierres Exitosos</span>
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-500/10 dark:bg-emerald-500/20 flex items-center justify-center text-emerald-500 flex-shrink-0">
+              <CheckCircle size={14} className="sm:size-[16px]" />
             </div>
           </div>
-          <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-2xl font-extrabold text-notion-text-light dark:text-notion-text-dark tracking-tight">{wonClients}</span>
-            <span className="text-[10px] text-emerald-500 font-semibold uppercase tracking-wider">Ganados</span>
+          <div className="mt-3 sm:mt-4 flex items-baseline gap-1 sm:gap-2 flex-wrap">
+            <span className="text-xl sm:text-2xl font-extrabold text-notion-text-light dark:text-notion-text-dark tracking-tight">{wonClients}</span>
+            <span className="text-[8px] sm:text-[10px] text-emerald-500 font-semibold uppercase tracking-wider">Ganados</span>
           </div>
         </div>
 
