@@ -43,6 +43,35 @@ export default function TaskManagerTudu({
     }
   }, [currentUser]);
 
+  // Drag and Drop States and Handlers
+  const [draggedOverColumn, setDraggedOverColumn] = useState(null);
+
+  const handleDragStart = (e, taskId) => {
+    e.dataTransfer.setData('text/plain', taskId);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+
+  const handleDragOver = (e, columnId) => {
+    e.preventDefault();
+    setDraggedOverColumn(columnId);
+  };
+
+  const handleDragLeave = () => {
+    setDraggedOverColumn(null);
+  };
+
+  const handleDrop = (e, targetColumnId) => {
+    e.preventDefault();
+    setDraggedOverColumn(null);
+    const taskId = e.dataTransfer.getData('text/plain');
+    if (taskId) {
+      onUpdateTask(taskId, {
+        estado: targetColumnId,
+        completada: targetColumnId === 'Completada'
+      });
+    }
+  };
+
   // Modal Nuevo Sprint
   const [sprintModalOpen, setSprintModalOpen] = useState(false);
   const [sprName, setSprName] = useState('');
@@ -274,14 +303,19 @@ export default function TaskManagerTudu({
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start pb-4">
         {columns.map((column) => {
           const columnTasks = filteredTasks.filter(t => t.estado === column.id);
+          const isOver = draggedOverColumn === column.id;
 
           return (
             <div 
               key={column.id}
+              onDragOver={(e) => handleDragOver(e, column.id)}
+              onDragLeave={handleDragLeave}
+              onDrop={(e) => handleDrop(e, column.id)}
               className={`
                 flex flex-col rounded-xl border border-notion-border-light dark:border-notion-border-dark
-                bg-notion-card-light dark:bg-notion-card-dark/20 min-h-[450px] max-h-[700px] overflow-hidden
+                bg-notion-card-light dark:bg-notion-card-dark/20 min-h-[450px] max-h-[700px] overflow-hidden transition-all duration-150
                 border-t-4 ${column.color}
+                ${isOver ? 'ring-2 ring-indigo-500/50 bg-indigo-500/5' : ''}
               `}
             >
               <div className="p-3 border-b border-notion-border-light dark:border-notion-border-dark flex items-center justify-between bg-notion-card-light dark:bg-notion-card-dark">
@@ -307,10 +341,12 @@ export default function TaskManagerTudu({
                     return (
                       <div
                         key={task.id}
+                        draggable
+                        onDragStart={(e) => handleDragStart(e, task.id)}
                         className="
                           p-3 rounded-lg border border-notion-border-light dark:border-notion-border-dark
                           bg-notion-card-light dark:bg-notion-card-dark hover:border-indigo-500/30
-                          transition-all duration-155 notion-shadow space-y-3
+                          cursor-grab active:cursor-grabbing transition-all duration-155 notion-shadow space-y-3 hover-glow
                         "
                       >
                         {/* Título y Delete */}
