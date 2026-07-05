@@ -214,68 +214,70 @@ export default function CalendarAgenda({
 
   return (
     <div className="space-y-4 text-xs">
-      
-      {/* Controles de Cabecera (Estilo Google Calendar) */}
-      <div className="flex flex-col sm:flex-row gap-3 justify-between items-start sm:items-center p-4 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow">
+      <div className="flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center p-4 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow">
         
         {/* Navegación de Fechas */}
-        <div className="flex items-center gap-2">
-          <button 
-            onClick={() => setAnchorDate(new Date())}
-            className="px-3 py-1.5 border border-notion-border-light dark:border-notion-border-dark hover:bg-notion-border-light/20 text-notion-text-light dark:text-notion-text-dark font-bold rounded-lg transition-all"
-          >
-            Hoy
-          </button>
-          
-          <div className="flex items-center border border-notion-border-light dark:border-notion-border-dark rounded-lg overflow-hidden bg-notion-bg-light dark:bg-notion-bg-dark">
-            <button onClick={() => shiftDate('prev')} className="p-1.5 hover:bg-notion-border-light/45 dark:hover:bg-notion-border-dark/45 text-notion-text-light dark:text-notion-text-dark">
-              <ChevronLeft size={14} />
+        <div className="flex items-center justify-between md:justify-start gap-2.5 w-full md:w-auto">
+          <div className="flex items-center gap-2">
+            <button 
+              onClick={() => setAnchorDate(new Date())}
+              className="px-3 py-1.5 border border-notion-border-light dark:border-notion-border-dark hover:bg-notion-border-light/20 text-notion-text-light dark:text-notion-text-dark font-bold rounded-lg transition-all"
+            >
+              Hoy
             </button>
-            <button onClick={() => shiftDate('next')} className="p-1.5 hover:bg-notion-border-light/45 dark:hover:bg-notion-border-dark/45 text-notion-text-light dark:text-notion-text-dark">
-              <ChevronRight size={14} />
-            </button>
+            
+            <div className="flex items-center border border-notion-border-light dark:border-notion-border-dark rounded-lg overflow-hidden bg-notion-bg-light dark:bg-notion-bg-dark">
+              <button onClick={() => shiftDate('prev')} className="p-1.5 hover:bg-notion-border-light/45 dark:hover:bg-notion-border-dark/45 text-notion-text-light dark:text-notion-text-dark">
+                <ChevronLeft size={14} />
+              </button>
+              <button onClick={() => shiftDate('next')} className="p-1.5 hover:bg-notion-border-light/45 dark:hover:bg-notion-border-dark/45 text-notion-text-light dark:text-notion-text-dark">
+                <ChevronRight size={14} />
+              </button>
+            </div>
           </div>
 
-          <h3 className="font-extrabold text-sm text-notion-text-light dark:text-notion-text-dark pl-2 capitalize">
+          <h3 className="font-extrabold text-sm sm:text-base text-notion-text-light dark:text-notion-text-dark pl-1 capitalize truncate">
             {anchorDate.toLocaleDateString('es-MX', { month: 'long', year: 'numeric' })}
           </h3>
         </div>
 
         {/* selectores de vista */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full md:w-auto">
           {/* Selector de Integrante para Calendario */}
-          <div className="flex items-center gap-1.5 border border-notion-border-light dark:border-notion-border-dark bg-notion-bg-light dark:bg-notion-bg-dark px-2.5 py-1.5 rounded-lg">
-            <Users size={13} className="text-indigo-500" />
-            <select
-              value={filterOwner}
-              onChange={(e) => setFilterOwner(e.target.value)}
-              className="bg-transparent text-[11px] text-notion-text-light dark:text-notion-text-dark font-bold focus:outline-none cursor-pointer"
-            >
-              <option value="Todos">Calendario: Todos</option>
-              {INTEGRANTES.map(user => (
-                <option key={user.id} value={user.id}>
-                  {user.nombre}
-                </option>
-              ))}
-            </select>
+          <div className="flex items-center gap-1.5 border border-notion-border-light dark:border-notion-border-dark bg-notion-bg-light dark:bg-notion-bg-dark px-2.5 py-1.5 rounded-lg justify-between w-full sm:w-auto">
+            <div className="flex items-center gap-1.5 w-full">
+              <Users size={13} className="text-indigo-500 flex-shrink-0" />
+              <select
+                value={filterOwner}
+                onChange={(e) => setFilterOwner(e.target.value)}
+                className="bg-transparent text-[11px] text-notion-text-light dark:text-notion-text-dark font-bold focus:outline-none cursor-pointer w-full"
+              >
+                <option value="Todos">Calendario: Todos</option>
+                {INTEGRANTES.map(user => (
+                  <option key={user.id} value={user.id}>
+                    {user.nombre}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
-          <div className="flex border border-notion-border-light dark:border-notion-border-dark rounded-lg overflow-hidden bg-notion-bg-light dark:bg-notion-bg-dark font-bold text-[10px]">
+          <div className="flex border border-notion-border-light dark:border-notion-border-dark rounded-lg overflow-hidden bg-notion-bg-light dark:bg-notion-bg-dark font-bold text-[10px] w-full sm:w-auto">
             <button 
               onClick={() => setCurrentView('day')} 
-              className={`px-3 py-1.5 ${currentView === 'day' ? 'bg-indigo-600 text-white' : 'text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light/10'}`}
+              className={`flex-1 sm:flex-none text-center px-3 py-1.5 ${currentView === 'day' ? 'bg-indigo-600 text-white' : 'text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light/10'}`}
             >
               Día
             </button>
             <button 
               onClick={() => setCurrentView('week')} 
-              className={`px-3 py-1.5 border-x border-notion-border-light dark:border-notion-border-dark ${currentView === 'week' ? 'bg-indigo-600 text-white' : 'text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light/10'}`}
+              className={`flex-1 sm:flex-none text-center px-3 py-1.5 border-x border-notion-border-light dark:border-notion-border-dark ${currentView === 'week' ? 'bg-indigo-600 text-white' : 'text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light/10'}`}
             >
               Semana
             </button>
             <button 
               onClick={() => setCurrentView('month')} 
-              className={`px-3 py-1.5 ${currentView === 'month' ? 'bg-indigo-600 text-white' : 'text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light/10'}`}
+              className={`flex-1 sm:flex-none text-center px-3 py-1.5 ${currentView === 'month' ? 'bg-indigo-600 text-white' : 'text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light/10'}`}
             >
               Mes
             </button>
@@ -283,9 +285,9 @@ export default function CalendarAgenda({
 
           <button
             onClick={() => setModalOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-sm transition-all"
+            className="flex items-center justify-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-sm transition-all w-full sm:w-auto"
           >
-            <Plus size={14} />
+            <Plus size={14} className="flex-shrink-0" />
             <span>Agendar Evento</span>
           </button>
         </div>
