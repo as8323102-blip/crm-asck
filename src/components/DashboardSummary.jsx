@@ -80,7 +80,7 @@ export default function DashboardSummary({
       {/* Fila de Métricas Principales */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         
-        <div className="p-5 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow">
+        <div className="p-5 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow hover-glow">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-bold text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-wider">Clientes Totales</span>
             <div className="w-8 h-8 rounded-lg bg-blue-500/10 dark:bg-blue-500/20 flex items-center justify-center text-blue-500">
@@ -93,7 +93,7 @@ export default function DashboardSummary({
           </div>
         </div>
 
-        <div className="p-5 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow">
+        <div className="p-5 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow hover-glow">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-bold text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-wider">Pipeline Activo</span>
             <div className="w-8 h-8 rounded-lg bg-indigo-500/10 dark:bg-indigo-500/20 flex items-center justify-center text-indigo-500">
@@ -107,7 +107,7 @@ export default function DashboardSummary({
           </div>
         </div>
 
-        <div className="p-5 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow">
+        <div className="p-5 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow hover-glow">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-bold text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-wider">Tus Pendientes</span>
             <div className="w-8 h-8 rounded-lg bg-amber-500/10 dark:bg-amber-500/20 flex items-center justify-center text-amber-500">
@@ -120,7 +120,7 @@ export default function DashboardSummary({
           </div>
         </div>
 
-        <div className="p-5 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow">
+        <div className="p-5 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow hover-glow">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-bold text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-wider">Cierres Exitosos</span>
             <div className="w-8 h-8 rounded-lg bg-emerald-500/10 dark:bg-emerald-500/20 flex items-center justify-center text-emerald-500">
@@ -228,7 +228,7 @@ export default function DashboardSummary({
             </div>
 
             {/* Resultado */}
-            <div className="p-3 rounded-lg bg-[#fbfbfa]/50 dark:bg-[#1a1a1a]/50 border border-notion-border-light/55 dark:border-notion-border-dark/55 flex flex-col justify-center items-center text-center mt-2.5">
+            <div className="p-3 rounded-lg bg-[#fbfbfa]/50 dark:bg-slate-900/50 border border-notion-border-light/55 dark:border-notion-border-dark/55 flex flex-col justify-center items-center text-center mt-2.5">
               <span className="text-[10px] text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-wider font-semibold">Resultado Convertido</span>
               <span className="text-base font-extrabold text-indigo-500 mt-1">
                 {toCurr === 'MXN' ? formatMXN(convertedResult) : `$${convertedResult.toLocaleString('es-MX', { maximumFractionDigits: 2 })} USD`}
@@ -271,7 +271,7 @@ export default function DashboardSummary({
             return (
               <div 
                 key={member.id}
-                className="p-4 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-[#fbfbfa]/30 dark:bg-[#1c1c1c]/30 space-y-4 hover:border-indigo-500/20 transition-all flex flex-col justify-between"
+                className="p-4 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-[#fbfbfa]/30 dark:bg-slate-900/30 space-y-4 hover:border-indigo-500/20 transition-all flex flex-col justify-between"
               >
                 {/* Perfil con tamaño de imagen controlado por contenedor */}
                 <div className="flex items-center gap-3">

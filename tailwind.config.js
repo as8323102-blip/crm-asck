@@ -11,22 +11,22 @@ export default {
         notion: {
           bg: {
             light: '#FBFBFA',
-            dark: '#191919',
+            dark: '#030712', // Slate 950 - Fondo profundo y moderno
           },
           card: {
             light: '#FFFFFF',
-            dark: '#202020',
+            dark: '#0F172A', // Slate 900 - Tarjetas contrastantes
           },
           border: {
             light: '#EBEBE9',
-            dark: '#2E2E2E',
+            dark: '#1F2937', // Gray 800 - Bordes sutiles
           },
           text: {
             light: '#37352F',
-            dark: '#E3E3E2',
+            dark: '#F9FAFB', // Gray 50 - Texto de alto contraste
             muted: {
               light: '#787774',
-              dark: '#9B9B9A',
+              dark: '#9CA3AF', // Gray 400 - Texto secundario legible
             }
           }
         }

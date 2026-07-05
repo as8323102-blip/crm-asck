@@ -84,7 +84,7 @@ export default function MainLayout({
       {/* Sidebar Container */}
       <aside className={`
         fixed inset-y-0 left-0 z-50 w-64 border-r border-notion-border-light dark:border-notion-border-dark
-        bg-[#F7F7F5] dark:bg-[#1C1C1C] flex flex-col justify-between transform transition-transform duration-200 lg:transform-none lg:relative
+        bg-[#F7F7F5] dark:bg-[#070a13] flex flex-col justify-between transform transition-transform duration-200 lg:transform-none lg:relative
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
         <div>
@@ -146,7 +146,7 @@ export default function MainLayout({
         </div>
 
         {/* Sidebar Footer (Active simulated user + theme switch) */}
-        <div className="p-4 border-t border-notion-border-light dark:border-notion-border-dark space-y-3 bg-[#F7F7F5] dark:bg-[#1C1C1C]">
+        <div className="p-4 border-t border-notion-border-light dark:border-notion-border-dark space-y-3 bg-[#F7F7F5] dark:bg-[#070a13]">
           
           {/* Simulated Active User Selector */}
           <div className="relative">

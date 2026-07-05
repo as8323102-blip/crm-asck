@@ -103,7 +103,7 @@ export default function KanbanBoard({ clients, onMoveClient, onClientClick }) {
                         className="
                           p-3 rounded-lg border border-notion-border-light dark:border-notion-border-dark
                           bg-notion-card-light dark:bg-notion-card-dark hover:border-indigo-500/40 dark:hover:border-indigo-400/40
-                          cursor-grab active:cursor-grabbing transition-all hover:-translate-y-0.5 shadow-sm space-y-1 group relative
+                          cursor-grab active:cursor-grabbing transition-all hover:-translate-y-0.5 shadow-sm space-y-1 group relative hover-glow
                         "
                       >
                         {/* Fila 1: Nombre del cliente y prioridad */}
