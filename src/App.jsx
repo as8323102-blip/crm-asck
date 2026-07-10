@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTheme } from './hooks/useTheme';
 import MainLayout from './layouts/MainLayout';
 import DashboardSummary from './components/DashboardSummary';
@@ -11,9 +11,10 @@ import CalendarAgenda from './components/CalendarAgenda';
 import ActivityFeed from './components/ActivityFeed';
 import ExcelImportExport from './components/ExcelImportExport';
 import ConfigPanel from './components/ConfigPanel';
+import { cloudSyncService } from './services/cloudSyncService';
+import { offlineQueue } from './services/offlineQueue';
 
 import { 
-  INTEGRANTES, 
   CLIENTES_INICIALES, 
   NOTAS_INICIALES, 
   TAREAS_INICIALES,
@@ -21,6 +22,7 @@ import {
   AGENDA_INICIAL,
   SPRINTS_INICIALES
 } from './mockData';
+import importedTasks from './data/imported_tasks.json';
 
 import { useClients } from './hooks/useClients';
 import { useTasks } from './hooks/useTasks';
@@ -32,7 +34,7 @@ import { useAuth } from './hooks/useAuth';
 import { useSupabaseRealtime } from './hooks/useSupabaseRealtime';
 
 export default function App() {
-  const { theme, toggleTheme, isDark } = useTheme();
+  const { toggleTheme, isDark } = useTheme();
   
   // Custom hooks para modularizar el CRM v1.8
   const { activeTab, setActiveTab } = useAppView();
@@ -99,6 +101,135 @@ export default function App() {
   });
   const [loading, setLoading] = useState(true);
 
+  const [syncRoomId, setSyncRoomId] = useState(() => {
+    const saved = localStorage.getItem('asck_crm_sync_room_id');
+    if (saved === null) {
+      localStorage.setItem('asck_crm_sync_room_id', 'ASCK-MASTER-SYNC');
+      return 'ASCK-MASTER-SYNC';
+    }
+    return saved === 'local' ? '' : saved;
+  });
+  const [syncing, setSyncing] = useState(false);
+  const isSyncingRef = useRef(false);
+
+  // Sincronización completa (Pull & Push)
+  const handleStartSync = async (roomId) => {
+    if (!roomId) return;
+    try {
+      setSyncing(true);
+      isSyncingRef.current = true;
+
+      const localPayload = {
+        clients: JSON.parse(localStorage.getItem('asck_crm_clients')) || [],
+        tasks: JSON.parse(localStorage.getItem('asck_crm_tasks')) || [],
+        notes: JSON.parse(localStorage.getItem('asck_crm_notes')) || [],
+        activities: JSON.parse(localStorage.getItem('asck_crm_activities')) || [],
+        agendaEvents: JSON.parse(localStorage.getItem('asck_crm_agenda')) || [],
+        sprints: JSON.parse(localStorage.getItem('asck_crm_sprints')) || [],
+        updatedAt: localStorage.getItem('asck_crm_updated_at') || new Date(0).toISOString()
+      };
+
+      const result = await cloudSyncService.sync(roomId, localPayload);
+
+      if (result) {
+        // Guardar resultado en localStorage
+        localStorage.setItem('asck_crm_clients', JSON.stringify(result.clients || []));
+        localStorage.setItem('asck_crm_tasks', JSON.stringify(result.tasks || []));
+        localStorage.setItem('asck_crm_notes', JSON.stringify(result.notes || []));
+        localStorage.setItem('asck_crm_activities', JSON.stringify(result.activities || []));
+        localStorage.setItem('asck_crm_agenda', JSON.stringify(result.agendaEvents || []));
+        localStorage.setItem('asck_crm_sprints', JSON.stringify(result.sprints || []));
+        localStorage.setItem('asck_crm_updated_at', result.updatedAt || new Date().toISOString());
+        localStorage.setItem('asck_crm_sync_room_id', roomId);
+        localStorage.setItem('asck_crm_seeded_v1_8', 'true');
+
+        // Actualizar estados reactivos
+        setClients(result.clients || []);
+        setTasks(result.tasks || []);
+        setNotes(result.notes || []);
+        setActivities(result.activities || []);
+        setAgendaEvents(result.agendaEvents || []);
+        setSprints(result.sprints || []);
+        setSyncRoomId(roomId);
+      }
+    } catch (e) {
+      console.error("[CloudSync] Error sincronizando:", e);
+    } finally {
+      isSyncingRef.current = false;
+      setSyncing(false);
+    }
+  };
+
+  const handleUnlinkSync = () => {
+    localStorage.setItem('asck_crm_sync_room_id', 'local');
+    setSyncRoomId('');
+  };
+
+  // Monitorear cambios locales para marcar que los datos cambiaron y deben subirse
+  useEffect(() => {
+    if (loading) return;
+    if (isSyncingRef.current) return;
+
+    const newTime = new Date().toISOString();
+    localStorage.setItem('asck_crm_updated_at', newTime);
+
+    // Si hay una sala activa, intentamos subir los cambios de inmediato
+    if (syncRoomId && navigator.onLine) {
+      const localPayload = {
+        clients,
+        tasks,
+        notes,
+        activities,
+        agendaEvents,
+        sprints,
+        updatedAt: newTime
+      };
+      cloudSyncService.uploadToCloud(syncRoomId, localPayload).catch(e => {
+        console.error("[CloudSync] Error al subir cambio local:", e);
+      });
+    }
+  }, [clients, tasks, notes, activities, agendaEvents, sprints]);
+
+  // Sincronización periódica automática (cada 15s) y al volver a estar online
+  useEffect(() => {
+    if (!syncRoomId) return;
+
+    handleStartSync(syncRoomId);
+
+    const interval = setInterval(() => {
+      if (navigator.onLine) {
+        handleStartSync(syncRoomId);
+      }
+    }, 15000);
+
+    const handleOnline = () => {
+      handleStartSync(syncRoomId);
+    };
+    window.addEventListener('online', handleOnline);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('online', handleOnline);
+    };
+  }, [syncRoomId]);
+
+  const handleSeedDemoData = () => {
+    localStorage.setItem('asck_crm_seeded_v1_8', 'true');
+    localStorage.setItem('asck_crm_clients', JSON.stringify(CLIENTES_INICIALES));
+    localStorage.setItem('asck_crm_notes', JSON.stringify(NOTAS_INICIALES));
+    localStorage.setItem('asck_crm_tasks', JSON.stringify(TAREAS_INICIALES));
+    localStorage.setItem('asck_crm_activities', JSON.stringify(ACTIVIDADES_INICIALES));
+    localStorage.setItem('asck_crm_agenda', JSON.stringify(AGENDA_INICIAL));
+    localStorage.setItem('asck_crm_sprints', JSON.stringify(SPRINTS_INICIALES));
+
+    setClients(CLIENTES_INICIALES);
+    setNotes(NOTAS_INICIALES);
+    setTasks(TAREAS_INICIALES);
+    setActivities(ACTIVIDADES_INICIALES);
+    setAgendaEvents(AGENDA_INICIAL);
+    setSprints(SPRINTS_INICIALES);
+  };
+
   // Cargar datos asíncronos (sembrando base si es la primera vez)
   useEffect(() => {
     async function initData() {
@@ -106,29 +237,83 @@ export default function App() {
         setLoading(true);
         const seededV18 = localStorage.getItem('asck_crm_seeded_v1_8') === 'true';
 
-        if (!seededV18) {
-          // Sembrado inicial v1.8
-          localStorage.setItem('asck_crm_seeded_v1_8', 'true');
-          localStorage.setItem('asck_crm_clients', JSON.stringify(CLIENTES_INICIALES));
-          localStorage.setItem('asck_crm_notes', JSON.stringify(NOTAS_INICIALES));
-          localStorage.setItem('asck_crm_tasks', JSON.stringify(TAREAS_INICIALES));
-          localStorage.setItem('asck_crm_activities', JSON.stringify(ACTIVIDADES_INICIALES));
-          localStorage.setItem('asck_crm_agenda', JSON.stringify(AGENDA_INICIAL));
-          localStorage.setItem('asck_crm_sprints', JSON.stringify(SPRINTS_INICIALES));
+        let initialClients = [];
+        let initialNotes = [];
+        let initialTasks = [];
+        let initialActivities = [];
+        let initialAgenda = [];
+        let initialSprints = [];
 
-          setClients(CLIENTES_INICIALES);
-          setNotes(NOTAS_INICIALES);
-          setTasks(TAREAS_INICIALES);
-          setActivities(ACTIVIDADES_INICIALES);
-          setAgendaEvents(AGENDA_INICIAL);
-          setSprints(SPRINTS_INICIALES);
+        if (seededV18) {
+          initialClients = JSON.parse(localStorage.getItem('asck_crm_clients')) || [];
+          initialNotes = JSON.parse(localStorage.getItem('asck_crm_notes')) || [];
+          initialTasks = JSON.parse(localStorage.getItem('asck_crm_tasks')) || [];
+          initialActivities = JSON.parse(localStorage.getItem('asck_crm_activities')) || [];
+          initialAgenda = JSON.parse(localStorage.getItem('asck_crm_agenda')) || [];
+          initialSprints = JSON.parse(localStorage.getItem('asck_crm_sprints')) || [];
+        }
+
+        // Si hay una sala de sincronización activa y hay red, hacer sync inicial para evitar parpadeos
+        const currentRoomId = localStorage.getItem('asck_crm_sync_room_id') || 'ASCK-MASTER-SYNC';
+        if (currentRoomId && currentRoomId !== 'local' && navigator.onLine) {
+          try {
+            const localPayload = {
+              clients: initialClients,
+              tasks: initialTasks,
+              notes: initialNotes,
+              activities: initialActivities,
+              agendaEvents: initialAgenda,
+              sprints: initialSprints,
+              updatedAt: localStorage.getItem('asck_crm_updated_at') || new Date(0).toISOString()
+            };
+            const result = await cloudSyncService.sync(currentRoomId, localPayload);
+            if (result) {
+              localStorage.setItem('asck_crm_clients', JSON.stringify(result.clients || []));
+              localStorage.setItem('asck_crm_notes', JSON.stringify(result.notes || []));
+              localStorage.setItem('asck_crm_tasks', JSON.stringify(result.tasks || []));
+              localStorage.setItem('asck_crm_activities', JSON.stringify(result.activities || []));
+              localStorage.setItem('asck_crm_agenda', JSON.stringify(result.agendaEvents || []));
+              localStorage.setItem('asck_crm_sprints', JSON.stringify(result.sprints || []));
+              localStorage.setItem('asck_crm_updated_at', result.updatedAt || new Date().toISOString());
+              localStorage.setItem('asck_crm_seeded_v1_8', 'true');
+
+              setClients(result.clients || []);
+              setNotes(result.notes || []);
+              setTasks(result.tasks || []);
+              setActivities(result.activities || []);
+              setAgendaEvents(result.agendaEvents || []);
+              setSprints(result.sprints || []);
+              setLoading(false);
+              return;
+            }
+          } catch (syncErr) {
+            console.warn("[CloudSync] Fallo en sincronización inicial, usando datos locales:", syncErr);
+          }
+        }
+
+        // Fallback local
+        if (!seededV18) {
+          localStorage.setItem('asck_crm_seeded_v1_8', 'true');
+          localStorage.setItem('asck_crm_clients', JSON.stringify([]));
+          localStorage.setItem('asck_crm_notes', JSON.stringify([]));
+          localStorage.setItem('asck_crm_tasks', JSON.stringify(importedTasks || []));
+          localStorage.setItem('asck_crm_activities', JSON.stringify([]));
+          localStorage.setItem('asck_crm_agenda', JSON.stringify([]));
+          localStorage.setItem('asck_crm_sprints', JSON.stringify([]));
+
+          setClients([]);
+          setNotes([]);
+          setTasks(importedTasks || []);
+          setActivities([]);
+          setAgendaEvents([]);
+          setSprints([]);
         } else {
-          // Carga normal vía servicios locales
-          await loadClientsAndNotes();
-          await loadTasks();
-          await loadActivities();
-          await loadCalendarEvents();
-          await loadSprints();
+          setClients(initialClients);
+          setNotes(initialNotes);
+          setTasks(initialTasks);
+          setActivities(initialActivities);
+          setAgendaEvents(initialAgenda);
+          setSprints(initialSprints);
         }
       } catch (err) {
         console.error("Error inicializando datos en el CRM:", err);
@@ -137,6 +322,21 @@ export default function App() {
       }
     }
     initData();
+  }, []);
+
+  // Sincronizar cola de cambios offline con Supabase cuando cambia el estado de conexión
+  useEffect(() => {
+    const handleOnline = () => {
+      offlineQueue.processQueue();
+    };
+    window.addEventListener('online', handleOnline);
+    
+    // Procesar cambios pendientes inmediatamente al arrancar
+    offlineQueue.processQueue();
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+    };
   }, []);
 
   return (
@@ -153,6 +353,9 @@ export default function App() {
       tasks={tasks}
       onClientClick={(c) => setSelectedClient(c)}
       onlineStatus={onlineStatus}
+      syncRoomId={syncRoomId}
+      syncing={syncing}
+      onStartSync={handleStartSync}
     >
       
       {loading ? (
@@ -250,6 +453,11 @@ export default function App() {
               setSprints={setSprints}
               isDark={isDark}
               toggleTheme={toggleTheme}
+              onSeedDemoData={handleSeedDemoData}
+              syncRoomId={syncRoomId}
+              syncing={syncing}
+              onStartSync={handleStartSync}
+              onUnlinkSync={handleUnlinkSync}
             />
           )}
         </>
