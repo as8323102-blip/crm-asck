@@ -1,4 +1,7 @@
-const API_URL = 'http://localhost/crm-api/index.php';
+// NOTA: servicio legado (integración XAMPP/PHP), sin referencias activas en la app
+// (el proveedor real es local/localStorage o Supabase, ver src/services/provider.js).
+// Se parametriza igualmente por higiene: evita hardcodear host/puerto.
+const API_URL = import.meta.env.VITE_XAMPP_API_URL || 'http://localhost/crm-api/index.php';
 
 export const XAMPPService = {
   async getData() {
