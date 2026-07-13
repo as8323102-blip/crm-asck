@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { clientService } from '../services/clientService';
 import { noteService } from '../services/noteService';
 import { INTEGRANTES } from '../mockData';

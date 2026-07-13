@@ -1,20 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  CheckSquare, 
-  Square, 
-  Clock, 
-  Trash2, 
-  ChevronLeft, 
-  ChevronRight, 
-  FolderOpen, 
-  User, 
-  AlertCircle, 
-  Plus, 
-  Calendar as CalendarIcon, 
-  PieChart, 
-  ChevronDown, 
-  HelpCircle,
-  Building2,
+import React, { useState } from 'react';
+import {
+  Clock,
+  Trash2,
+  FolderOpen,
+  User,
+  AlertCircle,
+  Plus,
   LayoutDashboard,
   List,
   Lock,
@@ -22,23 +13,19 @@ import {
   ShieldAlert,
   X,
   PlusCircle,
-  TrendingUp,
-  FileText
+  TrendingUp
 } from 'lucide-react';
 import { INTEGRANTES } from '../mockData';
 
-export default function TaskManagerTudu({ 
-  tasks = [], 
-  clients = [], 
-  sprints = [], 
-  currentUser, 
-  onAddTask, 
-  onToggleTask, 
-  onUpdateTask, 
-  onDeleteTask, 
-  onAddSprint, 
-  onUpdateSprint, 
-  onClientClick 
+export default function TaskManagerTudu({
+  tasks = [],
+  clients = [],
+  sprints = [],
+  currentUser,
+  onAddTask,
+  onUpdateTask,
+  onDeleteTask,
+  onAddSprint
 }) {
   // Vista Activa
   const [activeView, setActiveView] = useState('mando'); // 'mando', 'todas', 'kevin', 'sebas', 'alberto', 'centeno', 'urgentes', 'bloqueadas', 'hechas'
@@ -81,9 +68,6 @@ export default function TaskManagerTudu({
   const [newDuration, setNewDuration] = useState('1 hora');
   const [newObservations, setNewObservations] = useState('');
 
-  const [draggedOverColumn, setDraggedOverColumn] = useState(null);
-  const [activeMobileTab, setActiveMobileTab] = useState('Pendiente');
-
   // Definición de las 9 Vistas
   const viewsList = [
     { id: 'mando', label: 'Centro de Mando', icon: LayoutDashboard, desc: 'Métricas clave y KPIs de avance del equipo' },
@@ -97,16 +81,6 @@ export default function TaskManagerTudu({
     { id: 'hechas', label: 'Hechas', icon: CheckCircle, desc: 'Historial de pendientes completados' }
   ];
 
-  // Columnas Kanban para Tablero Visual
-  const columns = [
-    { id: 'Pendiente', label: 'Pendientes', color: 'border-t-amber-500 bg-amber-500/5 text-amber-500' },
-    { id: 'En progreso', label: 'En progreso', color: 'border-t-indigo-500 bg-indigo-500/5 text-indigo-500' },
-    { id: 'Hecho', label: 'Hechas', color: 'border-t-emerald-500 bg-emerald-500/5 text-emerald-500' },
-    { id: 'Bloqueado', label: 'Bloqueadas', color: 'border-t-rose-500 bg-rose-500/5 text-rose-500' },
-    { id: 'Pausado', label: 'Pausadas', color: 'border-t-zinc-500 bg-zinc-500/5 text-zinc-500' },
-    { id: 'Cancelado', label: 'Canceladas', color: 'border-t-gray-400 bg-gray-400/5 text-gray-400' }
-  ];
-
   // Helper para mapear IDs a nombres legibles
   const getAssigneeName = (id) => {
     if (!id) return 'Sin asignar';
@@ -115,43 +89,6 @@ export default function TaskManagerTudu({
     if (id === 'm-alberto-01') return 'Alberto';
     if (id === 'm-centeno-02') return 'Centeno';
     return 'Sin asignar';
-  };
-
-  const getAssigneeIdByName = (name) => {
-    if (!name) return '';
-    const norm = name.toLowerCase().trim();
-    if (norm === 'kevin') return 'm-kevin-04';
-    if (norm === 'sebas') return 'm-sebas-03';
-    if (norm === 'alberto') return 'm-alberto-01';
-    if (norm === 'centeno') return 'm-centeno-02';
-    return '';
-  };
-
-  // Drag & Drop
-  const handleDragStart = (e, taskId) => {
-    e.dataTransfer.setData('text/plain', taskId);
-    e.dataTransfer.effectAllowed = 'move';
-  };
-
-  const handleDragOver = (e, columnId) => {
-    e.preventDefault();
-    setDraggedOverColumn(columnId);
-  };
-
-  const handleDragLeave = () => {
-    setDraggedOverColumn(null);
-  };
-
-  const handleDrop = (e, targetColumnId) => {
-    e.preventDefault();
-    setDraggedOverColumn(null);
-    const taskId = e.dataTransfer.getData('text/plain');
-    if (taskId) {
-      onUpdateTask(taskId, {
-        estado: targetColumnId,
-        completada: targetColumnId === 'Hecho'
-      });
-    }
   };
 
   // Swipes en móvil
@@ -261,21 +198,6 @@ export default function TaskManagerTudu({
     setNewDuration('1 hora');
     setNewObservations('');
     setTaskFormOpen(false);
-  };
-
-  // Desplazar estado rápidamente en tarjeta
-  const shiftTaskState = (task, direction) => {
-    const states = ['Pendiente', 'En progreso', 'Hecho', 'Bloqueado', 'Pausado', 'Cancelado'];
-    const currIdx = states.indexOf(task.estado || 'Pendiente');
-    let nextIdx = direction === 'next' ? currIdx + 1 : currIdx - 1;
-
-    if (nextIdx >= 0 && nextIdx < states.length) {
-      const nextState = states[nextIdx];
-      onUpdateTask(task.id, {
-        estado: nextState,
-        completada: nextState === 'Hecho'
-      });
-    }
   };
 
   // ----------------------------------------------------

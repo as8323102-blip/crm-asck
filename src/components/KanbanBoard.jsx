@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { INTEGRANTES } from '../mockData';
-import { 
-  Building2, 
+import {
   ArrowRightLeft
 } from 'lucide-react';
 import { formatMXN } from '../utils/currency';

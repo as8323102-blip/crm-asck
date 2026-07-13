@@ -39,7 +39,7 @@ export default function App() {
   // Custom hooks para modularizar el CRM v1.8
   const { activeTab, setActiveTab } = useAppView();
   const { currentUser, setCurrentUser } = useAuth();
-  const { activities, setActivities, loadActivities, logEvent } = useActivity();
+  const { activities, setActivities, logEvent } = useActivity();
   
   // Helper para logging que inyectamos a los hooks
   const logEventHelper = (actionText, clientId = null) => {
@@ -50,7 +50,6 @@ export default function App() {
   const {
     tasks,
     setTasks,
-    loadTasks,
     handleAddTask,
     handleUpdateTask,
     handleToggleTask,
@@ -67,7 +66,6 @@ export default function App() {
     setSelectedClient,
     newClientModalOpen,
     setNewClientModalOpen,
-    loadClientsAndNotes,
     handleMoveClient,
     handleUpdateClient,
     handleCreateClient,
@@ -78,7 +76,6 @@ export default function App() {
   const {
     sprints,
     setSprints,
-    loadSprints,
     handleAddSprint,
     handleUpdateSprint
   } = useSprints(logEventHelper);
@@ -86,7 +83,6 @@ export default function App() {
   const {
     agendaEvents,
     setAgendaEvents,
-    loadCalendarEvents,
     handleAddAgendaEvent
   } = useCalendar(logEventHelper);
 
@@ -433,7 +429,7 @@ export default function App() {
               clients={clients}
               sprints={sprints}
               setClients={setClients}
-              logEvent={logEvent}
+              logEvent={logEventHelper}
             />
           )}
 

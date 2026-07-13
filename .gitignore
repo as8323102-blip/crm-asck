@@ -15,6 +15,10 @@ dist-ssr
 .env.*
 !.env.example
 
+# Scripts sueltos de diagnóstico local (historicamente con credenciales hardcodeadas
+# de DB/GitHub, ver AUDITORIA.md). No deben rastrearse.
+scratch/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

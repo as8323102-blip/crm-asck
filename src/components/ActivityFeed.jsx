@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { INTEGRANTES } from '../mockData';
-import { Calendar, User, Info, ArrowUpRight, Search } from 'lucide-react';
+import { Info, ArrowUpRight } from 'lucide-react';
 
 export default function ActivityFeed({ activities, clients, onClientClick }) {
   const [filterUser, setFilterUser] = useState('Todos');

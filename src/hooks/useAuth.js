@@ -7,7 +7,7 @@ export function useAuth() {
     if (saved) {
       try {
         return JSON.parse(saved);
-      } catch (e) {}
+      } catch {}
     }
     return INTEGRANTES[0]; // Primer integrante por defecto
   });
@@ -20,7 +20,7 @@ export function useAuth() {
   }, [currentUser]);
 
   // Login simulado local / preparación para Supabase
-  const login = async (email, password) => {
+  const login = async (email, _password) => {
     setLoading(true);
     // Simular retraso
     await new Promise(resolve => setTimeout(resolve, 800));

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, X, CheckSquare, User, Tag } from 'lucide-react';
-import { INTEGRANTES } from '../mockData';
+import { Search, X, CheckSquare } from 'lucide-react';
 
 export default function GlobalSearch({ 
   clients, 
@@ -78,7 +77,7 @@ export default function GlobalSearch({
     onClientClick(client);
   };
 
-  const handleSelectTask = (task) => {
+  const handleSelectTask = () => {
     setIsOpen(false);
     setQuery('');
     setActiveTab('tasks');

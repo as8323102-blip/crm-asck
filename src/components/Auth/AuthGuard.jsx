@@ -10,7 +10,12 @@ export default function AuthGuard({ children }) {
     if (activeProvider === 'local') return { user: currentUser };
     
     const saved = localStorage.getItem('asck_crm_session');
-    return saved ? JSON.parse(saved) : null;
+    if (!saved) return null;
+    try {
+      return JSON.parse(saved);
+    } catch {
+      return null;
+    }
   });
   
   const [errorMsg, setErrorMsg] = useState('');

@@ -10,7 +10,7 @@ export const offlineQueue = {
     try {
       const q = localStorage.getItem('asck_crm_offline_queue');
       return q ? JSON.parse(q) : [];
-    } catch (e) {
+    } catch {
       return [];
     }
   },

@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
 import { INTEGRANTES } from '../mockData';
 import { 
-  X, 
-  Building2, 
-  Mail, 
-  Phone, 
-  User, 
-  Tag, 
-  DollarSign, 
+  X,
+  Building2,
+  Mail,
+  Phone,
+  User,
+  Tag,
+  DollarSign,
   Calendar,
-  MessageSquare,
   Clock,
   Plus,
   Trash2,
-  CheckSquare,
   AlertCircle,
   FolderPlus,
-  Play,
   Edit3
 } from 'lucide-react';
 import { formatMXN } from '../utils/currency';

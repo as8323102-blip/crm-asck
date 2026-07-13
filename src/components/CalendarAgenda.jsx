@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { INTEGRANTES } from '../mockData';
-import { 
-  Calendar as CalendarIcon, 
-  Clock, 
-  Users, 
-  Plus, 
-  ChevronRight, 
+import {
+  Clock,
+  Users,
+  Plus,
+  ChevronRight,
   ChevronLeft,
   X,
-  PlusCircle,
-  Video,
-  FileText
+  PlusCircle
 } from 'lucide-react';
 
 export default function CalendarAgenda({ 
@@ -35,7 +32,6 @@ export default function CalendarAgenda({
 
   // Control de Modales
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState(null); // { date, time }
   const [selectedEvent, setSelectedEvent] = useState(null); // Para ver/editar detalles
 
   // Campos del Formulario de Evento

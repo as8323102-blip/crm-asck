@@ -109,7 +109,7 @@ export default function ConfigPanel({
 
         setSuccessMsg('Base de datos restaurada correctamente desde el respaldo.');
         setTimeout(() => setSuccessMsg(''), 4000);
-      } catch (err) {
+      } catch {
         setErrorMsg('Error al parsear el archivo JSON de respaldo.');
         setTimeout(() => setErrorMsg(''), 4000);
       }

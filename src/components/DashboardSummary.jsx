@@ -1,36 +1,25 @@
 import React, { useState } from 'react';
-import { 
-  Users, 
-  DollarSign, 
-  CheckCircle, 
-  Clock, 
-  Calendar,
+import {
+  Users,
+  DollarSign,
+  CheckCircle,
+  Clock,
   History,
   TrendingUp,
-  ArrowRightLeft,
   Calculator
 } from 'lucide-react';
 import { INTEGRANTES } from '../mockData';
 import { formatMXN, convertCurrency, TASA_CAMBIO_FIJA } from '../utils/currency';
 
-export default function DashboardSummary({ 
-  clients, 
-  tasks, 
-  activities = [],
-  toggleTask, 
-  addTask,
-  currentUser,
-  onClientClick
+export default function DashboardSummary({
+  clients,
+  tasks,
+  currentUser
 }) {
-  const [newTaskTitle, setNewTaskTitle] = useState('');
-  const [newTaskClient, setNewTaskClient] = useState('');
-
   // Estados del Conversor de Divisas
   const [convAmount, setConvAmount] = useState('100');
   const [fromCurr, setFromCurr] = useState('USD');
   const [toCurr, setToCurr] = useState('MXN');
-
-  const todayStr = new Date().toISOString().split('T')[0];
 
   // 1. Estadísticas básicas (en MXN)
   const totalClients = clients.length;
@@ -54,25 +43,6 @@ export default function DashboardSummary({
 
   // 3. Conversión del conversor
   const convertedResult = convertCurrency(Number(convAmount) || 0, fromCurr, toCurr);
-
-  const handleAddTaskSubmit = (e) => {
-    e.preventDefault();
-    if (!newTaskTitle.trim()) return;
-    
-    addTask({
-      titulo: newTaskTitle,
-      clienteId: newTaskClient || null,
-      asignadoA: currentUser.id,
-      completada: false,
-      estado: "Pendiente",
-      prioridad: "Media",
-      fechaLimite: new Date(Date.now() + 86400000 * 2).toISOString().split('T')[0],
-      horaLimite: "12:00"
-    });
-    
-    setNewTaskTitle('');
-    setNewTaskClient('');
-  };
 
   return (
     <div className="space-y-6">

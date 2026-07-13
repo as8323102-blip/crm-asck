@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
-import { 
-  Upload, 
-  Download, 
-  CheckCircle, 
-  AlertCircle, 
-  FileSpreadsheet, 
-  Filter, 
+import {
+  Upload,
+  Download,
+  CheckCircle,
+  FileSpreadsheet,
   Play,
   Info
 } from 'lucide-react';
 import { INTEGRANTES } from '../mockData';
 import { clientService } from '../services/clientService';
 
-export default function ExcelImportExport({ clients, sprints, setClients, logEvent }) {
+export default function ExcelImportExport({ clients, setClients, logEvent }) {
   // Estados para Importación
   const [file, setFile] = useState(null);
   const [headers, setHeaders] = useState([]);
@@ -207,7 +205,7 @@ export default function ExcelImportExport({ clients, sprints, setClients, logEve
     });
 
     // 2. Mapear a columnas del Excel original
-    const rows = filtered.map((c, idx) => {
+    const rows = filtered.map((c) => {
       const owner = INTEGRANTES.find(i => i.id === c.responsableId);
       const addressObj = c.camposPersonalizados?.find(f => f.clave === 'Dirección') || {};
       const redesObj = c.camposPersonalizados?.find(f => f.clave === 'Redes / Fuentes') || {};
