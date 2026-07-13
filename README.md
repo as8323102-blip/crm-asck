@@ -60,7 +60,7 @@ El CRM puede operar en dos modos mediante la variable `VITE_DATA_PROVIDER` en tu
   VITE_SUPABASE_ANON_KEY=tu-anon-key-de-supabase
   ```
 * Ejecuta el script de base de datos en Supabase:
-  👉 [schema.sql](file:///c:/Users/as832/Documents/CRM%20ASCK/src/services/supabase/schema.sql)
+  👉 [schema.sql](src/services/supabase/schema.sql)
 
 ---
 
@@ -78,4 +78,4 @@ El proyecto viene empaquetado para Capacitor. Para generar la APK móvil de Andr
 3. Genera tu APK desde Android Studio en **Build > Build Bundle(s) / APK(s) > Build APK(s)**.
 
 Para más detalles, consulta la guía de compilación móvil:
-👉 [MOBILE_BUILD_GUIDE.md](file:///C:/Users/as832/.gemini/antigravity/brain/2f56e212-3300-4930-8b34-c26785ada5ca/MOBILE_BUILD_GUIDE.md)
+👉 [MOBILE_BUILD_GUIDE.md](documentacion_goat/MOBILE_BUILD_GUIDE.md)
