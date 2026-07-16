@@ -128,10 +128,50 @@ async function run() {
   try {
     // A. Upsert de Integrantes para evitar errores de clave foránea
     const dbIntegrantes = [
-      { id: "m-kevin-04", nombre: "Kevin", email: "kevin@asck.software", rol: "Líder comercial y de cierres / QA", horas_disponibles: 52, avatar_url: "https://api.dicebear.com/7.x/bottts/svg?seed=Kevin" },
-      { id: "m-alberto-01", nombre: "Alberto", email: "alberto@asck.software", rol: "Sostiene CRM web, automatización, pruebas y guías técnicas", horas_disponibles: 36, avatar_url: "https://api.dicebear.com/7.x/bottts/svg?seed=Alberto" },
-      { id: "m-sebas-03", nombre: "Sebas", email: "sebas@asck.software", rol: "Alimenta el CRM, consigue datos, da seguimiento y agenda", horas_disponibles: 36, avatar_url: "https://api.dicebear.com/7.x/bottts/svg?seed=Sebas" },
-      { id: "m-centeno-02", nombre: "Centeno", email: "centeno@asck.software", rol: "Rescata y ordena demos", horas_disponibles: 52, avatar_url: "https://api.dicebear.com/7.x/bottts/svg?seed=Centeno" }
+      { 
+        id: "m-kevin-04", 
+        nombre: "Kevin", 
+        email: "kevin@asck.software", 
+        rol: "Líder comercial y de cierres / QA", 
+        cargo: "Director Comercial",
+        responsabilidades: "Lidera cierres, validación final y decisiones comerciales",
+        especialidad: "Negociación & Cierres",
+        horas_disponibles: 52, 
+        avatar_url: "https://api.dicebear.com/7.x/bottts/svg?seed=Kevin" 
+      },
+      { 
+        id: "m-alberto-01", 
+        nombre: "Alberto", 
+        email: "alberto@asck.software", 
+        rol: "Sostiene CRM web, automatización, pruebas y guías técnicas", 
+        cargo: "Lead Software Architect",
+        responsabilidades: "Soporte técnico del CRM web, automatizaciones, pruebas y guías técnicas",
+        especialidad: "Backend & Systems Architecture",
+        horas_disponibles: 36, 
+        avatar_url: "https://api.dicebear.com/7.x/bottts/svg?seed=Alberto" 
+      },
+      { 
+        id: "m-sebas-03", 
+        nombre: "Sebas", 
+        email: "sebas@asck.software", 
+        rol: "Alimenta el CRM, consigue datos, da seguimiento y agenda", 
+        cargo: "Operaciones Comerciales",
+        responsabilidades: "Búsqueda de datos de prospectos, primer contacto por WhatsApp/IG/Maps, seguimiento y agendación",
+        especialidad: "Data Collection & Sales Outreach",
+        horas_disponibles: 36, 
+        avatar_url: "https://api.dicebear.com/7.x/bottts/svg?seed=Sebas" 
+      },
+      { 
+        id: "m-centeno-02", 
+        nombre: "Centeno", 
+        email: "centeno@asck.software", 
+        rol: "Rescata y ordena demos", 
+        cargo: "UI/UX & Frontend Developer",
+        responsabilidades: "Preparación y limpieza de demos (Dental Printal, Finanzas, WhatsApp) y documentación visual de venta",
+        especialidad: "Frontend & Demo Building",
+        horas_disponibles: 52, 
+        avatar_url: "https://api.dicebear.com/7.x/bottts/svg?seed=Centeno" 
+      }
     ];
 
     console.log("👥 Asegurando integrantes en la base de datos...");

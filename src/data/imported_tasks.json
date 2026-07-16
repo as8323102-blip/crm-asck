@@ -7,7 +7,7 @@
     "responsableNombre": "Sebas",
     "apoyo": "Kevin / Alberto",
     "prioridad": "P0",
-    "estado": "Pendiente",
+    "estado": "En progreso",
     "completada": false,
     "fechaInicio": "2026-07-08",
     "fechaLimite": "2026-07-09",
@@ -15,8 +15,7 @@
     "justificacion": "Es la vitrina visual; Sebas debe hacer que se vea premium.",
     "bloqueo": "Diseño final / contenido / assets",
     "proximaAccion": "Definir estructura final y subir versión enseñable",
-    "updatedAt": "2026-07-10T01:39:05.633Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-2",
@@ -26,16 +25,15 @@
     "responsableNombre": "Sebas",
     "apoyo": "Kevin/alberto",
     "prioridad": "P0",
-    "estado": "Pendiente",
-    "completada": false,
+    "estado": "Hecho",
+    "completada": true,
     "fechaInicio": "2026-07-08",
     "fechaLimite": "2026-07-09",
     "entregable": "Demos visuales más vendibles sin tocar producción técnica",
     "justificacion": "Son demos de venta, no producción; necesitan impacto visual.",
     "bloqueo": "Falta criterio visual final",
     "proximaAccion": "Aplicar una plantilla visual base a cada demo",
-    "updatedAt": "2026-07-10T01:39:05.633Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-3",
@@ -45,7 +43,7 @@
     "responsableNombre": "Alberto",
     "apoyo": "Alberto / kevin",
     "prioridad": "P0",
-    "estado": "Pendiente",
+    "estado": "En progreso",
     "completada": false,
     "fechaInicio": "2026-07-08",
     "fechaLimite": "2026-07-10",
@@ -53,8 +51,7 @@
     "justificacion": "Soporte técnico y desarrollo de backend/arquitectura del sistema por Alberto (Técnico).",
     "bloqueo": "Flujo y campos finales",
     "proximaAccion": "Definir columnas mínimas del CRM y probar captura",
-    "updatedAt": "2026-07-10T01:39:05.633Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-4",
@@ -64,24 +61,23 @@
     "responsableNombre": "Kevin",
     "apoyo": "sebas",
     "prioridad": "P0",
-    "estado": "Pendiente",
-    "completada": false,
+    "estado": "Hecho",
+    "completada": true,
     "fechaInicio": "2026-07-08",
     "fechaLimite": "2026-07-08",
     "entregable": "Top 5 priorizados para rediseño y contacto",
     "justificacion": "Es decisión comercial; Centeno ayuda a ordenar datos.",
     "bloqueo": "Datos incompletos",
     "proximaAccion": "Elegir por ticket, urgencia, presencia digital y facilidad de demo",
-    "updatedAt": "2026-07-10T01:39:05.633Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-5",
     "titulo": "Contactar prospectos",
     "macroarea": "Ventas",
-    "asignadoA": "m-kevin-04",
-    "responsableNombre": "Kevin",
-    "apoyo": "Sebas",
+    "asignadoA": "m-alberto-01",
+    "responsableNombre": "Alberto",
+    "apoyo": "Todos",
     "prioridad": "P0",
     "estado": "Pendiente",
     "completada": false,
@@ -91,27 +87,25 @@
     "justificacion": "Kevin debe cerrar y entender al cliente.",
     "bloqueo": "Mensajes/capturas sin preparar",
     "proximaAccion": "Mandar primer lote de mensajes con demo/CTA",
-    "updatedAt": "2026-07-10T01:39:05.633Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-6",
     "titulo": "Terminar tier list de prospectos",
     "macroarea": "Prospección",
-    "asignadoA": "m-kevin-04",
-    "responsableNombre": "Kevin",
-    "apoyo": "sebas",
+    "asignadoA": "m-sebas-03",
+    "responsableNombre": "Sebas",
+    "apoyo": "Todos",
     "prioridad": "P0",
-    "estado": "Pendiente",
-    "completada": false,
+    "estado": "Hecho",
+    "completada": true,
     "fechaInicio": "2026-07-08",
     "fechaLimite": "2026-07-08",
     "entregable": "S/A/B con nombre, mercado, teléfono y razón",
     "justificacion": "Kevin decide valor comercial; Centeno organiza la lista.",
     "bloqueo": "Falta depurar duplicados",
     "proximaAccion": "Separar prospectos por potencial real",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-7",
@@ -121,7 +115,7 @@
     "responsableNombre": "Sebas",
     "apoyo": "Centeno",
     "prioridad": "P1",
-    "estado": "Pendiente",
+    "estado": "En progreso",
     "completada": false,
     "fechaInicio": "2026-07-09",
     "fechaLimite": "2026-07-10",
@@ -129,8 +123,7 @@
     "justificacion": "Sebas diseña; Centeno entrega datos limpios.",
     "bloqueo": "Datos finales del tier list",
     "proximaAccion": "Diseñar una lámina por prospecto top",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-8",
@@ -140,16 +133,15 @@
     "responsableNombre": "Kevin",
     "apoyo": "Todos",
     "prioridad": "P0",
-    "estado": "Pendiente",
-    "completada": false,
+    "estado": "Hecho",
+    "completada": true,
     "fechaInicio": "2026-07-08",
     "fechaLimite": "2026-07-08",
     "entregable": "Pitch corto para explicar qué vendemos",
     "justificacion": "Lo debe dominar quien vende.",
     "bloqueo": "Oferta todavía dispersa",
     "proximaAccion": "Redactar pitch de 30 segundos y versión WhatsApp",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-9",
@@ -159,16 +151,15 @@
     "responsableNombre": "Kevin",
     "apoyo": "Todos",
     "prioridad": "P0",
-    "estado": "Pendiente",
-    "completada": false,
+    "estado": "Hecho",
+    "completada": true,
     "fechaInicio": "2026-07-08",
     "fechaLimite": "2026-07-08",
     "entregable": "Paquetes claro: básico, captación y sistema/pro",
     "justificacion": "Kevin decide precio; Centeno estructura la tabla.",
     "bloqueo": "Rangos y anticipo sin cerrar",
     "proximaAccion": "Definir mínimo, recomendado y premium",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-10",
@@ -178,16 +169,15 @@
     "responsableNombre": "Kevin",
     "apoyo": "Todos",
     "prioridad": "P0",
-    "estado": "Pendiente",
-    "completada": false,
+    "estado": "Hecho",
+    "completada": true,
     "fechaInicio": "2026-07-08",
     "fechaLimite": "2026-07-09",
     "entregable": "Plantilla simple para cobrar sin improvisar",
     "justificacion": "Kevin define condiciones; Centeno ordena formato/proceso.",
     "bloqueo": "Condiciones no cerradas",
     "proximaAccion": "Crear formato de cotización con anticipo y entregables",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-11",
@@ -197,26 +187,25 @@
     "responsableNombre": "Kevin",
     "apoyo": "Sebas",
     "prioridad": "P1",
-    "estado": "Pendiente",
-    "completada": false,
+    "estado": "Hecho",
+    "completada": true,
     "fechaInicio": "2026-07-09",
     "fechaLimite": "2026-07-10",
     "entregable": "Mensajes, objeciones, presentación y ejemplos",
     "justificacion": "Sebas diseña; Kevin valida discurso.",
     "bloqueo": "Falta pitch y paquetes",
     "proximaAccion": "Armar una hoja visual de oferta",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-12",
     "titulo": "Portafolio ASCK",
     "macroarea": "Portafolio",
-    "asignadoA": "m-sebas-03",
-    "responsableNombre": "Sebas",
-    "apoyo": "Kevin",
+    "asignadoA": "m-kevin-04",
+    "responsableNombre": "Kevin",
+    "apoyo": "Todos",
     "prioridad": "P1",
-    "estado": "Pendiente",
+    "estado": "En progreso",
     "completada": false,
     "fechaInicio": "2026-07-09",
     "fechaLimite": "2026-07-10",
@@ -224,8 +213,7 @@
     "justificacion": "Sebas arma visual; Centeno ordena evidencias.",
     "bloqueo": "Capturas dispersas",
     "proximaAccion": "Recolectar 6 capturas limpias y armar portafolio",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-13",
@@ -235,16 +223,15 @@
     "responsableNombre": "Centeno",
     "apoyo": "Todos",
     "prioridad": "P1",
-    "estado": "Pendiente",
-    "completada": false,
+    "estado": "Hecho",
+    "completada": true,
     "fechaInicio": "2026-07-09",
     "fechaLimite": "2026-07-10",
     "entregable": "Todo ordenado por cliente/proyecto/demo",
     "justificacion": "Organización pura.",
     "bloqueo": "Archivos dispersos",
     "proximaAccion": "Crear estructura por proyecto y estado",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-14",
@@ -254,26 +241,25 @@
     "responsableNombre": "Kevin",
     "apoyo": "Todos",
     "prioridad": "P0",
-    "estado": "Pendiente",
-    "completada": false,
+    "estado": "Hecho",
+    "completada": true,
     "fechaInicio": "2026-07-08",
     "fechaLimite": "2026-07-08",
     "entregable": "Reglas de quién diseña, quién integra, quién revisa",
     "justificacion": "Centeno debe unir el flujo; Kevin aprueba.",
     "bloqueo": "Roles cruzados",
     "proximaAccion": "Publicar matriz de responsabilidades",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-15",
     "titulo": "Checklist estándar por demo",
     "macroarea": "QA/Operación",
-    "asignadoA": "m-centeno-02",
-    "responsableNombre": "Centeno",
+    "asignadoA": "m-sebas-03",
+    "responsableNombre": "Sebas",
     "apoyo": "",
     "prioridad": "P0",
-    "estado": "Pendiente",
+    "estado": "En progreso",
     "completada": false,
     "fechaInicio": "2026-07-08",
     "fechaLimite": "2026-07-09",
@@ -281,8 +267,7 @@
     "justificacion": "Organiza criterios de calidad para diseño y técnica.",
     "bloqueo": "No existe checklist único",
     "proximaAccion": "Crear checklist de revisión antes de enseñar",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-16",
@@ -300,8 +285,7 @@
     "justificacion": "Soporte técnico y desarrollo de backend/arquitectura del sistema por Alberto (Técnico).",
     "bloqueo": "Demasiadas opciones posibles",
     "proximaAccion": "Probar 3 herramientas y reportar uso real",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-17",
@@ -311,7 +295,7 @@
     "responsableNombre": "Alberto",
     "apoyo": "Kevin",
     "prioridad": "P1",
-    "estado": "Pendiente",
+    "estado": "Bloqueado",
     "completada": false,
     "fechaInicio": "2026-07-09",
     "fechaLimite": "2026-07-10",
@@ -319,8 +303,7 @@
     "justificacion": "Es evaluación técnica e integración.",
     "bloqueo": "Costos/límites desconocidos",
     "proximaAccion": "Hacer tabla de API, uso, costo aproximado y dificultad",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-18",
@@ -330,7 +313,7 @@
     "responsableNombre": "Alberto",
     "apoyo": "Kevin",
     "prioridad": "P1",
-    "estado": "Pendiente",
+    "estado": "Bloqueado",
     "completada": false,
     "fechaInicio": "2026-07-09",
     "fechaLimite": "2026-07-10",
@@ -338,18 +321,17 @@
     "justificacion": "Tarea técnica directa.",
     "bloqueo": "Hardware/configuración",
     "proximaAccion": "Instalar modelo viable y hacer prueba de endpoint",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-19",
     "titulo": "Instalar programas de locución",
     "macroarea": "Audio/Locución",
-    "asignadoA": "m-centeno-02",
-    "responsableNombre": "Centeno",
-    "apoyo": "Kevin",
+    "asignadoA": "m-kevin-04",
+    "responsableNombre": "Kevin",
+    "apoyo": "Centeno",
     "prioridad": "P1",
-    "estado": "Pendiente",
+    "estado": "Pausado",
     "completada": false,
     "fechaInicio": "2026-07-09",
     "fechaLimite": "2026-07-10",
@@ -357,8 +339,7 @@
     "justificacion": "Setup técnico: programas, drivers, plugins, exportación, pruebas.",
     "bloqueo": "Falta elegir software",
     "proximaAccion": "Instalar 1 opción principal y grabar prueba",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-21",
@@ -366,18 +347,17 @@
     "macroarea": "Contenido",
     "asignadoA": "m-kevin-04",
     "responsableNombre": "Kevin",
-    "apoyo": "CENTENO",
+    "apoyo": "Centeno",
     "prioridad": "P1",
-    "estado": "Pendiente",
-    "completada": false,
+    "estado": "Hecho",
+    "completada": true,
     "fechaInicio": "2026-07-09",
     "fechaLimite": "2026-07-10",
     "entregable": "Videos cortos listos para publicar/enviar",
     "justificacion": "Edición y estética.",
     "bloqueo": "Material sin grabar",
     "proximaAccion": "Editar primer lote de clips",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-22",
@@ -385,9 +365,9 @@
     "macroarea": "Finanzas",
     "asignadoA": "m-kevin-04",
     "responsableNombre": "Kevin",
-    "apoyo": "",
+    "apoyo": "Centeno",
     "prioridad": "P1",
-    "estado": "Pendiente",
+    "estado": "Pausado",
     "completada": false,
     "fechaInicio": "2026-07-09",
     "fechaLimite": "2026-07-10",
@@ -395,8 +375,7 @@
     "justificacion": "Kevin aprende para vender; Alberto resuelve dudas técnicas.",
     "bloqueo": "Falta recorrido completo",
     "proximaAccion": "Preparar guion de demo de Finanzas",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-23",
@@ -414,8 +393,7 @@
     "justificacion": "Organización, seguimiento y documentación visual de la entrega a cargo de Centeno (Seguimiento).",
     "bloqueo": "Falta empaquetar valor",
     "proximaAccion": "Crear recorrido: problema, solución, módulos, precio",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-24",
@@ -433,8 +411,7 @@
     "justificacion": "Kevin lo usa en contexto real; Alberto corrige.",
     "bloqueo": "Ambiente de prueba",
     "proximaAccion": "Probar flujo crítico y anotar fallos",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-25",
@@ -452,27 +429,25 @@
     "justificacion": "Es orden de datos y seguimiento.",
     "bloqueo": "Datos incompletos",
     "proximaAccion": "Revisar campos y duplicados",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-26",
     "titulo": "Revisión técnica final Finanzas",
     "macroarea": "Finanzas",
-    "asignadoA": "m-kevin-04",
-    "responsableNombre": "Kevin",
-    "apoyo": "CENTEJNO",
+    "asignadoA": "m-centeno-02",
+    "responsableNombre": "Centeno",
+    "apoyo": "Kevin",
     "prioridad": "P2",
-    "estado": "Pendiente",
-    "completada": false,
+    "estado": "Hecho",
+    "completada": true,
     "fechaInicio": "2026-07-10",
     "fechaLimite": "2026-07-12",
     "entregable": "Bugs anotados/corregidos",
     "justificacion": "Técnica y estabilidad.",
     "bloqueo": "Falta lista de bugs",
     "proximaAccion": "Revisar errores críticos",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-27",
@@ -482,16 +457,15 @@
     "responsableNombre": "Alberto",
     "apoyo": "Kevin / Sebas",
     "prioridad": "P1",
-    "estado": "Pendiente",
-    "completada": false,
+    "estado": "Hecho",
+    "completada": true,
     "fechaInicio": "2026-07-09",
     "fechaLimite": "2026-07-10",
     "entregable": "Demo dental estable para enseñar",
     "justificacion": "Alberto asegura funcionamiento; Kevin comercializa; Sebas mejora vista.",
     "bloqueo": "Estabilidad desconocida",
     "proximaAccion": "Levantar demo y revisar rutas críticas",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-28",
@@ -501,16 +475,15 @@
     "responsableNombre": "Alberto",
     "apoyo": "Centeno",
     "prioridad": "P1",
-    "estado": "Pendiente",
-    "completada": false,
+    "estado": "Hecho",
+    "completada": true,
     "fechaInicio": "2026-07-09",
     "fechaLimite": "2026-07-10",
     "entregable": "Qué sirve, qué falta y qué no tocar",
     "justificacion": "Soporte técnico y desarrollo de backend/arquitectura del sistema por Alberto (Técnico).",
     "bloqueo": "Falta diagnóstico",
     "proximaAccion": "Listar módulos listos y rotos",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-29",
@@ -520,16 +493,15 @@
     "responsableNombre": "Centeno",
     "apoyo": "Alberto",
     "prioridad": "P2",
-    "estado": "Pendiente",
-    "completada": false,
+    "estado": "Hecho",
+    "completada": true,
     "fechaInicio": "2026-07-10",
     "fechaLimite": "2026-07-12",
     "entregable": "Documento de pendientes técnicos",
     "justificacion": "Organización, seguimiento y documentación visual de la entrega a cargo de Centeno (Seguimiento).",
     "bloqueo": "Depende del diagnóstico",
     "proximaAccion": "Convertir hallazgos en checklist",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-30",
@@ -539,23 +511,22 @@
     "responsableNombre": "Centeno",
     "apoyo": "Alberto / Sebas",
     "prioridad": "P1",
-    "estado": "Pendiente",
-    "completada": false,
+    "estado": "Hecho",
+    "completada": true,
     "fechaInicio": "2026-07-09",
     "fechaLimite": "2026-07-10",
     "entregable": "Dental Captación + Agenda como oferta principal",
     "justificacion": "Organización, seguimiento y documentación visual de la entrega a cargo de Centeno (Seguimiento).",
     "bloqueo": "Oferta dental no cerrada",
     "proximaAccion": "Definir paquete dental vendible",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-31",
-    "titulo": "Mensajes para 3 dentales",
+    "titulo": "Mensajes para todos los dentales",
     "macroarea": "Dental/Ventas",
-    "asignadoA": "m-kevin-04",
-    "responsableNombre": "Kevin",
+    "asignadoA": "m-alberto-01",
+    "responsableNombre": "Alberto",
     "apoyo": "Sebas",
     "prioridad": "P1",
     "estado": "Pendiente",
@@ -566,8 +537,7 @@
     "justificacion": "Venta directa y copy personalizado.",
     "bloqueo": "Faltan datos de clínicas",
     "proximaAccion": "Preparar 3 mensajes y CTA",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-32",
@@ -577,16 +547,15 @@
     "responsableNombre": "Kevin",
     "apoyo": "Todos",
     "prioridad": "P1",
-    "estado": "Pendiente",
-    "completada": false,
+    "estado": "Hecho",
+    "completada": true,
     "fechaInicio": "2026-07-09",
     "fechaLimite": "2026-07-10",
     "entregable": "Precio por paquete dental",
     "justificacion": "Kevin define valor; Centeno estructura.",
     "bloqueo": "Precios no cerrados",
     "proximaAccion": "Hacer 3 niveles de paquete dental",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-33",
@@ -596,16 +565,15 @@
     "responsableNombre": "Kevin",
     "apoyo": "Centeno / Kevin",
     "prioridad": "P2",
-    "estado": "Pendiente",
-    "completada": false,
+    "estado": "Hecho",
+    "completada": true,
     "fechaInicio": "2026-07-10",
     "fechaLimite": "2026-07-12",
     "entregable": "Qué se vende ahora vs qué va después",
     "justificacion": "Alberto define viabilidad; Centeno ordena etapas.",
     "bloqueo": "Falta diagnóstico",
     "proximaAccion": "Separar MVP, demo y producción",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.667Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-37",
@@ -613,9 +581,9 @@
     "macroarea": "Prospección",
     "asignadoA": "m-sebas-03",
     "responsableNombre": "Sebas",
-    "apoyo": "Kevin",
+    "apoyo": "Todos",
     "prioridad": "P0",
-    "estado": "Pendiente",
+    "estado": "En progreso",
     "completada": false,
     "fechaInicio": "2026-07-08",
     "fechaLimite": "2026-07-10",
@@ -623,15 +591,14 @@
     "justificacion": "Centeno mantiene flujo; Kevin valida calidad.",
     "bloqueo": "Falta rutina diaria",
     "proximaAccion": "Registrar lote diario con datos mínimos",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.668Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-38",
     "titulo": "Contacto diario con prospectos",
     "macroarea": "Ventas",
-    "asignadoA": "m-kevin-04",
-    "responsableNombre": "Kevin",
+    "asignadoA": "m-sebas-03",
+    "responsableNombre": "Sebas",
     "apoyo": "—",
     "prioridad": "P0",
     "estado": "Pendiente",
@@ -642,46 +609,43 @@
     "justificacion": "Venta no se delega al 100%.",
     "bloqueo": "Tiempo/guion",
     "proximaAccion": "Mandar mensajes por bloques",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.668Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-39",
     "titulo": "Seguimiento a prospectos",
     "macroarea": "Seguimiento",
-    "asignadoA": "m-sebas-03",
-    "responsableNombre": "Sebas",
-    "apoyo": "Kevin",
+    "asignadoA": "m-alberto-01",
+    "responsableNombre": "Alberto",
+    "apoyo": "Todos",
     "prioridad": "P0",
     "estado": "Pendiente",
     "completada": false,
     "fechaInicio": "2026-07-08",
     "fechaLimite": "2026-07-10",
     "entregable": "3 seguimientos/día",
-    "justificacion": "Centeno recuerda, agenda y presiona ordenadamente.",
+    "justificacion": "Soporte técnico y desarrollo de backend/arquitectura del sistema por Alberto (Técnico).",
     "bloqueo": "Sin sistema de recordatorios",
     "proximaAccion": "Actualizar CRM con próximo seguimiento",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.668Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-40",
     "titulo": "Actualizar CRM diario",
     "macroarea": "CRM/Operación",
-    "asignadoA": "m-centeno-02",
-    "responsableNombre": "Centeno",
-    "apoyo": "Kevin / Alberto",
+    "asignadoA": "m-alberto-01",
+    "responsableNombre": "Alberto",
+    "apoyo": "Todos",
     "prioridad": "P0",
     "estado": "Pendiente",
     "completada": false,
     "fechaInicio": "2026-07-08",
     "fechaLimite": "2026-07-10",
     "entregable": "Todo prospecto con estado correcto",
-    "justificacion": "Organización, seguimiento y documentación visual de la entrega a cargo de Centeno (Seguimiento).",
+    "justificacion": "Soporte técnico y desarrollo de backend/arquitectura del sistema por Alberto (Técnico).",
     "bloqueo": "Campos incompletos",
     "proximaAccion": "Actualizar estados al cierre del día",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.668Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-41",
@@ -689,18 +653,17 @@
     "macroarea": "Ventas",
     "asignadoA": "m-kevin-04",
     "responsableNombre": "Kevin",
-    "apoyo": "Centeno",
+    "apoyo": "Todos",
     "prioridad": "P1",
-    "estado": "Pendiente",
-    "completada": false,
+    "estado": "Hecho",
+    "completada": true,
     "fechaInicio": "2026-07-09",
     "fechaLimite": "2026-07-10",
     "entregable": "Banco de objeciones para vender mejor",
     "justificacion": "Kevin sabe vender; Centeno documenta patrones.",
     "bloqueo": "Falta feedback real",
     "proximaAccion": "Guardar objeciones de cada conversación",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.668Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-42",
@@ -709,7 +672,7 @@
     "asignadoA": "m-kevin-04",
     "responsableNombre": "Kevin",
     "apoyo": "",
-    "prioridad": "P2",
+    "prioridad": "P0",
     "estado": "Pendiente",
     "completada": false,
     "fechaInicio": "2026-07-10",
@@ -718,8 +681,7 @@
     "justificacion": "Kevin define oferta; Sebas portafolio; Centeno ordena.",
     "bloqueo": "No prioritario",
     "proximaAccion": "Abrir solo si P0 va bien",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.668Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-43",
@@ -728,7 +690,7 @@
     "asignadoA": "m-kevin-04",
     "responsableNombre": "Kevin",
     "apoyo": "—",
-    "prioridad": "P1",
+    "prioridad": "P0",
     "estado": "Pendiente",
     "completada": false,
     "fechaInicio": "2026-07-09",
@@ -737,8 +699,7 @@
     "justificacion": "Es aprendizaje estratégico para vender mejor.",
     "bloqueo": "Riesgo de perder tiempo",
     "proximaAccion": "Tomar curso aplicando de inmediato",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.668Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-44",
@@ -747,7 +708,7 @@
     "asignadoA": "m-kevin-04",
     "responsableNombre": "Kevin",
     "apoyo": "—",
-    "prioridad": "P1",
+    "prioridad": "P0",
     "estado": "Pendiente",
     "completada": false,
     "fechaInicio": "2026-07-09",
@@ -756,8 +717,7 @@
     "justificacion": "Relación/aprendizaje directo.",
     "bloqueo": "Falta agenda",
     "proximaAccion": "Preparar 5 puntos antes de hablar",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.668Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-45",
@@ -765,9 +725,9 @@
     "macroarea": "Centro de mando",
     "asignadoA": "m-alberto-01",
     "responsableNombre": "Alberto",
-    "apoyo": "Kevin",
+    "apoyo": "Todos",
     "prioridad": "P0",
-    "estado": "Pendiente",
+    "estado": "En progreso",
     "completada": false,
     "fechaInicio": "2026-07-08",
     "fechaLimite": "2026-07-10",
@@ -775,8 +735,7 @@
     "justificacion": "Soporte técnico y desarrollo de backend/arquitectura del sistema por Alberto (Técnico).",
     "bloqueo": "Sin rutina fija",
     "proximaAccion": "Revisión diaria de 15 minutos",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.668Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-46",
@@ -786,7 +745,7 @@
     "responsableNombre": "Kevin",
     "apoyo": "Todos",
     "prioridad": "P0",
-    "estado": "Pendiente",
+    "estado": "En progreso",
     "completada": false,
     "fechaInicio": "2026-07-10",
     "fechaLimite": "2026-07-10",
@@ -794,8 +753,7 @@
     "justificacion": "Kevin decide; Centeno presenta avance.",
     "bloqueo": "Falta evidencia",
     "proximaAccion": "Hacer cierre con semáforo",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.668Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-47",
@@ -803,9 +761,9 @@
     "macroarea": "Conocimiento",
     "asignadoA": "m-sebas-03",
     "responsableNombre": "Sebas",
-    "apoyo": "Kevin",
+    "apoyo": "Todos",
     "prioridad": "P2",
-    "estado": "Pendiente",
+    "estado": "En progreso",
     "completada": false,
     "fechaInicio": "2026-07-10",
     "fechaLimite": "2026-07-12",
@@ -813,15 +771,14 @@
     "justificacion": "Centeno documenta aprendizajes comerciales.",
     "bloqueo": "Sin suficientes conversaciones",
     "proximaAccion": "Documentar patrones de clientes",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.668Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-48",
     "titulo": "Base ERP/nomenclaturas",
     "macroarea": "Conocimiento",
     "asignadoA": null,
-    "responsableNombre": "Sin asignar",
+    "responsableNombre": "TODOS",
     "apoyo": "Todos",
     "prioridad": "P2",
     "estado": "Pendiente",
@@ -832,8 +789,7 @@
     "justificacion": "Alberto da contenido técnico; Centeno lo ordena.",
     "bloqueo": "No urgente",
     "proximaAccion": "Crear glosario mínimo operativo",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.668Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   },
   {
     "id": "t-excel-49",
@@ -841,9 +797,9 @@
     "macroarea": "Finanzas/Conocimiento",
     "asignadoA": "m-kevin-04",
     "responsableNombre": "Kevin",
-    "apoyo": "Kevin / Alberto",
+    "apoyo": "Todos",
     "prioridad": "P2",
-    "estado": "Pendiente",
+    "estado": "En progreso",
     "completada": false,
     "fechaInicio": "2026-07-10",
     "fechaLimite": "2026-07-12",
@@ -851,7 +807,6 @@
     "justificacion": "Centeno documenta; Kevin valida venta; Alberto técnica.",
     "bloqueo": "Falta demo definida",
     "proximaAccion": "Documentar valor y módulos",
-    "updatedAt": "2026-07-10T01:39:05.634Z",
-    "createdAt": "2026-07-10T01:37:09.668Z"
+    "createdAt": "2026-07-16T05:49:50.680Z"
   }
 ]
