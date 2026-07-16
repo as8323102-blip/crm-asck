@@ -170,6 +170,7 @@ export default function App() {
   useEffect(() => {
     if (loading) return;
     if (isSyncingRef.current) return;
+    if (activeProvider === 'supabase') return; // Omitir sincronización local si Supabase está activo
 
     const newTime = new Date().toISOString();
     localStorage.setItem('asck_crm_updated_at', newTime);
@@ -193,6 +194,7 @@ export default function App() {
 
   // Sincronización periódica automática (cada 15s) y al volver a estar online
   useEffect(() => {
+    if (activeProvider === 'supabase') return; // Omitir sincronización local si Supabase está activo
     if (!syncRoomId) return;
 
     handleStartSync(syncRoomId);
@@ -252,6 +254,18 @@ export default function App() {
           initialActivities = JSON.parse(localStorage.getItem('asck_crm_activities')) || [];
           initialAgenda = JSON.parse(localStorage.getItem('asck_crm_agenda')) || [];
           initialSprints = JSON.parse(localStorage.getItem('asck_crm_sprints')) || [];
+        }
+
+        // Si estamos en modo Supabase, cargamos directamente desde Supabase y omitimos JSONBin
+        if (activeProvider === 'supabase') {
+          console.log("[ASCK CRM] Inicializando en modo Supabase...");
+          await loadClientsAndNotes();
+          await loadTasks();
+          await loadSprints();
+          await loadCalendarEvents();
+          await loadActivities();
+          setLoading(false);
+          return;
         }
 
         // Si hay una sala de sincronización activa y hay red, hacer sync inicial para evitar parpadeos

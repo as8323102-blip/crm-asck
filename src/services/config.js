@@ -9,7 +9,7 @@ export const isSupabaseConfigured =
   supabaseUrl !== 'https://tu-proyecto.supabase.co' && 
   supabaseAnonKey !== 'tu-anon-key-de-supabase';
 
-const rawProvider = import.meta.env.VITE_DATA_PROVIDER || 'local';
+const rawProvider = import.meta.env.VITE_DATA_PROVIDER || 'supabase';
 
 // Switch final: Usar supabase sólo si está explícitamente configurado y tiene keys
 export const activeProvider = (rawProvider === 'supabase' && isSupabaseConfigured) ? 'supabase' : 'local';
