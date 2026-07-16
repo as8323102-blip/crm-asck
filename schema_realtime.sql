@@ -10,7 +10,14 @@ ALTER TABLE public.tareas ADD COLUMN IF NOT EXISTS proxima_accion TEXT;
 ALTER TABLE public.tareas ADD COLUMN IF NOT EXISTS fecha_inicio DATE;
 ALTER TABLE public.tareas ADD COLUMN IF NOT EXISTS responsable_nombre VARCHAR(100);
 
--- 2. Deshabilitar RLS (Row Level Security) para simplificar acceso de lectura/escritura anónimo
+-- 2. Modificar o eliminar restricciones de check de tareas para permitir nuevos estados y prioridades
+ALTER TABLE public.tareas DROP CONSTRAINT IF EXISTS chk_tarea_estado;
+ALTER TABLE public.tareas ADD CONSTRAINT chk_tarea_estado CHECK (estado IN ('Pendiente', 'En progreso', 'Completada', 'Hecho', 'Bloqueado', 'Pausado', 'Cancelado'));
+
+ALTER TABLE public.tareas DROP CONSTRAINT IF EXISTS chk_tarea_prioridad;
+ALTER TABLE public.tareas ADD CONSTRAINT chk_tarea_prioridad CHECK (prioridad IN ('Alta', 'Media', 'Baja', 'P0', 'P1', 'P2'));
+
+-- 3. Deshabilitar RLS (Row Level Security) para simplificar acceso de lectura/escritura anónimo
 ALTER TABLE public.clientes DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.tareas DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.sprints DISABLE ROW LEVEL SECURITY;
@@ -19,8 +26,7 @@ ALTER TABLE public.notas_clientes DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.actividades DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.integrantes DISABLE ROW LEVEL SECURITY;
 
--- 3. Asegurarse de que las tablas estén incluidas en la publicación de Supabase Realtime
--- Nota: Si da error diciendo que ya existen en la publicación, se puede ignorar.
+-- 4. Asegurarse de que las tablas estén incluidas en la publicación de Supabase Realtime
 ALTER PUBLICATION supabase_realtime ADD TABLE public.clientes;
 ALTER PUBLICATION supabase_realtime ADD TABLE public.tareas;
 ALTER PUBLICATION supabase_realtime ADD TABLE public.sprints;
