@@ -46,6 +46,13 @@ export const mappers = {
   // 2. Tareas
   mapTaskFromDb(t) {
     if (!t) return null;
+    
+    // Traducir prioridad de la base de datos (Alta/Media/Baja) al formato frontend (P0/P1/P2)
+    let priority = t.prioridad || 'P2';
+    if (t.prioridad === 'Alta') priority = 'P0';
+    else if (t.prioridad === 'Media') priority = 'P1';
+    else if (t.prioridad === 'Baja') priority = 'P2';
+
     return {
       id: t.id,
       sprintId: t.sprint_id,
@@ -54,7 +61,7 @@ export const mappers = {
       titulo: t.titulo,
       completada: t.completada,
       estado: t.estado || 'Pendiente',
-      prioridad: t.prioridad || 'Media',
+      prioridad: priority,
       fechaLimite: t.fecha_limite || '',
       horaLimite: t.hora_limite || '12:00',
       duracionEstimada: t.duracion_estimada || '',
@@ -73,6 +80,13 @@ export const mappers = {
 
   mapTaskToDb(t) {
     if (!t) return null;
+
+    // Traducir prioridad del frontend (P0/P1/P2) al formato base de datos (Alta/Media/Baja)
+    let dbPriority = 'Media';
+    if (t.prioridad === 'P0' || t.prioridad === 'Alta') dbPriority = 'Alta';
+    else if (t.prioridad === 'P1' || t.prioridad === 'Media') dbPriority = 'Media';
+    else if (t.prioridad === 'P2' || t.prioridad === 'Baja') dbPriority = 'Baja';
+
     return {
       id: t.id,
       sprint_id: t.sprintId || null,
@@ -81,7 +95,7 @@ export const mappers = {
       titulo: t.titulo,
       completada: t.completada,
       estado: t.estado || 'Pendiente',
-      prioridad: t.prioridad || 'Media',
+      prioridad: dbPriority,
       fecha_limite: t.fechaLimite || null,
       hora_limite: t.horaLimite || '12:00',
       duracion_estimada: t.duracionEstimada || null,

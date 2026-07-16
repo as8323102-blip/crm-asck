@@ -158,6 +158,12 @@ async function run() {
     const bloqueo = getRowVal(colIdx.bloqueo);
     const proximaAccion = getRowVal(colIdx.proximaAccion) || 'Definir siguientes pasos';
 
+    // Map priority to database check constraint ('Alta', 'Media', 'Baja')
+    let dbPriority = 'Media';
+    if (priority === 'P0') dbPriority = 'Alta';
+    else if (priority === 'P1') dbPriority = 'Media';
+    else if (priority === 'P2') dbPriority = 'Baja';
+
     // Mapear al formato snake_case de la base de datos
     const dbTask = {
       id: idVal,
@@ -166,7 +172,7 @@ async function run() {
       asignado_a: mapNameToId(responsible) || null,
       responsable_nombre: responsible || 'Sin asignar',
       apoyo: support || null,
-      prioridad: priority,
+      prioridad: dbPriority,
       estado: state,
       completada: state === 'Hecho',
       fecha_inicio: fechaInicio,
@@ -188,10 +194,50 @@ async function run() {
   try {
     // A. Upsert de Integrantes para evitar errores de clave foránea
     const dbIntegrantes = [
-      { id: "m-kevin-04", nombre: "Kevin", email: "kevin@asck.software", rol: "Líder comercial y de cierres / QA", horas_disponibles: 52, avatar_url: "https://api.dicebear.com/7.x/bottts/svg?seed=Kevin" },
-      { id: "m-alberto-01", nombre: "Alberto", email: "alberto@asck.software", rol: "Sostiene CRM web, automatización, pruebas y guías técnicas", horas_disponibles: 36, avatar_url: "https://api.dicebear.com/7.x/bottts/svg?seed=Alberto" },
-      { id: "m-sebas-03", nombre: "Sebas", email: "sebas@asck.software", rol: "Alimenta el CRM, consigue datos, da seguimiento y agenda", horas_disponibles: 36, avatar_url: "https://api.dicebear.com/7.x/bottts/svg?seed=Sebas" },
-      { id: "m-centeno-02", nombre: "Centeno", email: "centeno@asck.software", rol: "Rescata y ordena demos", horas_disponibles: 52, avatar_url: "https://api.dicebear.com/7.x/bottts/svg?seed=Centeno" }
+      { 
+        id: "m-kevin-04", 
+        nombre: "Kevin", 
+        email: "kevin@asck.software", 
+        rol: "Líder comercial y de cierres / QA", 
+        cargo: "Director Comercial",
+        responsabilidades: "Lidera cierres, validación final y decisiones comerciales",
+        especialidad: "Negociación & Cierres",
+        horas_disponibles: 52, 
+        avatar_url: "https://api.dicebear.com/7.x/bottts/svg?seed=Kevin" 
+      },
+      { 
+        id: "m-alberto-01", 
+        nombre: "Alberto", 
+        email: "alberto@asck.software", 
+        rol: "Sostiene CRM web, automatización, pruebas y guías técnicas", 
+        cargo: "Lead Software Architect",
+        responsabilidades: "Soporte técnico del CRM web, automatizaciones, pruebas y guías técnicas",
+        especialidad: "Backend & Systems Architecture",
+        horas_disponibles: 36, 
+        avatar_url: "https://api.dicebear.com/7.x/bottts/svg?seed=Alberto" 
+      },
+      { 
+        id: "m-sebas-03", 
+        nombre: "Sebas", 
+        email: "sebas@asck.software", 
+        rol: "Alimenta el CRM, consigue datos, da seguimiento y agenda", 
+        cargo: "Operaciones Comerciales",
+        responsabilidades: "Búsqueda de datos de prospectos, primer contacto por WhatsApp/IG/Maps, seguimiento y agendación",
+        especialidad: "Data Collection & Sales Outreach",
+        horas_disponibles: 36, 
+        avatar_url: "https://api.dicebear.com/7.x/bottts/svg?seed=Sebas" 
+      },
+      { 
+        id: "m-centeno-02", 
+        nombre: "Centeno", 
+        email: "centeno@asck.software", 
+        rol: "Rescata y ordena demos", 
+        cargo: "UI/UX & Frontend Developer",
+        responsabilidades: "Preparación y limpieza de demos (Dental Printal, Finanzas, WhatsApp) y documentación visual de venta",
+        especialidad: "Frontend & Demo Building",
+        horas_disponibles: 52, 
+        avatar_url: "https://api.dicebear.com/7.x/bottts/svg?seed=Centeno" 
+      }
     ];
 
     console.log("👥 Asegurando integrantes en la base de datos...");
@@ -245,7 +291,7 @@ async function run() {
       asignadoA: t.asignado_a,
       responsableNombre: t.responsable_nombre,
       apoyo: t.apoyo || '',
-      prioridad: t.prioridad,
+      prioridad: t.prioridad === 'Alta' ? 'P0' : t.prioridad === 'Media' ? 'P1' : 'P2',
       estado: t.estado,
       completada: t.completada,
       fechaInicio: t.fecha_inicio,
