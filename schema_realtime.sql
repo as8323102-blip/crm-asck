@@ -17,6 +17,7 @@ ALTER TABLE public.sprints DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.agenda_eventos DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.notas_clientes DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.actividades DISABLE ROW LEVEL SECURITY;
+ALTER TABLE public.integrantes DISABLE ROW LEVEL SECURITY;
 
 -- 3. Asegurarse de que las tablas estén incluidas en la publicación de Supabase Realtime
 -- Nota: Si da error diciendo que ya existen en la publicación, se puede ignorar.
@@ -26,3 +27,4 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.sprints;
 ALTER PUBLICATION supabase_realtime ADD TABLE public.agenda_eventos;
 ALTER PUBLICATION supabase_realtime ADD TABLE public.notas_clientes;
 ALTER PUBLICATION supabase_realtime ADD TABLE public.actividades;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.integrantes;

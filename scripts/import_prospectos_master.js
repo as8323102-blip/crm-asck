@@ -123,15 +123,34 @@ async function run() {
     }
   }
 
-  // 3. Insertar en Supabase (si está configurado)
-  console.log("📡 Conectando a Supabase para actualizar tabla 'clientes'...");
+  // 3. Insertar en Supabase
+  console.log("📡 Conectando a Supabase para actualizar integrantes y clientes...");
   try {
-    // Primero eliminar los clientes anteriores
+    // A. Upsert de Integrantes para evitar errores de clave foránea
+    const dbIntegrantes = [
+      { id: "m-kevin-04", nombre: "Kevin", email: "kevin@asck.software", rol: "Líder comercial y de cierres / QA", horas_disponibles: 52, avatar_url: "https://api.dicebear.com/7.x/bottts/svg?seed=Kevin" },
+      { id: "m-alberto-01", nombre: "Alberto", email: "alberto@asck.software", rol: "Sostiene CRM web, automatización, pruebas y guías técnicas", horas_disponibles: 36, avatar_url: "https://api.dicebear.com/7.x/bottts/svg?seed=Alberto" },
+      { id: "m-sebas-03", nombre: "Sebas", email: "sebas@asck.software", rol: "Alimenta el CRM, consigue datos, da seguimiento y agenda", horas_disponibles: 36, avatar_url: "https://api.dicebear.com/7.x/bottts/svg?seed=Sebas" },
+      { id: "m-centeno-02", nombre: "Centeno", email: "centeno@asck.software", rol: "Rescata y ordena demos", horas_disponibles: 52, avatar_url: "https://api.dicebear.com/7.x/bottts/svg?seed=Centeno" }
+    ];
+
+    console.log("👥 Asegurando integrantes en la base de datos...");
+    const { error: memberError } = await supabase
+      .from('integrantes')
+      .upsert(dbIntegrantes);
+
+    if (memberError) {
+      console.error("❌ Error al insertar integrantes:", memberError.message);
+      throw memberError;
+    }
+    console.log("✅ Integrantes listos.");
+
+    // B. Primero eliminar los clientes anteriores
     console.log("🗑️ Borrando clientes anteriores de Supabase...");
     const { error: deleteError } = await supabase
       .from('clientes')
       .delete()
-      .neq('id', 'dummy-prevent-empty-delete'); // Elimina todo
+      .neq('id', 'dummy-prevent-empty-delete');
 
     if (deleteError) {
       console.warn("⚠️ Advertencia al limpiar clientes de Supabase:", deleteError.message);
