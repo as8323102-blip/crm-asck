@@ -250,7 +250,7 @@ export default function DashboardSummary({
           <span className="text-[10px] uppercase font-bold text-notion-text-muted-light dark:text-notion-text-muted-dark tracking-wider">Métricas de Ventas y Tareas</span>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {INTEGRANTES.map(member => {
             const memberClients = clients.filter(c => c.responsableId === member.id);
             const totalLeads = memberClients.length;
@@ -271,7 +271,7 @@ export default function DashboardSummary({
             return (
               <div 
                 key={member.id}
-                className="p-4 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-[#fbfbfa]/30 dark:bg-slate-900/30 space-y-4 hover:border-indigo-500/20 transition-all flex flex-col justify-between"
+                className="p-3 sm:p-4 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-[#fbfbfa]/30 dark:bg-slate-900/30 space-y-3 sm:space-y-4 hover:border-indigo-500/20 transition-all flex flex-col justify-between"
               >
                 {/* Perfil con tamaño de imagen controlado por contenedor */}
                 <div className="flex items-center gap-3">

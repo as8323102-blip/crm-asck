@@ -11,6 +11,7 @@ import CalendarAgenda from './components/CalendarAgenda';
 import ActivityFeed from './components/ActivityFeed';
 import ExcelImportExport from './components/ExcelImportExport';
 import ConfigPanel from './components/ConfigPanel';
+import DelegationPanel from './components/DelegationPanel';
 import { cloudSyncService } from './services/cloudSyncService';
 import { offlineQueue } from './services/offlineQueue';
 
@@ -425,6 +426,17 @@ export default function App() {
               activities={activities}
               clients={clients}
               onClientClick={(client) => setSelectedClient(client)}
+            />
+          )}
+
+          {activeTab === 'delegation' && (
+            <DelegationPanel
+              tasks={tasks}
+              setTasks={setTasks}
+              onAddTask={handleAddTask}
+              onUpdateTask={handleUpdateTask}
+              onDeleteTask={handleDeleteTask}
+              logEvent={logEvent}
             />
           )}
 

@@ -59,7 +59,15 @@ export const mappers = {
       horaLimite: t.hora_limite || '12:00',
       duracionEstimada: t.duracion_estimada || '',
       createdAt: t.created_at,
-      completedAt: t.completed_at
+      completedAt: t.completed_at,
+      macroarea: t.macroarea || 'General',
+      apoyo: t.apoyo || '',
+      entregable: t.entregable || '',
+      justificacion: t.justificacion || '',
+      bloqueo: t.bloqueo || '',
+      proximaAccion: t.proxima_accion || '',
+      fechaInicio: t.fecha_inicio || '',
+      responsableNombre: t.responsable_nombre || 'Sin asignar'
     };
   },
 
@@ -77,7 +85,15 @@ export const mappers = {
       fecha_limite: t.fechaLimite || null,
       hora_limite: t.horaLimite || '12:00',
       duracion_estimada: t.duracionEstimada || null,
-      completed_at: t.completedAt || null
+      completed_at: t.completedAt || null,
+      macroarea: t.macroarea || null,
+      apoyo: t.apoyo || null,
+      entregable: t.entregable || null,
+      justificacion: t.justificacion || null,
+      bloqueo: t.bloqueo || null,
+      proxima_accion: t.proximaAccion || null,
+      fecha_inicio: t.fechaInicio || null,
+      responsable_nombre: t.responsableNombre || null
     };
   },
 

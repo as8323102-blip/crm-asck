@@ -13,7 +13,8 @@ import {
   Menu, 
   ChevronDown,
   FileSpreadsheet,
-  Settings
+  Settings,
+  Briefcase
 } from 'lucide-react';
 import { INTEGRANTES } from '../mockData';
 import GlobalSearch from '../components/GlobalSearch';
@@ -41,6 +42,7 @@ export default function MainLayout({
     { id: 'kanban', name: 'Tablero de Ventas', icon: KanbanSquare },
     { id: 'list', name: 'Lista de Clientes', icon: List },
     { id: 'tasks', name: 'Tablero de Tareas', icon: CheckSquare },
+    { id: 'delegation', name: 'Delegación de Pendientes', icon: Briefcase },
     { id: 'calendar', name: 'Agenda', icon: Calendar },
     { id: 'activities', name: 'Historial', icon: History },
     { id: 'excel', name: 'Importar / Exportar', icon: FileSpreadsheet },
@@ -53,6 +55,7 @@ export default function MainLayout({
       case 'kanban': return 'Tablero de Ventas';
       case 'list': return 'Lista de Clientes';
       case 'tasks': return 'Tablero de Tareas';
+      case 'delegation': return 'Delegación de Pendientes (Tareas ASCK)';
       case 'calendar': return 'Agenda de Seguimiento';
       case 'activities': return 'Historial del Equipo';
       case 'excel': return 'Importación y Exportación de Datos';
