@@ -142,7 +142,7 @@ export default function App() {
         localStorage.setItem('asck_crm_sprints', JSON.stringify(result.sprints || []));
         localStorage.setItem('asck_crm_updated_at', result.updatedAt || new Date().toISOString());
         localStorage.setItem('asck_crm_sync_room_id', roomId);
-        localStorage.setItem('asck_crm_seeded_v1_8', 'true');
+        localStorage.setItem('asck_crm_seeded_v2_0', 'true');
 
         // Actualizar estados reactivos
         setClients(result.clients || []);
@@ -215,7 +215,7 @@ export default function App() {
   }, [syncRoomId]);
 
   const handleSeedDemoData = () => {
-    localStorage.setItem('asck_crm_seeded_v1_8', 'true');
+    localStorage.setItem('asck_crm_seeded_v2_0', 'true');
     localStorage.setItem('asck_crm_clients', JSON.stringify(CLIENTES_INICIALES));
     localStorage.setItem('asck_crm_notes', JSON.stringify(NOTAS_INICIALES));
     localStorage.setItem('asck_crm_tasks', JSON.stringify(TAREAS_INICIALES));
@@ -236,7 +236,7 @@ export default function App() {
     async function initData() {
       try {
         setLoading(true);
-        const seededV18 = localStorage.getItem('asck_crm_seeded_v1_8') === 'true';
+        const seededV20 = localStorage.getItem('asck_crm_seeded_v2_0') === 'true';
 
         let initialClients = [];
         let initialNotes = [];
@@ -245,7 +245,7 @@ export default function App() {
         let initialAgenda = [];
         let initialSprints = [];
 
-        if (seededV18) {
+        if (seededV20) {
           initialClients = JSON.parse(localStorage.getItem('asck_crm_clients')) || [];
           initialNotes = JSON.parse(localStorage.getItem('asck_crm_notes')) || [];
           initialTasks = JSON.parse(localStorage.getItem('asck_crm_tasks')) || [];
@@ -276,7 +276,7 @@ export default function App() {
               localStorage.setItem('asck_crm_agenda', JSON.stringify(result.agendaEvents || []));
               localStorage.setItem('asck_crm_sprints', JSON.stringify(result.sprints || []));
               localStorage.setItem('asck_crm_updated_at', result.updatedAt || new Date().toISOString());
-              localStorage.setItem('asck_crm_seeded_v1_8', 'true');
+              localStorage.setItem('asck_crm_seeded_v2_0', 'true');
 
               setClients(result.clients || []);
               setNotes(result.notes || []);
@@ -293,16 +293,16 @@ export default function App() {
         }
 
         // Fallback local
-        if (!seededV18) {
-          localStorage.setItem('asck_crm_seeded_v1_8', 'true');
-          localStorage.setItem('asck_crm_clients', JSON.stringify([]));
+        if (!seededV20) {
+          localStorage.setItem('asck_crm_seeded_v2_0', 'true');
+          localStorage.setItem('asck_crm_clients', JSON.stringify(CLIENTES_INICIALES));
           localStorage.setItem('asck_crm_notes', JSON.stringify([]));
           localStorage.setItem('asck_crm_tasks', JSON.stringify(importedTasks || []));
           localStorage.setItem('asck_crm_activities', JSON.stringify([]));
           localStorage.setItem('asck_crm_agenda', JSON.stringify([]));
           localStorage.setItem('asck_crm_sprints', JSON.stringify([]));
 
-          setClients([]);
+          setClients(CLIENTES_INICIALES);
           setNotes([]);
           setTasks(importedTasks || []);
           setActivities([]);
