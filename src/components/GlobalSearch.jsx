@@ -1,24 +1,28 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, X, CheckSquare } from 'lucide-react';
+import { useFocusTrap } from '../hooks/useFocusTrap';
 
-export default function GlobalSearch({ 
-  clients, 
-  notes, 
-  tasks, 
-  onClientClick, 
-  setActiveTab 
+export default function GlobalSearch({
+  clients,
+  notes,
+  tasks,
+  onClientClick,
+  setActiveTab
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState({ clients: [], tasks: [], notes: [] });
-  const modalRef = useRef(null);
+  const modalRef = useFocusTrap(isOpen);
 
-  // Escuchar tecla Ctrl+K o Cmd+K
+  // Escuchar tecla Ctrl+K o Cmd+K (abrir/cerrar) y Escape (cerrar)
   useEffect(() => {
     const handleKeyDown = (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
         e.preventDefault();
         setIsOpen(prev => !prev);
+      }
+      if (e.key === 'Escape') {
+        setIsOpen(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -88,8 +92,11 @@ export default function GlobalSearch({
   return (
     <>
       {/* Botón disparador visible en la cabecera */}
-      <button 
+      <button
         onClick={() => setIsOpen(true)}
+        aria-haspopup="dialog"
+        aria-expanded={isOpen}
+        aria-label="Buscar clientes"
         className="flex items-center justify-between gap-3 px-3 py-1.5 rounded-lg border border-notion-border-light dark:border-notion-border-dark bg-[#F4F4F2] dark:bg-[#202020] text-notion-text-muted-light dark:text-notion-text-muted-dark hover:text-notion-text-light dark:hover:text-notion-text-dark text-xs w-48 sm:w-64 transition-all text-left shadow-sm hover:shadow"
       >
         <span className="flex items-center gap-2">
@@ -106,8 +113,11 @@ export default function GlobalSearch({
         <div className="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm flex items-start justify-center pt-[10vh] px-4">
           
           {/* Contenedor principal estilo Notion */}
-          <div 
+          <div
             ref={modalRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Búsqueda global"
             className="w-full max-w-lg rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark shadow-2xl overflow-hidden flex flex-col max-h-[60vh] transition-all"
           >
             {/* Input de Búsqueda */}
@@ -116,13 +126,15 @@ export default function GlobalSearch({
               <input
                 type="text"
                 autoFocus
+                aria-label="Buscar clientes"
                 placeholder="Buscar clientes, tareas, notas..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 className="w-full bg-transparent text-xs text-notion-text-light dark:text-notion-text-dark border-none focus:outline-none focus:ring-0"
               />
-              <button 
+              <button
                 onClick={() => setIsOpen(false)}
+                aria-label="Cerrar"
                 className="p-1 rounded hover:bg-notion-border-light dark:hover:bg-notion-border-dark text-notion-text-muted-light dark:text-notion-text-muted-dark"
               >
                 <X size={14} />

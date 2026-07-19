@@ -17,20 +17,22 @@ import {
   Edit3
 } from 'lucide-react';
 import { formatMXN } from '../utils/currency';
+import { useFocusTrap } from '../hooks/useFocusTrap';
 
-export default function ClientDetail({ 
-  client, 
-  notes, 
+export default function ClientDetail({
+  client,
+  notes,
   tasks,
   activities = [],
-  onClose, 
-  onUpdateClient, 
-  onAddNote, 
+  onClose,
+  onUpdateClient,
+  onAddNote,
   onAddTask,
   onToggleTask,
   onDeleteClient,
   currentUser
 }) {
+  const modalRef = useFocusTrap(!!client);
   const [newNote, setNewNote] = useState('');
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [activeSubTab, setActiveSubTab] = useState('notes'); // 'notes' | 'tasks' | 'fields' | 'activity'
@@ -117,7 +119,13 @@ export default function ClientDetail({
       />
 
       {/* Modal Grande Centrado (Notion style) */}
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-4xl h-[85vh] bg-notion-card-light dark:bg-notion-card-dark border border-notion-border-light dark:border-notion-border-dark shadow-2xl rounded-2xl z-50 flex flex-col md:flex-row overflow-hidden transition-all text-xs">
+      <div
+        ref={modalRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="client-detail-title"
+        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-4xl h-[85vh] bg-notion-card-light dark:bg-notion-card-dark border border-notion-border-light dark:border-notion-border-dark shadow-2xl rounded-2xl z-50 flex flex-col md:flex-row overflow-hidden transition-all text-xs"
+      >
         
         {/* Panel Principal Izquierdo: Contenido y Propiedades */}
         <div className="flex-1 p-6 overflow-y-auto flex flex-col justify-between space-y-6">
@@ -126,15 +134,16 @@ export default function ClientDetail({
           <div className="space-y-2">
             <div className="flex justify-between items-center md:hidden">
               <span className="text-[9px] uppercase font-bold tracking-widest text-indigo-500 bg-indigo-500/10 px-2 py-0.5 rounded">Página del Cliente</span>
-              <button onClick={onClose} className="p-1 rounded hover:bg-notion-border-light dark:hover:bg-notion-border-dark text-notion-text-muted-light dark:text-notion-text-muted-dark">
+              <button onClick={onClose} aria-label="Cerrar" className="p-1 rounded hover:bg-notion-border-light dark:hover:bg-notion-border-dark text-notion-text-muted-light dark:text-notion-text-muted-dark">
                 <X size={16} />
               </button>
             </div>
 
             {isEditing ? (
               <div className="space-y-2">
-                <input 
+                <input
                   type="text"
+                  aria-label="Nombre del contacto"
                   value={tempNombre}
                   onChange={(e) => setTempNombre(e.target.value)}
                   className="text-lg font-bold bg-notion-bg-light dark:bg-notion-bg-dark border border-notion-border-light dark:border-notion-border-dark rounded px-2.5 py-1 w-full text-notion-text-light dark:text-notion-text-dark focus:ring-1 focus:ring-indigo-500 focus:outline-none"
@@ -142,8 +151,9 @@ export default function ClientDetail({
                 />
                 <div className="flex items-center gap-2">
                   <Building2 size={13} className="text-notion-text-muted-light dark:text-notion-text-muted-dark" />
-                  <input 
+                  <input
                     type="text"
+                    aria-label="Empresa"
                     value={tempEmpresa}
                     onChange={(e) => setTempEmpresa(e.target.value)}
                     className="bg-notion-bg-light dark:bg-notion-bg-dark border border-notion-border-light dark:border-notion-border-dark rounded px-2 py-0.5 text-xs text-notion-text-light dark:text-notion-text-dark focus:ring-1 focus:ring-indigo-500 focus:outline-none"
@@ -153,7 +163,7 @@ export default function ClientDetail({
               </div>
             ) : (
               <div className="space-y-1">
-                <h2 className="text-xl font-extrabold text-notion-text-light dark:text-notion-text-dark tracking-tight">
+                <h2 id="client-detail-title" className="text-xl font-extrabold text-notion-text-light dark:text-notion-text-dark tracking-tight">
                   {client.nombre}
                 </h2>
                 <div className="flex items-center gap-1.5 text-notion-text-muted-light dark:text-notion-text-muted-dark font-medium">
@@ -169,10 +179,11 @@ export default function ClientDetail({
             
             {/* Estado */}
             <div className="flex items-center justify-between">
-              <span className="text-notion-text-muted-light dark:text-notion-text-muted-dark flex items-center gap-1.5 font-semibold">
+              <span id="cd-estado-label" className="text-notion-text-muted-light dark:text-notion-text-muted-dark flex items-center gap-1.5 font-semibold">
                 <Tag size={13} /> Estado Pipeline
               </span>
               <select
+                aria-labelledby="cd-estado-label"
                 value={client.estado}
                 onChange={(e) => onUpdateClient(client.id, { estado: e.target.value, ultimoContacto: new Date().toISOString() })}
                 className="px-2 py-1 rounded border border-notion-border-light dark:border-notion-border-dark bg-notion-bg-light dark:bg-notion-bg-dark text-notion-text-light dark:text-notion-text-dark focus:outline-none focus:ring-1 focus:ring-indigo-500 w-44 cursor-pointer"
@@ -187,10 +198,11 @@ export default function ClientDetail({
 
             {/* Prioridad */}
             <div className="flex items-center justify-between">
-              <span className="text-notion-text-muted-light dark:text-notion-text-muted-dark flex items-center gap-1.5 font-semibold">
+              <span id="cd-prioridad-label" className="text-notion-text-muted-light dark:text-notion-text-muted-dark flex items-center gap-1.5 font-semibold">
                 <AlertCircle size={13} /> Prioridad
               </span>
               <select
+                aria-labelledby="cd-prioridad-label"
                 value={client.prioridad || 'Baja'}
                 onChange={(e) => onUpdateClient(client.id, { prioridad: e.target.value })}
                 className="px-2 py-1 rounded border border-notion-border-light dark:border-notion-border-dark bg-notion-bg-light dark:bg-notion-bg-dark text-notion-text-light dark:text-notion-text-dark focus:outline-none focus:ring-1 focus:ring-indigo-500 w-44 cursor-pointer"
@@ -203,10 +215,11 @@ export default function ClientDetail({
 
             {/* Responsable */}
             <div className="flex items-center justify-between">
-              <span className="text-notion-text-muted-light dark:text-notion-text-muted-dark flex items-center gap-1.5 font-semibold">
+              <span id="cd-responsable-label" className="text-notion-text-muted-light dark:text-notion-text-muted-dark flex items-center gap-1.5 font-semibold">
                 <User size={13} /> Responsable
               </span>
               <select
+                aria-labelledby="cd-responsable-label"
                 value={client.responsableId || ''}
                 onChange={(e) => onUpdateClient(client.id, { responsableId: e.target.value })}
                 className="px-2 py-1 rounded border border-notion-border-light dark:border-notion-border-dark bg-notion-bg-light dark:bg-notion-bg-dark text-notion-text-light dark:text-notion-text-dark focus:outline-none focus:ring-1 focus:ring-indigo-500 w-44 cursor-pointer"
@@ -220,13 +233,14 @@ export default function ClientDetail({
 
             {/* Monto estimado (MXN) */}
             <div className="flex items-center justify-between">
-              <span className="text-notion-text-muted-light dark:text-notion-text-muted-dark flex items-center gap-1.5 font-semibold">
+              <span id="cd-monto-label" className="text-notion-text-muted-light dark:text-notion-text-muted-dark flex items-center gap-1.5 font-semibold">
                 <DollarSign size={13} /> Monto Estimado
               </span>
               {isEditing ? (
                 <div className="relative w-44">
                   <input
                     type="number"
+                    aria-labelledby="cd-monto-label"
                     value={tempValorEstimado}
                     onChange={(e) => setTempValorEstimado(Number(e.target.value))}
                     className="w-full pl-5 pr-2 py-1 rounded border border-notion-border-light dark:border-notion-border-dark bg-notion-bg-light dark:bg-notion-bg-dark text-notion-text-light dark:text-notion-text-dark focus:ring-1 focus:ring-indigo-500 focus:outline-none"
@@ -242,12 +256,13 @@ export default function ClientDetail({
 
             {/* Correo y Teléfono */}
             <div className="flex items-center justify-between">
-              <span className="text-notion-text-muted-light dark:text-notion-text-muted-dark flex items-center gap-1.5 font-semibold">
+              <span id="cd-correo-label" className="text-notion-text-muted-light dark:text-notion-text-muted-dark flex items-center gap-1.5 font-semibold">
                 <Mail size={13} /> Correo
               </span>
               {isEditing ? (
                 <input
                   type="email"
+                  aria-labelledby="cd-correo-label"
                   value={tempCorreo}
                   onChange={(e) => setTempCorreo(e.target.value)}
                   className="px-2 py-1 w-44 rounded border border-notion-border-light dark:border-notion-border-dark bg-notion-bg-light dark:bg-notion-bg-dark text-notion-text-light dark:text-notion-text-dark focus:ring-1 focus:ring-indigo-500 focus:outline-none"
@@ -260,12 +275,13 @@ export default function ClientDetail({
             </div>
 
             <div className="flex items-center justify-between">
-              <span className="text-notion-text-muted-light dark:text-notion-text-muted-dark flex items-center gap-1.5 font-semibold">
+              <span id="cd-telefono-label" className="text-notion-text-muted-light dark:text-notion-text-muted-dark flex items-center gap-1.5 font-semibold">
                 <Phone size={13} /> Teléfono
               </span>
               {isEditing ? (
                 <input
                   type="text"
+                  aria-labelledby="cd-telefono-label"
                   value={tempTelefono}
                   onChange={(e) => setTempTelefono(e.target.value)}
                   className="px-2 py-1 w-44 rounded border border-notion-border-light dark:border-notion-border-dark bg-notion-bg-light dark:bg-notion-bg-dark text-notion-text-light dark:text-notion-text-dark focus:ring-1 focus:ring-indigo-500 focus:outline-none"
@@ -279,11 +295,12 @@ export default function ClientDetail({
 
             {/* Fecha Seguimiento */}
             <div className="flex items-center justify-between">
-              <span className="text-notion-text-muted-light dark:text-notion-text-muted-dark flex items-center gap-1.5 font-semibold">
+              <span id="cd-seguimiento-label" className="text-notion-text-muted-light dark:text-notion-text-muted-dark flex items-center gap-1.5 font-semibold">
                 <Calendar size={13} /> Próx. Seguimiento
               </span>
               <input
                 type="date"
+                aria-labelledby="cd-seguimiento-label"
                 value={client.fechaSeguimiento || ''}
                 onChange={(e) => onUpdateClient(client.id, { fechaSeguimiento: e.target.value })}
                 className="px-2 py-1 rounded border border-notion-border-light dark:border-notion-border-dark bg-notion-bg-light dark:bg-notion-bg-dark text-notion-text-light dark:text-notion-text-dark focus:outline-none focus:ring-1 focus:ring-indigo-500 w-44"
@@ -349,7 +366,7 @@ export default function ClientDetail({
                             <div className="flex justify-between items-center text-[10px]">
                               <div className="flex items-center gap-1.5">
                                 {author && (
-                                  <img src={author.avatarUrl} alt={author.nombre} className="w-4 h-4 rounded-full bg-indigo-50 dark:bg-indigo-950" />
+                                  <img src={author.avatarUrl} alt={author.nombre} loading="lazy" width={16} height={16} className="w-4 h-4 rounded-full bg-indigo-50 dark:bg-indigo-950" />
                                 )}
                                 <span className="font-semibold text-notion-text-light dark:text-notion-text-dark">{author ? author.nombre : 'Sistema'}</span>
                               </div>
@@ -452,6 +469,7 @@ export default function ClientDetail({
                         <div key={idx} className="flex items-center gap-2 p-2 rounded-lg border border-notion-border-light dark:border-notion-border-dark bg-[#fbfbfa]/30 dark:bg-[#1e1e1e]/30">
                           <input
                             type="text"
+                            aria-label="Nombre de la propiedad"
                             value={field.clave}
                             onChange={(e) => handleCustomFieldChange(idx, e.target.value, field.valor)}
                             placeholder="Nombre campo"
@@ -460,6 +478,7 @@ export default function ClientDetail({
                           <span className="text-notion-text-muted-light dark:text-notion-text-muted-dark font-mono">:</span>
                           <input
                             type="text"
+                            aria-label="Valor de la propiedad"
                             value={field.valor}
                             onChange={(e) => handleCustomFieldChange(idx, field.clave, e.target.value)}
                             placeholder="Valor"
@@ -468,6 +487,7 @@ export default function ClientDetail({
                           <button
                             type="button"
                             onClick={() => handleRemoveCustomField(idx)}
+                            aria-label="Eliminar propiedad"
                             className="p-1 rounded text-notion-text-muted-light dark:text-notion-text-muted-dark hover:text-rose-500"
                           >
                             <Trash2 size={12} />
@@ -499,7 +519,7 @@ export default function ClientDetail({
                       return (
                         <div key={act.id} className="flex items-start gap-2.5 p-2 border-b border-notion-border-light/40 dark:border-notion-border-dark/40 pb-2">
                           {user && (
-                            <img src={user.avatarUrl} alt={user.nombre} className="w-5 h-5 rounded-full bg-indigo-50 dark:bg-indigo-950 mt-0.5" />
+                            <img src={user.avatarUrl} alt={user.nombre} loading="lazy" width={20} height={20} className="w-5 h-5 rounded-full bg-indigo-50 dark:bg-indigo-950 mt-0.5" />
                           )}
                           <div className="flex-1 min-w-0">
                             <span className="font-semibold text-notion-text-light dark:text-notion-text-dark">{user ? user.nombre : 'Sistema'}</span>
@@ -526,8 +546,9 @@ export default function ClientDetail({
           <div className="space-y-4">
             <div className="hidden md:flex justify-between items-center">
               <span className="text-[9px] uppercase font-bold tracking-widest text-indigo-500">Acciones del Lead</span>
-              <button 
+              <button
                 onClick={onClose}
+                aria-label="Cerrar"
                 className="p-1 rounded hover:bg-notion-border-light dark:hover:bg-notion-border-dark text-notion-text-muted-light dark:text-notion-text-muted-dark hover:text-notion-text-light dark:hover:text-notion-text-dark"
               >
                 <X size={18} />

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { INTEGRANTES, ESTADOS_PIPELINE } from '../mockData';
 import { X, Building2, User, Mail, Phone, DollarSign, Tag, AlertCircle, Calendar, Play } from 'lucide-react';
+import { useFocusTrap } from '../hooks/useFocusTrap';
 
 export default function NewClientModal({ onClose, onCreateClient, currentUser }) {
+  const modalRef = useFocusTrap(true);
   const [nombre, setNombre] = useState('');
   const [empresa, setEmpresa] = useState('');
   const [correo, setCorreo] = useState('');
@@ -46,13 +48,20 @@ export default function NewClientModal({ onClose, onCreateClient, currentUser })
       />
 
       {/* Modal Card */}
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-md w-[92%] bg-notion-card-light dark:bg-notion-card-dark border border-notion-border-light dark:border-notion-border-dark rounded-xl shadow-2xl z-50 overflow-hidden transition-all p-6 space-y-4 max-h-[90vh] overflow-y-auto">
-        
+      <div
+        ref={modalRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="new-client-title"
+        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-md w-[92%] bg-notion-card-light dark:bg-notion-card-dark border border-notion-border-light dark:border-notion-border-dark rounded-xl shadow-2xl z-50 overflow-hidden transition-all p-6 space-y-4 max-h-[90vh] overflow-y-auto"
+      >
+
         {/* Header */}
         <div className="flex items-center justify-between border-b border-notion-border-light dark:border-notion-border-dark pb-3">
-          <h3 className="font-bold text-sm text-notion-text-light dark:text-notion-text-dark">Registrar Nuevo Cliente</h3>
-          <button 
+          <h3 id="new-client-title" className="font-bold text-sm text-notion-text-light dark:text-notion-text-dark">Registrar Nuevo Cliente</h3>
+          <button
             onClick={onClose}
+            aria-label="Cerrar"
             className="p-1 rounded hover:bg-notion-border-light dark:hover:bg-notion-border-dark text-notion-text-muted-light dark:text-notion-text-muted-dark hover:text-notion-text-light dark:hover:text-notion-text-dark"
           >
             <X size={16} />
@@ -64,10 +73,11 @@ export default function NewClientModal({ onClose, onCreateClient, currentUser })
           
           {/* Nombre y Empresa */}
           <div className="space-y-1">
-            <label className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Nombre del Contacto *</label>
+            <label htmlFor="nc-nombre" className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Nombre del Contacto *</label>
             <div className="relative">
               <User size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-notion-text-muted-light dark:text-notion-text-muted-dark" />
               <input
+                id="nc-nombre"
                 type="text"
                 required
                 placeholder="Ej. Carlos Mendoza"
@@ -79,10 +89,11 @@ export default function NewClientModal({ onClose, onCreateClient, currentUser })
           </div>
 
           <div className="space-y-1">
-            <label className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Empresa / Organización *</label>
+            <label htmlFor="nc-empresa" className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Empresa / Organización *</label>
             <div className="relative">
               <Building2 size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-notion-text-muted-light dark:text-notion-text-muted-dark" />
               <input
+                id="nc-empresa"
                 type="text"
                 required
                 placeholder="Ej. Apex Solutions"
@@ -96,10 +107,11 @@ export default function NewClientModal({ onClose, onCreateClient, currentUser })
           {/* Correo y Teléfono */}
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Correo Electrónico</label>
+              <label htmlFor="nc-correo" className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Correo Electrónico</label>
               <div className="relative">
                 <Mail size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-notion-text-muted-light dark:text-notion-text-muted-dark" />
                 <input
+                  id="nc-correo"
                   type="email"
                   placeholder="nombre@empresa.com"
                   value={correo}
@@ -109,10 +121,11 @@ export default function NewClientModal({ onClose, onCreateClient, currentUser })
               </div>
             </div>
             <div className="space-y-1">
-              <label className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Teléfono</label>
+              <label htmlFor="nc-telefono" className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Teléfono</label>
               <div className="relative">
                 <Phone size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-notion-text-muted-light dark:text-notion-text-muted-dark" />
                 <input
+                  id="nc-telefono"
                   type="text"
                   placeholder="Ej. +52 55..."
                   value={telefono}
@@ -126,10 +139,11 @@ export default function NewClientModal({ onClose, onCreateClient, currentUser })
           {/* Estado, Integrante y Prioridad */}
           <div className="grid grid-cols-3 gap-2">
             <div className="space-y-1">
-              <label className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Estado</label>
+              <label htmlFor="nc-estado" className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Estado</label>
               <div className="relative">
                 <Tag size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-notion-text-muted-light dark:text-notion-text-muted-dark pointer-events-none" />
                 <select
+                  id="nc-estado"
                   value={estado}
                   onChange={(e) => setEstado(e.target.value)}
                   className="w-full pl-7.5 pr-2 py-2 rounded-lg border border-notion-border-light dark:border-notion-border-dark bg-notion-bg-light dark:bg-notion-bg-dark text-notion-text-light dark:text-notion-text-dark focus:outline-none focus:ring-1 focus:ring-indigo-500 cursor-pointer appearance-none"
@@ -142,10 +156,11 @@ export default function NewClientModal({ onClose, onCreateClient, currentUser })
             </div>
             
             <div className="space-y-1">
-              <label className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Asignado a</label>
+              <label htmlFor="nc-responsable" className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Asignado a</label>
               <div className="relative">
                 <User size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-notion-text-muted-light dark:text-notion-text-muted-dark pointer-events-none" />
                 <select
+                  id="nc-responsable"
                   value={responsableId}
                   onChange={(e) => setResponsableId(e.target.value)}
                   className="w-full pl-7.5 pr-2 py-2 rounded-lg border border-notion-border-light dark:border-notion-border-dark bg-notion-bg-light dark:bg-notion-bg-dark text-notion-text-light dark:text-notion-text-dark focus:outline-none focus:ring-1 focus:ring-indigo-500 cursor-pointer appearance-none"
@@ -158,10 +173,11 @@ export default function NewClientModal({ onClose, onCreateClient, currentUser })
             </div>
 
             <div className="space-y-1">
-              <label className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Prioridad</label>
+              <label htmlFor="nc-prioridad" className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Prioridad</label>
               <div className="relative">
                 <AlertCircle size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-notion-text-muted-light dark:text-notion-text-muted-dark pointer-events-none" />
                 <select
+                  id="nc-prioridad"
                   value={prioridad}
                   onChange={(e) => setPrioridad(e.target.value)}
                   className="w-full pl-7.5 pr-2 py-2 rounded-lg border border-notion-border-light dark:border-notion-border-dark bg-notion-bg-light dark:bg-notion-bg-dark text-notion-text-light dark:text-notion-text-dark focus:outline-none focus:ring-1 focus:ring-indigo-500 cursor-pointer appearance-none"
@@ -177,10 +193,11 @@ export default function NewClientModal({ onClose, onCreateClient, currentUser })
           {/* Seguimiento Inicial y Monto (MXN) */}
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Próx. Seguimiento</label>
+              <label htmlFor="nc-seguimiento" className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Próx. Seguimiento</label>
               <div className="relative">
                 <Calendar size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-notion-text-muted-light dark:text-notion-text-muted-dark" />
                 <input
+                  id="nc-seguimiento"
                   type="date"
                   value={fechaSeguimiento}
                   onChange={(e) => setFechaSeguimiento(e.target.value)}
@@ -190,10 +207,11 @@ export default function NewClientModal({ onClose, onCreateClient, currentUser })
             </div>
             
             <div className="space-y-1">
-              <label className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Monto Estimado (MXN)</label>
+              <label htmlFor="nc-monto" className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Monto Estimado (MXN)</label>
               <div className="relative">
                 <DollarSign size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-notion-text-muted-light dark:text-notion-text-muted-dark" />
                 <input
+                  id="nc-monto"
                   type="number"
                   min="0"
                   placeholder="Ej. 25000"
@@ -206,10 +224,11 @@ export default function NewClientModal({ onClose, onCreateClient, currentUser })
           </div>
 
           <div className="space-y-1">
-            <label className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Próxima acción planificada</label>
+            <label htmlFor="nc-proxima-accion" className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Próxima acción planificada</label>
             <div className="relative">
               <Play size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-notion-text-muted-light dark:text-notion-text-muted-dark" />
               <input
+                id="nc-proxima-accion"
                 type="text"
                 placeholder="Ej. Enviar cotización formal por correo"
                 value={proximaAccion}
