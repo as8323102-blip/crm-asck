@@ -41,7 +41,7 @@ export default function App() {
   
   // Custom hooks para modularizar el CRM v1.8
   const { activeTab, setActiveTab } = useAppView();
-  const { currentUser, setCurrentUser } = useAuth();
+  const { currentUser, logout } = useAuth();
   const { activities, setActivities, logEvent } = useActivity();
   
   // Helper para logging que inyectamos a los hooks
@@ -348,13 +348,25 @@ export default function App() {
     </div>
   );
 
+  // AuthGuard ya garantiza que hay sesión de Supabase activa antes de montar <App/>,
+  // pero el perfil (tabla `integrantes`) se resuelve de forma asíncrona en este hook.
+  // Mientras no haya currentUser no se renderiza MainLayout (evita acceder a
+  // propiedades de un usuario nulo y evita cualquier estado por defecto inseguro).
+  if (!currentUser) {
+    return (
+      <ErrorBoundary>
+        {loadingFallback}
+      </ErrorBoundary>
+    );
+  }
+
   return (
     <ErrorBoundary>
     <MainLayout
       activeTab={activeTab}
       setActiveTab={setActiveTab}
       currentUser={currentUser}
-      setCurrentUser={setCurrentUser}
+      onLogout={logout}
       isDark={isDark}
       toggleTheme={toggleTheme}
       onNewClientClick={() => setNewClientModalOpen(true)}
