@@ -8,6 +8,20 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Acento de marca ASCK (violeta → cian del lenguaje visual del portafolio).
+        // Se usa para identidad (logo, CTA, indicadores); el color semántico de
+        // estados (blue/amber/purple/emerald/rose) queda separado a propósito.
+        asck: {
+          violet: {
+            DEFAULT: '#7C6CF5',
+            bright: '#948AF8',
+            deep: '#5B4BE0',
+          },
+          cyan: {
+            DEFAULT: '#10B1C6',
+            bright: '#22C9DE',
+          },
+        },
         notion: {
           bg: {
             light: '#FBFBFA',
@@ -43,6 +57,13 @@ export default {
           '"Helvetica Neue"',
           'Arial',
           '"Noto Sans"',
+          'sans-serif',
+        ],
+        heading: [
+          'Outfit',
+          'Inter',
+          'ui-sans-serif',
+          'system-ui',
           'sans-serif',
         ],
       },

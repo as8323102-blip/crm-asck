@@ -3,9 +3,76 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --asck-violet: #7c6cf5;
+    --asck-cyan: #10b1c6;
+    --asck-focus: #6366f1;
+  }
+
+  .dark {
+    --asck-focus: #818cf8;
+  }
+
   body {
     @apply bg-notion-bg-light dark:bg-notion-bg-dark text-notion-text-light dark:text-notion-text-dark font-sans antialiased transition-colors duration-200;
   }
+
+  /* Titulares y cifras clave con Outfit (identidad ASCK) */
+  h1, h2, h3, h4 {
+    @apply font-heading tracking-tight;
+  }
+
+  /* Foco visible consistente en todo el CRM (teclado). El !important es
+     deliberado: gana a los `focus:outline-none` heredados sin tocar cada input. */
+  :focus-visible {
+    outline: 2px solid var(--asck-focus) !important;
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: rgba(124, 108, 245, 0.28);
+  }
+}
+
+@layer components {
+  /* Botón primario de marca: violeta ASCK → índigo, un solo lugar de verdad */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg font-semibold text-white
+      bg-gradient-to-br from-asck-violet to-indigo-600
+      shadow-sm shadow-indigo-500/20
+      hover:from-asck-violet-bright hover:to-indigo-500 hover:shadow-md hover:shadow-indigo-500/25
+      active:scale-[0.99]
+      disabled:opacity-50 disabled:pointer-events-none disabled:shadow-none
+      transition-all duration-150;
+  }
+
+  /* Botón secundario neutro con borde */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg font-semibold
+      border border-notion-border-light dark:border-notion-border-dark
+      text-notion-text-light dark:text-notion-text-dark
+      hover:bg-notion-border-light/30 dark:hover:bg-notion-border-dark/30
+      transition-colors duration-150;
+  }
+
+  /* Chip base para estados y prioridades */
+  .chip {
+    @apply inline-flex items-center gap-1 rounded border px-1.5 py-0.5 font-semibold whitespace-nowrap;
+  }
+}
+
+/* Fondo del área de trabajo: lavado radial violeta/cian MUY sutil solo en oscuro
+   (identidad ASCK con criterio de herramienta: estático, sin orbes animados) */
+.app-shell {
+  background-color: theme('colors.notion.bg.light');
+}
+
+.dark .app-shell {
+  background-color: theme('colors.notion.bg.dark');
+  background-image:
+    radial-gradient(1100px 640px at 88% -12%, rgba(124, 108, 245, 0.07), transparent 62%),
+    radial-gradient(900px 560px at -8% 112%, rgba(16, 177, 198, 0.05), transparent 60%);
+  background-attachment: fixed;
 }
 
 /* Scrollbar estilizado estilo Notion/Linear */
@@ -29,11 +96,11 @@
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: #374151;
+  background: rgba(124, 108, 245, 0.45);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #d3d3d0;
+  background: #c9c9c5;
 }
 
 /* Clases utilitarias adicionales para look premium */
@@ -62,10 +129,30 @@
   border-color: rgba(99, 102, 241, 0.3);
 }
 
+/* Entrada suave de cada vista al cambiar de pestaña (sobrio: 160ms) */
+.view-fade {
+  animation: viewFade 0.16s ease-out;
+}
+
+@keyframes viewFade {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Accesibilidad: respetar la preferencia de movimiento reducido del sistema */
 @media (prefers-reduced-motion: reduce) {
-  .animate-pulse,
-  .animate-spin {
-    animation: none;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

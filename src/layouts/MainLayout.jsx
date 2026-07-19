@@ -71,7 +71,7 @@ export default function MainLayout({
   };
 
   return (
-    <div className="min-h-screen flex bg-notion-bg-light dark:bg-notion-bg-dark transition-colors duration-200">
+    <div className="min-h-screen flex app-shell transition-colors duration-200">
       
       {/* Mobile Sidebar Backdrop */}
       {sidebarOpen && (
@@ -91,11 +91,11 @@ export default function MainLayout({
           {/* Logo ASCK Software */}
           <div className="h-16 flex items-center justify-between px-6 border-b border-notion-border-light dark:border-notion-border-dark">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-indigo-500/10 p-0.5 flex-shrink-0 overflow-hidden">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br from-asck-violet/20 to-asck-cyan/10 border border-asck-violet/15 p-0.5 flex-shrink-0 overflow-hidden">
                 <img src="/logo_asck.svg" alt="ASCK Logo" className="w-full h-full object-contain dark:invert" />
               </div>
               <div>
-                <span className="font-semibold text-sm tracking-wide block text-notion-text-light dark:text-notion-text-dark">ASCK Software</span>
+                <span className="font-heading font-semibold text-sm tracking-wide block text-notion-text-light dark:text-notion-text-dark">ASCK Software</span>
                 <span className="text-[10px] text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-widest font-medium">CRM Interno v1.8</span>
               </div>
             </div>
@@ -110,9 +110,9 @@ export default function MainLayout({
 
           {/* Quick Actions */}
           <div className="p-4 space-y-1">
-            <button 
+            <button
               onClick={onNewClientClick}
-              className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white rounded-lg text-xs font-semibold shadow-sm transition-all"
+              className="btn-primary w-full px-3 py-2 text-xs"
             >
               <PlusCircle size={14} />
               <span>Registrar Prospecto</span>
@@ -131,14 +131,21 @@ export default function MainLayout({
                     setActiveTab(item.id);
                     setSidebarOpen(false);
                   }}
+                  aria-current={isActive ? 'page' : undefined}
                   className={`
-                    w-full flex items-center gap-2.5 px-3.5 py-2 rounded-lg text-xs font-medium transition-colors
-                    ${isActive 
-                      ? 'bg-notion-border-light dark:bg-notion-border-dark text-notion-text-light dark:text-notion-text-dark font-semibold' 
+                    relative w-full flex items-center gap-2.5 px-3.5 py-2 rounded-lg text-xs font-medium transition-colors
+                    ${isActive
+                      ? 'bg-indigo-500/10 dark:bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 font-semibold'
                       : 'text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light/40 dark:hover:bg-notion-border-dark/40 hover:text-notion-text-light dark:hover:text-notion-text-dark'}
                   `}
                 >
-                  <Icon size={15} className={isActive ? 'text-indigo-500' : 'text-notion-text-muted-light dark:text-notion-text-muted-dark'} />
+                  {isActive && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-0.5 rounded-full bg-gradient-to-b from-asck-violet to-asck-cyan"
+                    />
+                  )}
+                  <Icon size={15} className={isActive ? 'text-indigo-500 dark:text-indigo-400' : 'text-notion-text-muted-light dark:text-notion-text-muted-dark'} />
                   <span>{item.name}</span>
                 </button>
               );
@@ -227,7 +234,7 @@ export default function MainLayout({
       <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
         
         {/* Top Header */}
-        <header className="h-16 border-b border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark flex items-center justify-between px-6 z-30 transition-colors duration-200">
+        <header className="h-16 border-b border-notion-border-light dark:border-notion-border-dark bg-notion-card-light/85 dark:bg-notion-card-dark/70 backdrop-blur-md flex items-center justify-between px-6 z-30 transition-colors duration-200">
           <div className="flex items-center gap-4">
             <button
               className="p-1 rounded lg:hidden text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light dark:hover:bg-notion-border-dark"
@@ -251,7 +258,7 @@ export default function MainLayout({
               setActiveTab={setActiveTab}
             />
             
-            <div className="hidden lg:flex items-center gap-1.5 text-xs text-notion-text-muted-light dark:text-notion-text-muted-dark border border-notion-border-light dark:border-notion-border-dark px-2.5 py-1 rounded-full bg-[#fbfbfa]/50 dark:bg-[#191919]/50">
+            <div role="status" className="hidden lg:flex items-center gap-1.5 text-xs text-notion-text-muted-light dark:text-notion-text-muted-dark border border-notion-border-light dark:border-notion-border-dark px-2.5 py-1 rounded-full bg-[#fbfbfa]/50 dark:bg-[#191919]/50">
               <span className={`w-1.5 h-1.5 rounded-full ${getStatusColorClass()} animate-pulse`}></span>
               <span>{onlineStatus}</span>
             </div>
