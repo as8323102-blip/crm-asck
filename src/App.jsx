@@ -16,6 +16,13 @@ const ExcelImportExport = lazy(() => import('./components/ExcelImportExport')); 
 const ConfigPanel = lazy(() => import('./components/ConfigPanel'));
 import { cloudSyncService } from './services/cloudSyncService';
 import { offlineQueue } from './services/offlineQueue';
+import { activeProvider } from './services/config';
+import { clientService } from './services/clientService';
+import { noteService } from './services/noteService';
+import { taskService } from './services/taskService';
+import { activityService } from './services/activityService';
+import { agendaService } from './services/agendaService';
+import { sprintService } from './services/sprintService';
 
 import { 
   CLIENTES_INICIALES, 
@@ -236,6 +243,31 @@ export default function App() {
     async function initData() {
       try {
         setLoading(true);
+
+        // PRODUCCIÓN (Supabase): la base con RLS es la fuente de verdad al
+        // iniciar sesión. Los services ya guardan copia en localStorage y
+        // caen a local si la red falla, así que esto no rompe el modo
+        // offline. Sin este bloque, la app arrancaba siempre de localStorage
+        // y nunca LEÍA los datos reales de la nube (solo escribía en ella).
+        if (activeProvider === 'supabase') {
+          const [c, n, t, a, ag, s] = await Promise.all([
+            clientService.getClients(),
+            noteService.getNotes(),
+            taskService.getTasks(),
+            activityService.getActivities(),
+            agendaService.getEvents(),
+            sprintService.getSprints()
+          ]);
+          setClients(c || []);
+          setNotes(n || []);
+          setTasks(t || []);
+          setActivities(a || []);
+          setAgendaEvents(ag || []);
+          setSprints(s || []);
+          localStorage.setItem('asck_crm_seeded_v1_8', 'true');
+          return; // finally deja loading en false
+        }
+
         const seededV18 = localStorage.getItem('asck_crm_seeded_v1_8') === 'true';
 
         let initialClients = [];
