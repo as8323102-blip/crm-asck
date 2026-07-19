@@ -1,0 +1,24 @@
+{
+  "short_name": "ASCK CRM",
+  "name": "ASCK Software CRM",
+  "description": "Sistema de gestión de relaciones comerciales y planeación operativa para ASCK Software",
+  "icons": [
+    {
+      "src": "/logo_asck.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#1c1c1c",
+  "theme_color": "#1c1c1c",
+  "display": "standalone",
+  "orientation": "portrait"
+}
