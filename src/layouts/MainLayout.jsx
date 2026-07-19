@@ -1,30 +1,30 @@
 import React, { useState } from 'react';
-import { 
-  LayoutDashboard, 
-  KanbanSquare, 
-  List, 
+import {
+  LayoutDashboard,
+  KanbanSquare,
+  List,
   CheckSquare,
   Calendar,
   History,
-  X, 
-  PlusCircle, 
-  Moon, 
-  Sun, 
-  Menu, 
+  X,
+  PlusCircle,
+  Moon,
+  Sun,
+  Menu,
   ChevronDown,
   FileSpreadsheet,
-  Settings
+  Settings,
+  LogOut
 } from 'lucide-react';
-import { INTEGRANTES } from '../mockData';
 import GlobalSearch from '../components/GlobalSearch';
 
-export default function MainLayout({ 
-  children, 
-  activeTab, 
-  setActiveTab, 
-  currentUser, 
-  setCurrentUser, 
-  isDark, 
+export default function MainLayout({
+  children,
+  activeTab,
+  setActiveTab,
+  currentUser,
+  onLogout,
+  isDark,
   toggleTheme,
   onNewClientClick,
   clients,
@@ -34,7 +34,7 @@ export default function MainLayout({
   onlineStatus = 'Modo local'
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   const navigation = [
     { id: 'dashboard', name: 'Panel General', icon: LayoutDashboard },
@@ -156,58 +156,50 @@ export default function MainLayout({
         {/* Sidebar Footer (Active simulated user + theme switch) */}
         <div className="p-4 border-t border-notion-border-light dark:border-notion-border-dark space-y-3 bg-[#F7F7F5] dark:bg-[#070a13]">
           
-          {/* Simulated Active User Selector */}
+          {/* Identidad de sesión real (Supabase Auth). Sin selector: no se puede
+              suplantar a otro integrante desde el cliente. */}
           <div className="relative">
             <button
-              onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-              aria-haspopup="listbox"
-              aria-expanded={userDropdownOpen}
+              onClick={() => setUserMenuOpen(!userMenuOpen)}
+              aria-haspopup="menu"
+              aria-expanded={userMenuOpen}
               className="w-full flex items-center justify-between p-2 rounded-lg border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark text-left transition-all hover:bg-notion-border-light/30 dark:hover:bg-notion-border-dark/30"
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 min-w-0">
                 <img
                   src={currentUser.avatarUrl}
                   alt={currentUser.nombre}
                   loading="lazy"
                   width={24}
                   height={24}
-                  className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-950"
+                  className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-950 flex-shrink-0"
                 />
-                <div>
-                  <div className="text-xs font-semibold text-notion-text-light dark:text-notion-text-dark leading-tight">{currentUser.nombre}</div>
-                  <div className="text-[10px] text-notion-text-muted-light dark:text-notion-text-muted-dark leading-none">{currentUser.rol}</div>
+                <div className="min-w-0">
+                  <div className="text-xs font-semibold text-notion-text-light dark:text-notion-text-dark leading-tight truncate">{currentUser.nombre}</div>
+                  <div className="text-[10px] text-notion-text-muted-light dark:text-notion-text-muted-dark leading-none truncate">{currentUser.rol || 'Sin rol asignado'}</div>
                 </div>
               </div>
-              <ChevronDown size={14} className="text-notion-text-muted-light dark:text-notion-text-muted-dark" />
+              <ChevronDown size={14} className="text-notion-text-muted-light dark:text-notion-text-muted-dark flex-shrink-0" />
             </button>
 
-            {userDropdownOpen && (
+            {userMenuOpen && (
               <>
-                <div className="fixed inset-0 z-10" onClick={() => setUserDropdownOpen(false)} />
-                <div role="listbox" aria-label="Seleccionar usuario activo" className="absolute bottom-full left-0 w-full mb-1 bg-notion-card-light dark:bg-notion-card-dark border border-notion-border-light dark:border-notion-border-dark rounded-lg shadow-xl overflow-hidden z-20 transition-all">
-                  {INTEGRANTES.map((user) => (
-                    <button
-                      key={user.id}
-                      role="option"
-                      aria-selected={currentUser.id === user.id}
-                      onClick={() => {
-                        setCurrentUser(user);
-                        setUserDropdownOpen(false);
-                      }}
-                      className={`
-                        w-full flex items-center gap-2 px-3 py-2 text-left text-xs transition-colors
-                        ${currentUser.id === user.id
-                          ? 'bg-notion-border-light dark:bg-notion-border-dark font-medium'
-                          : 'hover:bg-notion-border-light/50 dark:hover:bg-notion-border-dark/50'}
-                      `}
-                    >
-                      <img src={user.avatarUrl} alt={user.nombre} loading="lazy" width={20} height={20} className="w-5 h-5 rounded-full bg-indigo-50 dark:bg-indigo-950" />
-                      <div>
-                        <div className="text-notion-text-light dark:text-notion-text-dark font-medium">{user.nombre}</div>
-                        <div className="text-[10px] text-notion-text-muted-light dark:text-notion-text-muted-dark">{user.rol}</div>
-                      </div>
-                    </button>
-                  ))}
+                <div className="fixed inset-0 z-10" onClick={() => setUserMenuOpen(false)} />
+                <div role="menu" aria-label="Sesión" className="absolute bottom-full left-0 w-full mb-1 bg-notion-card-light dark:bg-notion-card-dark border border-notion-border-light dark:border-notion-border-dark rounded-lg shadow-xl overflow-hidden z-20 transition-all">
+                  <div className="px-3 py-2 text-[10px] text-notion-text-muted-light dark:text-notion-text-muted-dark border-b border-notion-border-light dark:border-notion-border-dark truncate">
+                    {currentUser.email}
+                  </div>
+                  <button
+                    role="menuitem"
+                    onClick={() => {
+                      setUserMenuOpen(false);
+                      onLogout?.();
+                    }}
+                    className="w-full flex items-center gap-2 px-3 py-2 text-left text-xs text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
+                  >
+                    <LogOut size={14} />
+                    <span>Cerrar sesión</span>
+                  </button>
                 </div>
               </>
             )}
