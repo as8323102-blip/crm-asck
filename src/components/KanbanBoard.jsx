@@ -7,6 +7,7 @@ import { formatMXN } from '../utils/currency';
 
 export default function KanbanBoard({ clients, onMoveClient, onClientClick }) {
   const [draggedOverColumn, setDraggedOverColumn] = useState(null);
+  const [openMoveMenu, setOpenMoveMenu] = useState(null);
 
   const columns = [
     { id: 'Prospecto', label: 'Prospectos', color: 'border-t-blue-500 bg-blue-500/5 text-blue-500' },
@@ -43,6 +44,7 @@ export default function KanbanBoard({ clients, onMoveClient, onClientClick }) {
   const handleMobileMoveState = (e, client, nextState) => {
     e.stopPropagation();
     onMoveClient(client.id, nextState);
+    setOpenMoveMenu(null);
   };
 
   return (
@@ -136,35 +138,44 @@ export default function KanbanBoard({ clients, onMoveClient, onClientClick }) {
 
                           {owner && (
                             <div className="w-5 h-5 rounded-full overflow-hidden border border-indigo-500/15 bg-indigo-50 dark:bg-indigo-950 flex-shrink-0">
-                              <img src={owner.avatarUrl} alt={owner.nombre} className="w-full h-full object-cover" />
+                              <img src={owner.avatarUrl} alt={owner.nombre} loading="lazy" width={20} height={20} className="w-full h-full object-cover" />
                             </div>
                           )}
                         </div>
 
                         {/* Control rápido móvil */}
                         <div className="flex lg:hidden justify-end pt-1">
-                          <div className="relative inline-flex group/selector">
+                          <div className="relative inline-flex">
                             <button
-                              onClick={(e) => e.stopPropagation()}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setOpenMoveMenu(prev => (prev === client.id ? null : client.id));
+                              }}
+                              aria-haspopup="menu"
+                              aria-expanded={openMoveMenu === client.id}
+                              aria-label="Mover a otra etapa"
                               className="p-0.5 rounded hover:bg-notion-border-light dark:hover:bg-notion-border-dark text-notion-text-muted-light dark:text-notion-text-muted-dark"
                               title="Mover"
                             >
                               <ArrowRightLeft size={10} />
                             </button>
-                            <div className="absolute right-0 bottom-full mb-1 hidden group-hover/selector:block bg-notion-card-light dark:bg-notion-card-dark border border-notion-border-light dark:border-notion-border-dark rounded shadow-lg z-30 p-1 w-32 space-y-0.5">
-                              {columns
-                                .filter(col => col.id !== client.estado)
-                                .map(col => (
-                                  <button
-                                    key={col.id}
-                                    onClick={(e) => handleMobileMoveState(e, client, col.id)}
-                                    className="w-full text-left text-[9px] px-2 py-0.5 hover:bg-notion-border-light dark:hover:bg-notion-border-dark rounded text-notion-text-light dark:text-notion-text-dark"
-                                  >
-                                    → {col.label}
-                                  </button>
-                                ))
-                              }
-                            </div>
+                            {openMoveMenu === client.id && (
+                              <div role="menu" className="absolute right-0 bottom-full mb-1 block bg-notion-card-light dark:bg-notion-card-dark border border-notion-border-light dark:border-notion-border-dark rounded shadow-lg z-30 p-1 w-32 space-y-0.5">
+                                {columns
+                                  .filter(col => col.id !== client.estado)
+                                  .map(col => (
+                                    <button
+                                      key={col.id}
+                                      role="menuitem"
+                                      onClick={(e) => handleMobileMoveState(e, client, col.id)}
+                                      className="w-full text-left text-[9px] px-2 py-0.5 hover:bg-notion-border-light dark:hover:bg-notion-border-dark rounded text-notion-text-light dark:text-notion-text-dark"
+                                    >
+                                      → {col.label}
+                                    </button>
+                                  ))
+                                }
+                              </div>
+                            )}
                           </div>
                         </div>
 

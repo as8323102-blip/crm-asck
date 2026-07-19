@@ -39,6 +39,7 @@ export default function ClientList({ clients, onClientClick }) {
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-notion-text-muted-light dark:text-notion-text-muted-dark" />
           <input
             type="text"
+            aria-label="Buscar clientes"
             placeholder="Buscar por nombre o empresa..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -54,6 +55,7 @@ export default function ClientList({ clients, onClientClick }) {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
+              aria-label="Filtrar por estado"
               className="bg-transparent text-xs text-notion-text-light dark:text-notion-text-dark focus:outline-none cursor-pointer"
             >
               {uniqueStatuses.map(status => (
@@ -68,6 +70,7 @@ export default function ClientList({ clients, onClientClick }) {
             <select
               value={ownerFilter}
               onChange={(e) => setOwnerFilter(e.target.value)}
+              aria-label="Filtrar por responsable"
               className="bg-transparent text-xs text-notion-text-light dark:text-notion-text-dark focus:outline-none cursor-pointer"
             >
               <option value="Todos" className="dark:bg-[#202020]">Responsable: Todos</option>
@@ -89,14 +92,15 @@ export default function ClientList({ clients, onClientClick }) {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
+              <caption className="sr-only">Lista de clientes</caption>
               <thead>
                 <tr className="border-b border-notion-border-light dark:border-notion-border-dark text-[11px] font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-wider bg-notion-border-light/10 dark:bg-notion-border-dark/10">
-                  <th className="py-3 px-4">Cliente</th>
-                  <th className="py-3 px-4">Empresa</th>
-                  <th className="py-3 px-4">Estado</th>
-                  <th className="py-3 px-4">Responsable</th>
-                  <th className="py-3 px-4">Contacto</th>
-                  <th className="py-3 px-4 text-right">Monto Estimado</th>
+                  <th scope="col" className="py-3 px-4">Cliente</th>
+                  <th scope="col" className="py-3 px-4">Empresa</th>
+                  <th scope="col" className="py-3 px-4">Estado</th>
+                  <th scope="col" className="py-3 px-4">Responsable</th>
+                  <th scope="col" className="py-3 px-4">Contacto</th>
+                  <th scope="col" className="py-3 px-4 text-right">Monto Estimado</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-notion-border-light dark:divide-notion-border-dark text-xs">
@@ -106,7 +110,16 @@ export default function ClientList({ clients, onClientClick }) {
                     <tr
                       key={client.id}
                       onClick={() => onClientClick(client)}
-                      className="hover:bg-notion-border-light/20 dark:hover:bg-notion-border-dark/20 cursor-pointer transition-colors"
+                      tabIndex={0}
+                      role="button"
+                      aria-label={`Abrir cliente ${client.nombre}`}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          onClientClick(client);
+                        }
+                      }}
+                      className="hover:bg-notion-border-light/20 dark:hover:bg-notion-border-dark/20 cursor-pointer transition-colors focus:outline-none focus:ring-1 focus:ring-inset focus:ring-indigo-500"
                     >
                       {/* Cliente */}
                       <td className="py-3.5 px-4 font-semibold text-notion-text-light dark:text-notion-text-dark">
@@ -138,7 +151,7 @@ export default function ClientList({ clients, onClientClick }) {
                       <td className="py-3.5 px-4">
                         {owner ? (
                           <div className="flex items-center gap-1.5">
-                            <img src={owner.avatarUrl} alt={owner.nombre} className="w-5 h-5 rounded-full bg-indigo-50 dark:bg-indigo-950" />
+                            <img src={owner.avatarUrl} alt={owner.nombre} loading="lazy" width={20} height={20} className="w-5 h-5 rounded-full bg-indigo-50 dark:bg-indigo-950" />
                             <span className="text-notion-text-light dark:text-notion-text-dark font-medium">{owner.nombre}</span>
                           </div>
                         ) : (

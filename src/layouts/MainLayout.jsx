@@ -99,9 +99,10 @@ export default function MainLayout({
                 <span className="text-[10px] text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-widest font-medium">CRM Interno v1.8</span>
               </div>
             </div>
-            <button 
+            <button
               className="p-1 rounded lg:hidden text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light dark:hover:bg-notion-border-dark"
               onClick={() => setSidebarOpen(false)}
+              aria-label="Cerrar menú"
             >
               <X size={18} />
             </button>
@@ -152,13 +153,18 @@ export default function MainLayout({
           <div className="relative">
             <button
               onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+              aria-haspopup="listbox"
+              aria-expanded={userDropdownOpen}
               className="w-full flex items-center justify-between p-2 rounded-lg border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark text-left transition-all hover:bg-notion-border-light/30 dark:hover:bg-notion-border-dark/30"
             >
               <div className="flex items-center gap-2">
-                <img 
-                  src={currentUser.avatarUrl} 
-                  alt={currentUser.nombre} 
-                  className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-950" 
+                <img
+                  src={currentUser.avatarUrl}
+                  alt={currentUser.nombre}
+                  loading="lazy"
+                  width={24}
+                  height={24}
+                  className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-950"
                 />
                 <div>
                   <div className="text-xs font-semibold text-notion-text-light dark:text-notion-text-dark leading-tight">{currentUser.nombre}</div>
@@ -171,22 +177,24 @@ export default function MainLayout({
             {userDropdownOpen && (
               <>
                 <div className="fixed inset-0 z-10" onClick={() => setUserDropdownOpen(false)} />
-                <div className="absolute bottom-full left-0 w-full mb-1 bg-notion-card-light dark:bg-notion-card-dark border border-notion-border-light dark:border-notion-border-dark rounded-lg shadow-xl overflow-hidden z-20 transition-all">
+                <div role="listbox" aria-label="Seleccionar usuario activo" className="absolute bottom-full left-0 w-full mb-1 bg-notion-card-light dark:bg-notion-card-dark border border-notion-border-light dark:border-notion-border-dark rounded-lg shadow-xl overflow-hidden z-20 transition-all">
                   {INTEGRANTES.map((user) => (
                     <button
                       key={user.id}
+                      role="option"
+                      aria-selected={currentUser.id === user.id}
                       onClick={() => {
                         setCurrentUser(user);
                         setUserDropdownOpen(false);
                       }}
                       className={`
                         w-full flex items-center gap-2 px-3 py-2 text-left text-xs transition-colors
-                        ${currentUser.id === user.id 
-                          ? 'bg-notion-border-light dark:bg-notion-border-dark font-medium' 
+                        ${currentUser.id === user.id
+                          ? 'bg-notion-border-light dark:bg-notion-border-dark font-medium'
                           : 'hover:bg-notion-border-light/50 dark:hover:bg-notion-border-dark/50'}
                       `}
                     >
-                      <img src={user.avatarUrl} alt={user.nombre} className="w-5 h-5 rounded-full bg-indigo-50 dark:bg-indigo-950" />
+                      <img src={user.avatarUrl} alt={user.nombre} loading="lazy" width={20} height={20} className="w-5 h-5 rounded-full bg-indigo-50 dark:bg-indigo-950" />
                       <div>
                         <div className="text-notion-text-light dark:text-notion-text-dark font-medium">{user.nombre}</div>
                         <div className="text-[10px] text-notion-text-muted-light dark:text-notion-text-muted-dark">{user.rol}</div>
@@ -221,9 +229,10 @@ export default function MainLayout({
         {/* Top Header */}
         <header className="h-16 border-b border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark flex items-center justify-between px-6 z-30 transition-colors duration-200">
           <div className="flex items-center gap-4">
-            <button 
+            <button
               className="p-1 rounded lg:hidden text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light dark:hover:bg-notion-border-dark"
               onClick={() => setSidebarOpen(true)}
+              aria-label="Abrir menú"
             >
               <Menu size={20} />
             </button>
@@ -246,10 +255,13 @@ export default function MainLayout({
               <span className={`w-1.5 h-1.5 rounded-full ${getStatusColorClass()} animate-pulse`}></span>
               <span>{onlineStatus}</span>
             </div>
-            <img 
-              src={currentUser.avatarUrl} 
-              alt={currentUser.nombre} 
-              className="w-8 h-8 rounded-full border border-indigo-500/20 shadow-sm bg-indigo-50 dark:bg-indigo-950" 
+            <img
+              src={currentUser.avatarUrl}
+              alt={currentUser.nombre}
+              loading="lazy"
+              width={32}
+              height={32}
+              className="w-8 h-8 rounded-full border border-indigo-500/20 shadow-sm bg-indigo-50 dark:bg-indigo-950"
             />
           </div>
         </header>
