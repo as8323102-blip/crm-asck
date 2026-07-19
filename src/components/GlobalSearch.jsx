@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, X, CheckSquare } from 'lucide-react';
 import { useFocusTrap } from '../hooks/useFocusTrap';
+import { estadoCliente, prioridadCliente } from '../utils/statusStyles';
 
 export default function GlobalSearch({
   clients,
@@ -103,9 +104,9 @@ export default function GlobalSearch({
           <Search size={14} />
           <span>Buscar...</span>
         </span>
-        <span className="text-[10px] bg-notion-border-light dark:bg-notion-border-dark px-1.5 py-0.5 rounded font-mono text-[9px] font-bold">
+        <kbd className="bg-notion-border-light dark:bg-notion-border-dark px-1.5 py-0.5 rounded font-mono text-[9px] font-bold">
           Ctrl+K
-        </span>
+        </kbd>
       </button>
 
       {/* Modal Overlay */}
@@ -174,7 +175,8 @@ export default function GlobalSearch({
                               <span className="font-semibold text-notion-text-light dark:text-notion-text-dark">{c.nombre}</span>
                               <span className="text-notion-text-muted-light dark:text-notion-text-muted-dark">({c.empresa})</span>
                             </div>
-                            <span className="text-[9px] bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 px-1.5 py-0.2 rounded font-semibold">
+                            <span className={`chip text-[9px] ${estadoCliente(c.estado).chip}`}>
+                              <span aria-hidden="true" className={`w-1 h-1 rounded-full ${estadoCliente(c.estado).dot}`}></span>
                               {c.estado}
                             </span>
                           </button>
@@ -203,10 +205,7 @@ export default function GlobalSearch({
                               </span>
                             </div>
                             {t.prioridad && (
-                              <span className={`text-[9px] font-semibold px-1 rounded ${
-                                t.prioridad === 'Alta' ? 'bg-rose-500/10 text-rose-500' :
-                                t.prioridad === 'Media' ? 'bg-amber-500/10 text-amber-500' : 'bg-blue-500/10 text-blue-500'
-                              }`}>
+                              <span className={`chip text-[9px] ${prioridadCliente(t.prioridad).chip}`}>
                                 {t.prioridad}
                               </span>
                             )}
@@ -250,8 +249,11 @@ export default function GlobalSearch({
             
             {/* Footer */}
             <div className="px-4 py-2 border-t border-notion-border-light dark:border-notion-border-dark bg-[#fbfbfa] dark:bg-[#1c1c1c] text-[10px] text-notion-text-muted-light dark:text-notion-text-muted-dark flex items-center justify-between">
-              <span>Selecciona una fila para navegar</span>
-              <span>ESC para cerrar</span>
+              <span>Selecciona un resultado para navegar</span>
+              <span className="flex items-center gap-1">
+                <kbd className="bg-notion-border-light dark:bg-notion-border-dark px-1 py-0.5 rounded font-mono text-[9px] font-bold">Esc</kbd>
+                para cerrar
+              </span>
             </div>
 
           </div>

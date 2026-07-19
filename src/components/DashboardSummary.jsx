@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { INTEGRANTES } from '../mockData';
 import { formatMXN, convertCurrency, TASA_CAMBIO_FIJA } from '../utils/currency';
+import { estadoCliente } from '../utils/statusStyles';
 
 export default function DashboardSummary({
   clients,
@@ -45,8 +46,8 @@ export default function DashboardSummary({
   const convertedResult = convertCurrency(Number(convAmount) || 0, fromCurr, toCurr);
 
   return (
-    <div className="space-y-6">
-      
+    <div className="space-y-6 view-fade">
+
       {/* Fila de Métricas Principales */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         
@@ -58,8 +59,8 @@ export default function DashboardSummary({
             </div>
           </div>
           <div className="mt-3 sm:mt-4 flex items-baseline gap-1 sm:gap-2 flex-wrap">
-            <span className="text-xl sm:text-2xl font-extrabold text-notion-text-light dark:text-notion-text-dark tracking-tight">{totalClients}</span>
-            <span className="text-[8px] sm:text-[10px] text-emerald-500 font-semibold uppercase tracking-wider">Registrados</span>
+            <span className="font-heading tabular-nums text-xl sm:text-2xl font-extrabold text-notion-text-light dark:text-notion-text-dark tracking-tight">{totalClients}</span>
+            <span className="text-[8px] sm:text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold uppercase tracking-wider">Registrados</span>
           </div>
         </div>
 
@@ -71,7 +72,7 @@ export default function DashboardSummary({
             </div>
           </div>
           <div className="mt-3 sm:mt-4 flex flex-col justify-end">
-            <span className="text-base sm:text-xl font-extrabold text-notion-text-light dark:text-notion-text-dark tracking-tight truncate">
+            <span className="font-heading tabular-nums text-base sm:text-xl font-extrabold text-notion-text-light dark:text-notion-text-dark tracking-tight truncate">
               {formatMXN(activePipelineValue)}
             </span>
           </div>
@@ -85,7 +86,7 @@ export default function DashboardSummary({
             </div>
           </div>
           <div className="mt-3 sm:mt-4 flex items-baseline gap-1 sm:gap-2 flex-wrap">
-            <span className="text-xl sm:text-2xl font-extrabold text-notion-text-light dark:text-notion-text-dark tracking-tight">{pendingUserTasks.length}</span>
+            <span className="font-heading tabular-nums text-xl sm:text-2xl font-extrabold text-notion-text-light dark:text-notion-text-dark tracking-tight">{pendingUserTasks.length}</span>
             <span className="text-[8px] sm:text-[10px] text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-wider">Tareas</span>
           </div>
         </div>
@@ -98,8 +99,8 @@ export default function DashboardSummary({
             </div>
           </div>
           <div className="mt-3 sm:mt-4 flex items-baseline gap-1 sm:gap-2 flex-wrap">
-            <span className="text-xl sm:text-2xl font-extrabold text-notion-text-light dark:text-notion-text-dark tracking-tight">{wonClients}</span>
-            <span className="text-[8px] sm:text-[10px] text-emerald-500 font-semibold uppercase tracking-wider">Ganados</span>
+            <span className="font-heading tabular-nums text-xl sm:text-2xl font-extrabold text-notion-text-light dark:text-notion-text-dark tracking-tight">{wonClients}</span>
+            <span className="text-[8px] sm:text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold uppercase tracking-wider">Ganados</span>
           </div>
         </div>
 
@@ -119,20 +120,19 @@ export default function DashboardSummary({
               const val = valueByStage[stage] || 0;
               const maxVal = Math.max(...Object.values(valueByStage), 1);
               const pct = (val / maxVal) * 100;
+              const stageStyle = estadoCliente(stage);
               return (
                 <div key={stage} className="space-y-1">
                   <div className="flex justify-between text-xs font-semibold">
-                    <span className="text-notion-text-light dark:text-notion-text-dark">{stage}</span>
-                    <span className="text-notion-text-muted-light dark:text-notion-text-muted-dark">{formatMXN(val)}</span>
+                    <span className="flex items-center gap-1.5 text-notion-text-light dark:text-notion-text-dark">
+                      <span aria-hidden="true" className={`w-1.5 h-1.5 rounded-full ${stageStyle.dot}`}></span>
+                      {stage}
+                    </span>
+                    <span className="tabular-nums text-notion-text-muted-light dark:text-notion-text-muted-dark">{formatMXN(val)}</span>
                   </div>
                   <div className="w-full bg-[#EBEBE9] dark:bg-[#2A2A2A] h-1.5 rounded-full overflow-hidden">
-                    <div 
-                      className={`h-full rounded-full transition-all duration-300 ${
-                        stage === 'Prospecto' ? 'bg-blue-500' :
-                        stage === 'Contactado' ? 'bg-amber-500' :
-                        stage === 'Negociación' ? 'bg-purple-500' :
-                        stage === 'Cerrado' ? 'bg-emerald-500' : 'bg-rose-500'
-                      }`}
+                    <div
+                      className={`h-full rounded-full transition-all duration-300 ${stageStyle.bar}`}
                       style={{ width: `${pct}%` }}
                     />
                   </div>
@@ -200,7 +200,7 @@ export default function DashboardSummary({
             {/* Resultado */}
             <div className="p-3 rounded-lg bg-[#fbfbfa]/50 dark:bg-slate-900/50 border border-notion-border-light/55 dark:border-notion-border-dark/55 flex flex-col justify-center items-center text-center mt-2.5">
               <span className="text-[10px] text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-wider font-semibold">Resultado Convertido</span>
-              <span className="text-base font-extrabold text-indigo-500 mt-1">
+              <span className="font-heading tabular-nums text-base font-extrabold text-indigo-600 dark:text-indigo-400 mt-1">
                 {toCurr === 'MXN' ? formatMXN(convertedResult) : `$${convertedResult.toLocaleString('es-MX', { maximumFractionDigits: 2 })} USD`}
               </span>
             </div>
@@ -258,17 +258,17 @@ export default function DashboardSummary({
                 <div className="grid grid-cols-3 gap-1 py-2 border-y border-notion-border-light/40 dark:border-notion-border-dark/40 text-center">
                   <div>
                     <div className="text-[9px] font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-tight">Leads</div>
-                    <div className="text-xs font-bold text-notion-text-light dark:text-notion-text-dark mt-0.5">{totalLeads}</div>
+                    <div className="tabular-nums text-xs font-bold text-notion-text-light dark:text-notion-text-dark mt-0.5">{totalLeads}</div>
                   </div>
                   <div>
                     <div className="text-[9px] font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-tight">Pipe</div>
-                    <div className="text-xs font-bold text-indigo-500 mt-0.5" title={formatMXN(pipelineVal)}>
+                    <div className="tabular-nums text-xs font-bold text-indigo-600 dark:text-indigo-400 mt-0.5" title={formatMXN(pipelineVal)}>
                       ${pipelineVal >= 1000 ? `${(pipelineVal / 1000).toFixed(0)}k` : pipelineVal}
                     </div>
                   </div>
                   <div>
                     <div className="text-[9px] font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark uppercase tracking-tight">Cierres</div>
-                    <div className="text-xs font-bold text-emerald-500 mt-0.5" title={formatMXN(closedVal)}>
+                    <div className="tabular-nums text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-0.5" title={formatMXN(closedVal)}>
                       ${closedVal >= 1000 ? `${(closedVal / 1000).toFixed(0)}k` : closedVal}
                     </div>
                   </div>
@@ -277,8 +277,8 @@ export default function DashboardSummary({
                 {/* Tareas Progreso */}
                 <div className="space-y-1.5 pt-1">
                   <div className="flex justify-between text-[10px] font-medium">
-                    <span className="text-notion-text-muted-light dark:text-notion-text-muted-dark">Tareas TÚDU: {completedTasks}/{totalTasks}</span>
-                    <span className="text-notion-text-light dark:text-notion-text-dark font-bold">{taskPct}%</span>
+                    <span className="tabular-nums text-notion-text-muted-light dark:text-notion-text-muted-dark">Tareas TÚDU: {completedTasks}/{totalTasks}</span>
+                    <span className="tabular-nums text-notion-text-light dark:text-notion-text-dark font-bold">{taskPct}%</span>
                   </div>
                   <div className="w-full bg-[#EBEBE9] dark:bg-[#2A2A2A] h-1.5 rounded-full overflow-hidden">
                     <div 

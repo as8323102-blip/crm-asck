@@ -9,6 +9,7 @@ import {
   Phone
 } from 'lucide-react';
 import { formatMXN } from '../utils/currency';
+import { estadoCliente } from '../utils/statusStyles';
 
 export default function ClientList({ clients, onClientClick }) {
   const [search, setSearch] = useState('');
@@ -30,7 +31,7 @@ export default function ClientList({ clients, onClientClick }) {
   const uniqueStatuses = ["Todos", "Prospecto", "Contactado", "Negociación", "Cerrado", "Perdido / pausado"];
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 view-fade">
       {/* Controles de búsqueda y filtros */}
       <div className="flex flex-col sm:flex-row gap-3 p-4 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow">
         
@@ -86,8 +87,10 @@ export default function ClientList({ clients, onClientClick }) {
       {/* Lista / Tabla de Clientes */}
       <div className="border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark rounded-xl overflow-hidden notion-shadow">
         {filteredClients.length === 0 ? (
-          <div className="text-center py-12 text-xs text-notion-text-muted-light dark:text-notion-text-muted-dark">
-            No se encontraron clientes con los filtros seleccionados.
+          <div className="flex flex-col items-center gap-2 text-center py-12 text-xs text-notion-text-muted-light dark:text-notion-text-muted-dark">
+            <Search size={18} className="opacity-50" aria-hidden="true" />
+            <span>No se encontraron clientes con los filtros seleccionados.</span>
+            <span className="text-[10px] opacity-70">Ajusta la búsqueda o limpia los filtros para ver toda la cartera.</span>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -136,13 +139,8 @@ export default function ClientList({ clients, onClientClick }) {
 
                       {/* Estado */}
                       <td className="py-3.5 px-4">
-                        <span className={`inline-flex px-2 py-0.5 rounded text-[10px] font-semibold border ${
-                          client.estado === 'Prospecto' ? 'bg-blue-500/10 text-blue-500 border-blue-500/20' :
-                          client.estado === 'Contactado' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' :
-                          client.estado === 'Negociación' ? 'bg-purple-500/10 text-purple-500 border-purple-500/20' :
-                          client.estado === 'Cerrado' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
-                          'bg-rose-500/10 text-rose-500 border-rose-500/20'
-                        }`}>
+                        <span className={`chip text-[10px] ${estadoCliente(client.estado).chip}`}>
+                          <span aria-hidden="true" className={`w-1.5 h-1.5 rounded-full ${estadoCliente(client.estado).dot}`}></span>
                           {client.estado}
                         </span>
                       </td>
@@ -176,7 +174,7 @@ export default function ClientList({ clients, onClientClick }) {
                       </td>
 
                       {/* Monto */}
-                      <td className="py-3.5 px-4 text-right font-bold text-notion-text-light dark:text-notion-text-dark">
+                      <td className="py-3.5 px-4 text-right tabular-nums font-bold text-notion-text-light dark:text-notion-text-dark">
                         {formatMXN(client.valorEstimado)}
                       </td>
 

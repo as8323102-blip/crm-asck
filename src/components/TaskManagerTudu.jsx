@@ -16,6 +16,7 @@ import {
   TrendingUp
 } from 'lucide-react';
 import { INTEGRANTES } from '../mockData';
+import { prioridadTarea, estadoTarea } from '../utils/statusStyles';
 
 export default function TaskManagerTudu({
   tasks = [],
@@ -123,14 +124,12 @@ export default function TaskManagerTudu({
         estado: nextCol,
         completada: nextCol === 'Hecho'
       });
-      setActiveMobileTab(nextCol);
     } else if (deltaX < -swipeThreshold && idx > 0) {
       const prevCol = kanbanStates[idx - 1];
       onUpdateTask(task.id, {
         estado: prevCol,
         completada: prevCol === 'Hecho'
       });
-      setActiveMobileTab(prevCol);
     }
     setTouchState({ taskId: null, startX: 0, currentX: 0 });
   };
@@ -323,8 +322,8 @@ export default function TaskManagerTudu({
   };
 
   return (
-    <div className="space-y-6 text-xs text-left">
-      
+    <div className="space-y-6 text-xs text-left view-fade">
+
       {/* 1. Selector Horizontal de las 9 Vistas */}
       <div className="flex overflow-x-auto gap-1 bg-[#F4F4F2] dark:bg-[#1A1A1A] p-1 rounded-xl border border-notion-border-light dark:border-notion-border-dark scrollbar-none">
         {viewsList.map(v => {
@@ -334,10 +333,11 @@ export default function TaskManagerTudu({
             <button
               key={v.id}
               onClick={() => setActiveView(v.id)}
+              aria-pressed={isActive}
               className={`flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-bold text-[10px] uppercase tracking-wider transition-all ${
-                isActive 
-                  ? 'bg-indigo-600 text-white shadow-sm' 
-                  : 'text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light/20'
+                isActive
+                  ? 'bg-gradient-to-br from-asck-violet to-indigo-600 text-white shadow-sm shadow-indigo-500/20'
+                  : 'text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light/20 dark:hover:bg-notion-border-dark/30'
               }`}
               title={v.desc}
             >
@@ -369,14 +369,14 @@ export default function TaskManagerTudu({
         <div className="flex gap-2 w-full sm:w-auto">
           <button
             onClick={() => setSprintModalOpen(true)}
-            className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 border border-notion-border-light dark:border-notion-border-dark hover:bg-notion-border-light/20 text-notion-text-light dark:text-notion-text-dark rounded-lg font-bold transition-all bg-transparent"
+            className="btn-ghost flex-1 sm:flex-none px-3 py-1.5 font-bold"
           >
             <span>+ Nuevo Ciclo</span>
           </button>
-          
+
           <button
             onClick={() => setTaskFormOpen(true)}
-            className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold shadow transition-all"
+            className="btn-primary flex-1 sm:flex-none px-3 py-1.5 font-bold"
           >
             <Plus size={14} />
             <span>Crear Tarea</span>
@@ -392,23 +392,23 @@ export default function TaskManagerTudu({
           {/* Fila de Tarjetas Kpis generales */}
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3.5">
             <div className="p-4 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark text-center">
-              <span className="block text-2xl font-bold text-gray-800 dark:text-gray-200">{totalCount}</span>
+              <span className="block font-heading tabular-nums text-2xl font-bold text-gray-800 dark:text-gray-200">{totalCount}</span>
               <span className="text-[9px] uppercase tracking-wider font-extrabold text-notion-text-muted-light dark:text-notion-text-muted-dark">Total Tareas</span>
             </div>
             <div className="p-4 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark text-center">
-              <span className="block text-2xl font-bold text-amber-500">{pendingCount}</span>
+              <span className="block font-heading tabular-nums text-2xl font-bold text-amber-600 dark:text-amber-400">{pendingCount}</span>
               <span className="text-[9px] uppercase tracking-wider font-extrabold text-notion-text-muted-light dark:text-notion-text-muted-dark">Pendientes</span>
             </div>
             <div className="p-4 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark text-center">
-              <span className="block text-2xl font-bold text-indigo-500">{progressCount}</span>
+              <span className="block font-heading tabular-nums text-2xl font-bold text-indigo-600 dark:text-indigo-400">{progressCount}</span>
               <span className="text-[9px] uppercase tracking-wider font-extrabold text-notion-text-muted-light dark:text-notion-text-muted-dark">En progreso</span>
             </div>
             <div className="p-4 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark text-center">
-              <span className="block text-2xl font-bold text-emerald-500">{doneCount}</span>
+              <span className="block font-heading tabular-nums text-2xl font-bold text-emerald-600 dark:text-emerald-400">{doneCount}</span>
               <span className="text-[9px] uppercase tracking-wider font-extrabold text-notion-text-muted-light dark:text-notion-text-muted-dark">Hechas</span>
             </div>
             <div className="p-4 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark text-center col-span-2 md:col-span-1">
-              <span className="block text-2xl font-bold text-rose-500">{blockedCount}</span>
+              <span className="block font-heading tabular-nums text-2xl font-bold text-rose-600 dark:text-rose-400">{blockedCount}</span>
               <span className="text-[9px] uppercase tracking-wider font-extrabold text-notion-text-muted-light dark:text-notion-text-muted-dark">Bloqueadas</span>
             </div>
           </div>
@@ -442,30 +442,30 @@ export default function TaskManagerTudu({
                 <div key={key} className="p-5 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow space-y-4">
                   <div className="flex justify-between items-center pb-2 border-b border-notion-border-light/40 dark:border-notion-border-dark/40">
                     <span className="font-bold text-sm text-notion-text-light dark:text-notion-text-dark">Colaborador: {name}</span>
-                    <span className="font-mono font-bold text-indigo-500 bg-indigo-500/10 px-2 py-0.5 rounded text-[10px]">{value.pct}% Completado</span>
+                    <span className="tabular-nums font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded text-[10px]">{value.pct}% Completado</span>
                   </div>
 
                   {/* Barra progreso personal */}
                   <div className="space-y-1.5">
                     <div className="w-full bg-[#EBEBE9] dark:bg-[#2E2E2E] h-2 rounded-full overflow-hidden">
-                      <div className="bg-indigo-600 h-full rounded-full transition-all duration-300" style={{ width: `${value.pct}%` }} />
+                      <div className="bg-gradient-to-r from-asck-violet to-indigo-600 h-full rounded-full transition-all duration-300" style={{ width: `${value.pct}%` }} />
                     </div>
-                    <div className="flex justify-between text-[9px] text-notion-text-muted-light dark:text-notion-text-muted-dark font-mono">
+                    <div className="flex justify-between text-[9px] text-notion-text-muted-light dark:text-notion-text-muted-dark tabular-nums">
                       <span>{value.done} de {value.total} tareas en total</span>
                     </div>
                   </div>
 
                   {/* Detalle Prioridades */}
-                  <div className="grid grid-cols-3 gap-2.5 pt-1 text-center font-mono">
-                    <div className="p-2 rounded bg-rose-500/5 border border-rose-500/10 text-rose-500">
-                      <div className="text-[8px] uppercase font-semibold text-gray-500 dark:text-gray-400">Criticas P0</div>
+                  <div className="grid grid-cols-3 gap-2.5 pt-1 text-center tabular-nums">
+                    <div className="p-2 rounded bg-rose-500/5 border border-rose-500/10 text-rose-600 dark:text-rose-400">
+                      <div className="text-[8px] uppercase font-semibold text-gray-500 dark:text-gray-400">Críticas P0</div>
                       <div className="text-xs font-bold mt-0.5">{value.p0}</div>
                     </div>
-                    <div className="p-2 rounded bg-amber-500/5 border border-amber-500/10 text-amber-500">
-                      <div className="text-[8px] uppercase font-semibold text-gray-500 dark:text-gray-400">Conversion P1</div>
+                    <div className="p-2 rounded bg-amber-500/5 border border-amber-500/10 text-amber-600 dark:text-amber-400">
+                      <div className="text-[8px] uppercase font-semibold text-gray-500 dark:text-gray-400">Conversión P1</div>
                       <div className="text-xs font-bold mt-0.5">{value.p1}</div>
                     </div>
-                    <div className="p-2 rounded bg-blue-500/5 border border-blue-500/10 text-blue-500">
+                    <div className="p-2 rounded bg-blue-500/5 border border-blue-500/10 text-blue-600 dark:text-blue-400">
                       <div className="text-[8px] uppercase font-semibold text-gray-500 dark:text-gray-400">Soporte P2</div>
                       <div className="text-xs font-bold mt-0.5">{value.p2}</div>
                     </div>
@@ -569,8 +569,8 @@ export default function TaskManagerTudu({
                 className="w-full p-2.5 rounded border border-notion-border-light dark:border-notion-border-dark bg-[#F4F4F2] dark:bg-[#1A1A1A] focus:outline-none"
               >
                 <option value="Todos">Ninguno (Normal)</option>
-                <option value="vencidos_bloqueados">🚨 Vencidos o Bloqueados</option>
-                <option value="completados">✅ Completados</option>
+                <option value="vencidos_bloqueados">Vencidos o bloqueados</option>
+                <option value="completados">Completados</option>
               </select>
             </div>
 
@@ -614,25 +614,16 @@ export default function TaskManagerTudu({
                         {t.apoyo || '-'}
                       </td>
                       <td className="p-3 text-center">
-                        <span className={`text-[8px] font-extrabold px-1.5 py-0.5 rounded ${
-                          t.prioridad === 'P0' ? 'bg-rose-500/10 text-rose-500 border border-rose-500/20' :
-                          t.prioridad === 'P1' ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20' :
-                          'bg-blue-500/10 text-blue-500 border border-blue-500/20'
-                        }`}>
+                        <span className={`chip text-[8px] font-extrabold ${prioridadTarea(t.prioridad).chip}`}>
                           {t.prioridad || 'P2'}
                         </span>
                       </td>
                       <td className="p-3">
                         <select
                           value={t.estado || 'Pendiente'}
+                          aria-label={`Estado de la tarea ${t.titulo}`}
                           onChange={(e) => onUpdateTask(t.id, { estado: e.target.value, completada: e.target.value === 'Hecho' })}
-                          className={`text-[9px] font-bold px-2 py-1 rounded border bg-transparent cursor-pointer focus:outline-none ${
-                            t.estado === 'Hecho' ? 'text-emerald-500 border-emerald-500/20 bg-emerald-500/5' :
-                            t.estado === 'En progreso' ? 'text-indigo-500 border-indigo-500/20 bg-indigo-500/5' :
-                            t.estado === 'Bloqueado' ? 'text-rose-500 border-rose-500/20 bg-rose-500/5' :
-                            t.estado === 'Pausado' ? 'text-amber-500 border-amber-500/20 bg-amber-500/5' :
-                            'text-gray-500 border-gray-500/20 bg-gray-500/5'
-                          }`}
+                          className={`text-[9px] font-bold px-2 py-1 rounded border bg-transparent cursor-pointer focus:outline-none ${estadoTarea(t.estado)}`}
                         >
                           <option value="Pendiente">Pendiente</option>
                           <option value="En progreso">En progreso</option>
@@ -663,41 +654,39 @@ export default function TaskManagerTudu({
       {activeView !== 'mando' && activeView !== 'todas' && (
         <div className="space-y-3.5">
           <div className="p-3 bg-indigo-500/5 border border-indigo-500/10 rounded-xl flex items-center justify-between">
-            <span className="font-bold text-indigo-500">Pendientes encontrados en esta vista: {filteredTasks.length}</span>
-            <span className="text-[10px] font-mono text-notion-text-muted-light dark:text-notion-text-muted-dark">Orden prioritario P0 ➜ P2</span>
+            <span className="font-bold text-indigo-600 dark:text-indigo-400 tabular-nums">Pendientes encontrados en esta vista: {filteredTasks.length}</span>
+            <span className="text-[10px] font-mono text-notion-text-muted-light dark:text-notion-text-muted-dark">Orden prioritario P0 → P2</span>
           </div>
 
           {filteredTasks.length === 0 ? (
-            <div className="text-center py-12 border border-dashed border-notion-border-light dark:border-notion-border-dark rounded-xl bg-notion-card-light dark:bg-notion-card-dark text-notion-text-muted-light dark:text-notion-text-muted-dark italic">
-              No hay tareas en esta vista.
+            <div className="flex flex-col items-center gap-2 text-center py-12 border border-dashed border-notion-border-light dark:border-notion-border-dark rounded-xl bg-notion-card-light dark:bg-notion-card-dark text-notion-text-muted-light dark:text-notion-text-muted-dark">
+              <CheckCircle size={18} className="opacity-50" aria-hidden="true" />
+              <span>No hay tareas en esta vista.</span>
+              <span className="text-[10px] opacity-70">Crea una tarea nueva o cambia de vista para ver más pendientes.</span>
             </div>
           ) : (
             <div className="grid grid-cols-1 gap-3.5">
-              {filteredTasks.map(t => (
-                <div 
+              {filteredTasks.map(t => {
+                const prio = prioridadTarea(t.prioridad);
+                const PrioIcon = prio.icon;
+                return (
+                <div
                   key={t.id}
                   onTouchStart={(e) => handleTouchStart(e, t.id)}
                   onTouchMove={handleTouchMove}
                   onTouchEnd={() => handleTouchEnd(t)}
-                  className={`p-4 rounded-xl border bg-notion-card-light dark:bg-notion-card-dark notion-shadow flex flex-col md:flex-row md:items-start justify-between gap-4 border-l-4 ${
-                    t.prioridad === 'P0' ? 'border-l-rose-500 border-notion-border-light dark:border-notion-border-dark' :
-                    t.prioridad === 'P1' ? 'border-l-amber-500 border-notion-border-light dark:border-notion-border-dark' :
-                    'border-l-blue-500 border-notion-border-light dark:border-notion-border-dark'
-                  }`}
+                  className={`p-4 rounded-xl border bg-notion-card-light dark:bg-notion-card-dark notion-shadow flex flex-col md:flex-row md:items-start justify-between gap-4 border-l-4 border-notion-border-light dark:border-notion-border-dark ${prio.edge}`}
                 >
                   <div className="space-y-3 flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-[8px] font-mono font-bold px-1.5 py-0.5 rounded bg-zinc-500/10 text-zinc-500 uppercase">
+                      <span className="text-[8px] font-mono font-bold px-1.5 py-0.5 rounded bg-zinc-500/10 text-zinc-600 dark:text-zinc-400 uppercase">
                         ID: {t.id.replace('t-excel-', '')}
                       </span>
-                      <span className="text-[8px] font-bold px-1.5 py-0.5 rounded bg-indigo-500/10 text-indigo-500 uppercase">
-                        📁 {t.macroarea || t.area || 'General'}
+                      <span className="text-[8px] font-bold px-1.5 py-0.5 rounded bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 uppercase">
+                        {t.macroarea || t.area || 'General'}
                       </span>
-                      <span className={`text-[8px] font-extrabold px-1.5 py-0.5 rounded ${
-                        t.prioridad === 'P0' ? 'bg-rose-500/10 text-rose-500 border border-rose-500/20' :
-                        t.prioridad === 'P1' ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20' :
-                        'bg-blue-500/10 text-blue-500 border border-blue-500/20'
-                      }`}>
+                      <span className={`chip text-[8px] font-extrabold ${prio.chip}`}>
+                        <PrioIcon size={9} aria-hidden="true" />
                         {t.prioridad}
                       </span>
                     </div>
@@ -708,14 +697,14 @@ export default function TaskManagerTudu({
 
                     {t.justificacion && (
                       <p className="text-[10px] text-notion-text-muted-light dark:text-notion-text-muted-dark italic leading-relaxed border-l-2 border-indigo-500/20 pl-2">
-                        🧠 <strong>Justificación:</strong> {t.justificacion}
+                        <strong>Justificación:</strong> {t.justificacion}
                       </p>
                     )}
 
                     {t.bloqueo && (
-                      <div className="p-2 rounded bg-rose-500/5 border border-rose-500/10 text-rose-600 dark:text-rose-400 font-mono text-[9px] leading-normal flex items-start gap-1">
-                        <AlertCircle size={10} className="mt-0.5 flex-shrink-0" />
-                        <span>⚠️ <strong>Detenido por:</strong> {t.bloqueo}</span>
+                      <div className="p-2 rounded bg-rose-500/5 border border-rose-500/10 text-rose-600 dark:text-rose-400 text-[9px] leading-normal flex items-start gap-1">
+                        <AlertCircle size={10} className="mt-0.5 flex-shrink-0" aria-hidden="true" />
+                        <span><strong>Detenido por:</strong> {t.bloqueo}</span>
                       </div>
                     )}
 
@@ -741,14 +730,9 @@ export default function TaskManagerTudu({
                   <div className="flex md:flex-col justify-end items-center gap-2 flex-shrink-0 pt-2 md:pt-0 border-t md:border-t-0 border-dashed border-notion-border-light/40 dark:border-notion-border-dark/40">
                     <select
                       value={t.estado || 'Pendiente'}
+                      aria-label={`Estado de la tarea ${t.titulo}`}
                       onChange={(e) => onUpdateTask(t.id, { estado: e.target.value, completada: e.target.value === 'Hecho' })}
-                      className={`w-full md:w-28 text-[9px] font-bold p-2 rounded border bg-transparent cursor-pointer focus:outline-none ${
-                        t.estado === 'Hecho' ? 'text-emerald-500 border-emerald-500/20 bg-emerald-500/5' :
-                        t.estado === 'En progreso' ? 'text-indigo-500 border-indigo-500/20 bg-indigo-500/5' :
-                        t.estado === 'Bloqueado' ? 'text-rose-500 border-rose-500/20 bg-rose-500/5' :
-                        t.estado === 'Pausado' ? 'text-amber-500 border-amber-500/20 bg-amber-500/5' :
-                        'text-gray-500 border-gray-500/20 bg-gray-500/5'
-                      }`}
+                      className={`w-full md:w-28 text-[9px] font-bold p-2 rounded border bg-transparent cursor-pointer focus:outline-none ${estadoTarea(t.estado)}`}
                     >
                       <option value="Pendiente">Pendiente</option>
                       <option value="En progreso">En progreso</option>
@@ -758,12 +742,16 @@ export default function TaskManagerTudu({
                       <option value="Cancelado">Cancelado</option>
                     </select>
 
-                    <div className="text-[9px] text-notion-text-muted-light dark:text-notion-text-muted-dark font-bold bg-[#F4F4F2] dark:bg-[#1A1A1A] px-2 py-1 rounded w-full md:w-28 text-center truncate">
-                      👉 {t.proximaAccion || 'No tiene acción registrada'}
+                    <div
+                      className="text-[9px] text-notion-text-muted-light dark:text-notion-text-muted-dark font-bold bg-[#F4F4F2] dark:bg-[#1A1A1A] px-2 py-1 rounded w-full md:w-28 text-center truncate"
+                      title={t.proximaAccion || 'Sin próxima acción registrada'}
+                    >
+                      Siguiente: {t.proximaAccion || 'sin registrar'}
                     </div>
 
                     <button
                       onClick={() => onDeleteTask(t.id)}
+                      aria-label={`Borrar tarea ${t.titulo}`}
                       className="p-2 rounded text-notion-text-muted-light dark:text-notion-text-muted-dark hover:text-rose-500 hover:bg-rose-500/5 transition-colors border border-notion-border-light dark:border-notion-border-dark flex items-center justify-center gap-1 text-[9px] font-bold"
                     >
                       <Trash2 size={10} />
@@ -771,7 +759,8 @@ export default function TaskManagerTudu({
                     </button>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
@@ -872,13 +861,13 @@ export default function TaskManagerTudu({
                 <button
                   type="button"
                   onClick={() => setSprintModalOpen(false)}
-                  className="px-3 py-1.5 border border-notion-border-light dark:border-notion-border-dark text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light/20 rounded-lg font-semibold"
+                  className="btn-ghost px-3 py-1.5 text-notion-text-muted-light dark:text-notion-text-muted-dark"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold shadow"
+                  className="btn-primary px-4 py-1.5 font-bold"
                 >
                   Crear Ciclo
                 </button>
@@ -1067,13 +1056,13 @@ export default function TaskManagerTudu({
                 <button
                   type="button"
                   onClick={() => setTaskFormOpen(false)}
-                  className="px-3 py-1.5 border border-notion-border-light dark:border-notion-border-dark text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light/20 rounded-lg font-semibold"
+                  className="btn-ghost px-3 py-1.5 text-notion-text-muted-light dark:text-notion-text-muted-dark"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold shadow"
+                  className="btn-primary px-4 py-1.5 font-bold"
                 >
                   Crear Tarea
                 </button>

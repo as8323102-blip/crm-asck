@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import { INTEGRANTES } from '../mockData';
 import {
-  ArrowRightLeft
+  ArrowRightLeft,
+  Inbox
 } from 'lucide-react';
 import { formatMXN } from '../utils/currency';
+import { estadoCliente, prioridadCliente } from '../utils/statusStyles';
 
 export default function KanbanBoard({ clients, onMoveClient, onClientClick }) {
   const [draggedOverColumn, setDraggedOverColumn] = useState(null);
   const [openMoveMenu, setOpenMoveMenu] = useState(null);
 
   const columns = [
-    { id: 'Prospecto', label: 'Prospectos', color: 'border-t-blue-500 bg-blue-500/5 text-blue-500' },
-    { id: 'Contactado', label: 'Contactados', color: 'border-t-amber-500 bg-amber-500/5 text-amber-500' },
-    { id: 'Negociación', label: 'Negociación', color: 'border-t-purple-500 bg-purple-500/5 text-purple-500' },
-    { id: 'Cerrado', label: 'Cerrados / Ganado', color: 'border-t-emerald-500 bg-emerald-500/5 text-emerald-500' },
-    { id: 'Perdido / pausado', label: 'Perdidos / Pausados', color: 'border-t-rose-500 bg-rose-500/5 text-rose-500' }
+    { id: 'Prospecto', label: 'Prospectos' },
+    { id: 'Contactado', label: 'Contactados' },
+    { id: 'Negociación', label: 'Negociación' },
+    { id: 'Cerrado', label: 'Cerrados / Ganado' },
+    { id: 'Perdido / pausado', label: 'Perdidos / Pausados' }
   ];
 
   // Drag and Drop Handlers
@@ -48,14 +50,15 @@ export default function KanbanBoard({ clients, onMoveClient, onClientClick }) {
   };
 
   return (
-    <div className="space-y-4 text-xs">
-      
+    <div className="space-y-4 text-xs view-fade">
+
       {/* Grid de Columnas (Kanban) */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-start overflow-x-auto pb-4">
         {columns.map((column) => {
           const columnClients = clients.filter(c => c.estado === column.id);
           const totalValue = columnClients.reduce((sum, c) => sum + (c.valorEstimado || 0), 0);
           const isOver = draggedOverColumn === column.id;
+          const st = estadoCliente(column.id);
 
           return (
             <div
@@ -66,20 +69,21 @@ export default function KanbanBoard({ clients, onMoveClient, onClientClick }) {
               className={`
                 flex flex-col rounded-xl border border-notion-border-light dark:border-notion-border-dark
                 bg-notion-card-light dark:bg-notion-card-dark/20 min-h-[450px] max-h-[700px] overflow-hidden transition-all duration-150
-                border-t-4 ${column.color}
+                border-t-4 ${st.colTop} ${st.colText}
                 ${isOver ? 'ring-2 ring-indigo-500/50 bg-indigo-500/5' : ''}
               `}
             >
               {/* Encabezado de Columna */}
               <div className="p-3 border-b border-notion-border-light dark:border-notion-border-dark flex items-center justify-between bg-notion-card-light dark:bg-notion-card-dark">
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-xs text-notion-text-light dark:text-notion-text-dark">{column.label}</span>
-                  <span className="text-[10px] px-1.5 py-0.2 rounded bg-notion-border-light dark:border-notion-border-dark text-notion-text-muted-light dark:text-notion-text-muted-dark font-mono font-bold">
+                <div className="flex items-center gap-2 min-w-0">
+                  <span aria-hidden="true" className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${st.dot}`}></span>
+                  <span className="font-bold text-xs text-notion-text-light dark:text-notion-text-dark truncate">{column.label}</span>
+                  <span className="tabular-nums text-[10px] px-1.5 py-0.2 rounded bg-notion-border-light dark:bg-notion-border-dark text-notion-text-muted-light dark:text-notion-text-muted-dark font-bold flex-shrink-0">
                     {columnClients.length}
                   </span>
                 </div>
                 {totalValue > 0 && (
-                  <span className="text-[9px] font-extrabold text-notion-text-muted-light dark:text-notion-text-muted-dark">
+                  <span className="tabular-nums text-[9px] font-extrabold text-notion-text-muted-light dark:text-notion-text-muted-dark flex-shrink-0" title={formatMXN(totalValue)}>
                     {totalValue >= 1000 ? `$${(totalValue / 1000).toFixed(0)}k` : `$${totalValue}`}
                   </span>
                 )}
@@ -88,18 +92,31 @@ export default function KanbanBoard({ clients, onMoveClient, onClientClick }) {
               {/* Contenedor de Tarjetas Compactas */}
               <div className="p-2.5 space-y-2.5 overflow-y-auto flex-1 custom-scrollbar">
                 {columnClients.length === 0 ? (
-                  <div className="text-center py-6 text-[10px] text-notion-text-muted-light dark:text-notion-text-muted-dark border border-dashed border-notion-border-light dark:border-notion-border-dark rounded-lg">
-                    Soltar aquí
+                  <div className="flex flex-col items-center gap-1.5 text-center py-8 text-[10px] text-notion-text-muted-light dark:text-notion-text-muted-dark border border-dashed border-notion-border-light dark:border-notion-border-dark rounded-lg">
+                    <Inbox size={16} className="opacity-60" aria-hidden="true" />
+                    <span>Sin prospectos en esta etapa.</span>
+                    <span className="opacity-70">Arrastra una tarjeta aquí.</span>
                   </div>
                 ) : (
                   columnClients.map((client) => {
                     const owner = INTEGRANTES.find(i => i.id === client.responsableId);
-                    
+                    const prio = prioridadCliente(client.prioridad || 'Baja');
+                    const PrioIcon = prio.icon;
+
                     return (
                       <div
                         key={client.id}
                         draggable
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`Abrir prospecto ${client.nombre}`}
                         onClick={() => onClientClick(client)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            onClientClick(client);
+                          }
+                        }}
                         onDragStart={(e) => handleDragStart(e, client.id)}
                         className="
                           p-3 rounded-lg border border-notion-border-light dark:border-notion-border-dark
@@ -112,11 +129,8 @@ export default function KanbanBoard({ clients, onMoveClient, onClientClick }) {
                           <h4 className="font-bold text-[11px] text-notion-text-light dark:text-notion-text-dark truncate leading-tight group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors">
                             {client.nombre}
                           </h4>
-                          <span className={`text-[8px] font-extrabold px-1 rounded uppercase tracking-wide flex-shrink-0 ${
-                            client.prioridad === 'Alta' ? 'bg-rose-500/10 text-rose-500' :
-                            client.prioridad === 'Media' ? 'bg-amber-500/10 text-amber-500' :
-                            'bg-blue-500/10 text-blue-500'
-                          }`}>
+                          <span className={`chip text-[8px] font-extrabold uppercase tracking-wide flex-shrink-0 ${prio.chip}`}>
+                            <PrioIcon size={9} aria-hidden="true" />
                             {client.prioridad || 'Baja'}
                           </span>
                         </div>
@@ -129,7 +143,7 @@ export default function KanbanBoard({ clients, onMoveClient, onClientClick }) {
                         {/* Fila 3: Monto · Responsable (Estilo Notion solicitado) */}
                         <div className="flex items-center justify-between pt-1.5 text-[9px] text-notion-text-muted-light dark:text-notion-text-muted-dark border-t border-notion-border-light/20 dark:border-notion-border-dark/20">
                           <div className="flex items-center gap-1">
-                            <span className="font-bold text-notion-text-light dark:text-notion-text-dark">
+                            <span className="tabular-nums font-bold text-notion-text-light dark:text-notion-text-dark">
                               {client.valorEstimado ? formatMXN(client.valorEstimado) : '$0 MXN'}
                             </span>
                             <span>·</span>
