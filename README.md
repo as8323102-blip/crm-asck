@@ -59,8 +59,10 @@ El CRM puede operar en dos modos mediante la variable `VITE_DATA_PROVIDER` en tu
   VITE_SUPABASE_URL=https://tu-proyecto.supabase.co
   VITE_SUPABASE_ANON_KEY=tu-anon-key-de-supabase
   ```
-* Ejecuta el script de base de datos en Supabase:
-  👉 [schema.sql](src/services/supabase/schema.sql)
+* Ejecuta el script de base de datos en Supabase (esquema de PRODUCCIÓN con RLS correcto):
+  👉 [supabase/schema.sql](supabase/schema.sql) y luego [supabase/seed.sql](supabase/seed.sql)
+  Guía completa: [CRM-PRODUCCION-ACTIVACION.md](CRM-PRODUCCION-ACTIVACION.md).
+  ⚠️ NO uses `src/services/supabase/schema.sql` (obsoleto/inseguro: policy `USING(true)` en integrantes).
 
 ---
 
