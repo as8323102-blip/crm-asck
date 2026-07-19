@@ -1,16 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
+import { X } from 'lucide-react';
 import { useTheme } from './hooks/useTheme';
 import MainLayout from './layouts/MainLayout';
+import ErrorBoundary from './components/ErrorBoundary';
 import DashboardSummary from './components/DashboardSummary';
 import KanbanBoard from './components/KanbanBoard';
 import ClientList from './components/ClientList';
 import ClientDetail from './components/ClientDetail';
 import NewClientModal from './components/NewClientModal';
 import TaskManagerTudu from './components/TaskManagerTudu';
-import CalendarAgenda from './components/CalendarAgenda';
 import ActivityFeed from './components/ActivityFeed';
-import ExcelImportExport from './components/ExcelImportExport';
-import ConfigPanel from './components/ConfigPanel';
+// Code-splitting: componentes pesados de pestaña cargados bajo demanda
+const CalendarAgenda = lazy(() => import('./components/CalendarAgenda'));
+const ExcelImportExport = lazy(() => import('./components/ExcelImportExport')); // arrastra la librería xlsx
+const ConfigPanel = lazy(() => import('./components/ConfigPanel'));
 import { cloudSyncService } from './services/cloudSyncService';
 import { offlineQueue } from './services/offlineQueue';
 
@@ -66,6 +69,8 @@ export default function App() {
     setSelectedClient,
     newClientModalOpen,
     setNewClientModalOpen,
+    lastError,
+    setLastError,
     handleMoveClient,
     handleUpdateClient,
     handleCreateClient,
@@ -335,7 +340,16 @@ export default function App() {
     };
   }, []);
 
+  // Spinner reutilizable (estado de carga y fallback de Suspense) con semántica de estado
+  const loadingFallback = (
+    <div role="status" aria-live="polite" className="flex flex-col items-center justify-center py-20 space-y-4">
+      <div className="w-8 h-8 rounded-full border-2 border-indigo-500 border-t-transparent animate-spin"></div>
+      <p className="text-xs text-notion-text-muted-light dark:text-notion-text-muted-dark">Cargando el espacio de trabajo...</p>
+    </div>
+  );
+
   return (
+    <ErrorBoundary>
     <MainLayout
       activeTab={activeTab}
       setActiveTab={setActiveTab}
@@ -353,14 +367,28 @@ export default function App() {
       syncing={syncing}
       onStartSync={handleStartSync}
     >
-      
-      {loading ? (
-        <div className="flex flex-col items-center justify-center py-20 space-y-4">
-          <div className="w-8 h-8 rounded-full border-2 border-indigo-500 border-t-transparent animate-spin"></div>
-          <p className="text-xs text-notion-text-muted-light dark:text-notion-text-muted-dark">Cargando el espacio de trabajo...</p>
+
+      {/* Aviso de error de escritura (Supabase / sync) */}
+      {lastError && (
+        <div
+          role="alert"
+          className="fixed bottom-4 right-4 z-[200] max-w-sm p-3 rounded-lg border border-rose-500/30 bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-300 text-xs shadow-lg flex items-start gap-2"
+        >
+          <span className="flex-1">{lastError}</span>
+          <button
+            onClick={() => setLastError(null)}
+            aria-label="Cerrar aviso"
+            className="p-0.5 rounded hover:bg-rose-500/10"
+          >
+            <X size={14} />
+          </button>
         </div>
+      )}
+
+      {loading ? (
+        loadingFallback
       ) : (
-        <>
+        <Suspense fallback={loadingFallback}>
           {activeTab === 'dashboard' && (
             <DashboardSummary
               clients={clients}
@@ -456,7 +484,7 @@ export default function App() {
               onUnlinkSync={handleUnlinkSync}
             />
           )}
-        </>
+        </Suspense>
       )}
 
       {/* Drawer Detalle de Cliente (Notion style modal centrado) */}
@@ -486,5 +514,6 @@ export default function App() {
       )}
 
     </MainLayout>
+    </ErrorBoundary>
   );
 }

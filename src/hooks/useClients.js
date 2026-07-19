@@ -8,6 +8,8 @@ export function useClients(currentUser, logEvent, tasks, setTasks) {
   const [notes, setNotes] = useState([]);
   const [selectedClient, setSelectedClient] = useState(null);
   const [newClientModalOpen, setNewClientModalOpen] = useState(false);
+  // Último error de escritura para exponerlo en la UI (banner/toast con role="alert")
+  const [lastError, setLastError] = useState(null);
 
   const loadClientsAndNotes = async () => {
     try {
@@ -74,6 +76,7 @@ export function useClients(currentUser, logEvent, tasks, setTasks) {
       }
     } catch (err) {
       console.error("Error en handleMoveClient:", err);
+      setLastError(`No se pudo mover el cliente. ${err?.message || 'Reintenta más tarde.'}`);
     }
   };
 
@@ -110,6 +113,7 @@ export function useClients(currentUser, logEvent, tasks, setTasks) {
       }
     } catch (err) {
       console.error("Error en handleUpdateClient:", err);
+      setLastError(`No se pudieron guardar los cambios del cliente. ${err?.message || 'Reintenta más tarde.'}`);
     }
   };
 
@@ -145,6 +149,7 @@ export function useClients(currentUser, logEvent, tasks, setTasks) {
       setNotes(prev => [welcomeNote, ...prev]);
     } catch (err) {
       console.error("Error en handleCreateClient:", err);
+      setLastError(`No se pudo registrar el cliente. ${err?.message || 'Reintenta más tarde.'}`);
     }
   };
 
@@ -166,6 +171,7 @@ export function useClients(currentUser, logEvent, tasks, setTasks) {
       setSelectedClient(null);
     } catch (err) {
       console.error("Error en handleDeleteClient:", err);
+      setLastError(`No se pudo eliminar el cliente. ${err?.message || 'Reintenta más tarde.'}`);
     }
   };
 
@@ -205,6 +211,7 @@ export function useClients(currentUser, logEvent, tasks, setTasks) {
       }
     } catch (err) {
       console.error("Error en handleAddNote:", err);
+      setLastError(`No se pudo guardar la nota. ${err?.message || 'Reintenta más tarde.'}`);
     }
   };
 
@@ -217,6 +224,8 @@ export function useClients(currentUser, logEvent, tasks, setTasks) {
     setSelectedClient,
     newClientModalOpen,
     setNewClientModalOpen,
+    lastError,
+    setLastError,
     loadClientsAndNotes,
     handleMoveClient,
     handleUpdateClient,

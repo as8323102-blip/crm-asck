@@ -61,3 +61,11 @@
   box-shadow: 0 0 20px 1px rgba(99, 102, 241, 0.08);
   border-color: rgba(99, 102, 241, 0.3);
 }
+
+/* Accesibilidad: respetar la preferencia de movimiento reducido del sistema */
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse,
+  .animate-spin {
+    animation: none;
+  }
+}

@@ -25,15 +25,16 @@ export default function LoginView({ onLogin, errorMsg, loading }) {
         </div>
 
         {errorMsg && (
-          <div className="p-3 text-xs text-red-600 bg-red-50 dark:bg-red-950/20 dark:text-red-400 rounded-lg border border-red-200 dark:border-red-900">
+          <div role="alert" className="p-3 text-xs text-red-600 bg-red-50 dark:bg-red-950/20 dark:text-red-400 rounded-lg border border-red-200 dark:border-red-900">
             {errorMsg}
           </div>
         )}
 
         <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Correo Electrónico</label>
+            <label htmlFor="login-email" className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Correo Electrónico</label>
             <input
+              id="login-email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -44,8 +45,9 @@ export default function LoginView({ onLogin, errorMsg, loading }) {
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Contraseña</label>
+            <label htmlFor="login-password" className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Contraseña</label>
             <input
+              id="login-password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

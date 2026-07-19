@@ -278,10 +278,11 @@ export default function ExcelImportExport({ clients, setClients, logEvent }) {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 text-[11px]">
               {Object.keys(mappings).map((field) => (
                 <div key={field} className="space-y-1">
-                  <label className="capitalize font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">
+                  <label htmlFor={`xlsx-map-${field}`} className="capitalize font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">
                     {field === 'nombre' ? 'Nombre / Negocio *' : field}
                   </label>
                   <select
+                    id={`xlsx-map-${field}`}
                     value={mappings[field]}
                     onChange={(e) => handleMappingChange(field, e.target.value)}
                     className="w-full px-2 py-1 rounded border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark text-notion-text-light dark:text-notion-text-dark"
@@ -348,8 +349,9 @@ export default function ExcelImportExport({ clients, setClients, logEvent }) {
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-[11px] p-4 rounded-xl border border-notion-border-light/60 dark:border-notion-border-dark/60 bg-[#fbfbfa]/30 dark:bg-[#1c1c1c]/30">
           <div className="space-y-1">
-            <label className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Filtrar por Estado</label>
+            <label htmlFor="xlsx-filter-estado" className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Filtrar por Estado</label>
             <select
+              id="xlsx-filter-estado"
               value={filterEstado}
               onChange={(e) => setFilterEstado(e.target.value)}
               className="w-full px-2.5 py-1.5 rounded border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark text-notion-text-light dark:text-notion-text-dark"
@@ -364,8 +366,9 @@ export default function ExcelImportExport({ clients, setClients, logEvent }) {
           </div>
 
           <div className="space-y-1">
-            <label className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Filtrar por Responsable</label>
+            <label htmlFor="xlsx-filter-responsable" className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Filtrar por Responsable</label>
             <select
+              id="xlsx-filter-responsable"
               value={filterResponsable}
               onChange={(e) => setFilterResponsable(e.target.value)}
               className="w-full px-2.5 py-1.5 rounded border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark text-notion-text-light dark:text-notion-text-dark"
@@ -378,8 +381,9 @@ export default function ExcelImportExport({ clients, setClients, logEvent }) {
           </div>
 
           <div className="space-y-1">
-            <label className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Filtrar por Prioridad</label>
+            <label htmlFor="xlsx-filter-prioridad" className="font-semibold text-notion-text-muted-light dark:text-notion-text-muted-dark">Filtrar por Prioridad</label>
             <select
+              id="xlsx-filter-prioridad"
               value={filterPrioridad}
               onChange={(e) => setFilterPrioridad(e.target.value)}
               className="w-full px-2.5 py-1.5 rounded border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark text-notion-text-light dark:text-notion-text-dark"
