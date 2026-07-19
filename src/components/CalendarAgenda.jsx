@@ -209,7 +209,7 @@ export default function CalendarAgenda({
   };
 
   return (
-    <div className="space-y-4 text-xs">
+    <div className="space-y-4 text-xs view-fade">
       <div className="flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center p-4 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow">
         
         {/* Navegación de Fechas */}
@@ -259,21 +259,24 @@ export default function CalendarAgenda({
           </div>
 
           <div className="flex border border-notion-border-light dark:border-notion-border-dark rounded-lg overflow-hidden bg-notion-bg-light dark:bg-notion-bg-dark font-bold text-[10px] w-full sm:w-auto">
-            <button 
-              onClick={() => setCurrentView('day')} 
-              className={`flex-1 sm:flex-none text-center px-3 py-1.5 ${currentView === 'day' ? 'bg-indigo-600 text-white' : 'text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light/10'}`}
+            <button
+              onClick={() => setCurrentView('day')}
+              aria-pressed={currentView === 'day'}
+              className={`flex-1 sm:flex-none text-center px-3 py-1.5 transition-colors ${currentView === 'day' ? 'bg-gradient-to-br from-asck-violet to-indigo-600 text-white' : 'text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light/10 dark:hover:bg-notion-border-dark/30'}`}
             >
               Día
             </button>
-            <button 
-              onClick={() => setCurrentView('week')} 
-              className={`flex-1 sm:flex-none text-center px-3 py-1.5 border-x border-notion-border-light dark:border-notion-border-dark ${currentView === 'week' ? 'bg-indigo-600 text-white' : 'text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light/10'}`}
+            <button
+              onClick={() => setCurrentView('week')}
+              aria-pressed={currentView === 'week'}
+              className={`flex-1 sm:flex-none text-center px-3 py-1.5 border-x border-notion-border-light dark:border-notion-border-dark transition-colors ${currentView === 'week' ? 'bg-gradient-to-br from-asck-violet to-indigo-600 text-white' : 'text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light/10 dark:hover:bg-notion-border-dark/30'}`}
             >
               Semana
             </button>
-            <button 
-              onClick={() => setCurrentView('month')} 
-              className={`flex-1 sm:flex-none text-center px-3 py-1.5 ${currentView === 'month' ? 'bg-indigo-600 text-white' : 'text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light/10'}`}
+            <button
+              onClick={() => setCurrentView('month')}
+              aria-pressed={currentView === 'month'}
+              className={`flex-1 sm:flex-none text-center px-3 py-1.5 transition-colors ${currentView === 'month' ? 'bg-gradient-to-br from-asck-violet to-indigo-600 text-white' : 'text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light/10 dark:hover:bg-notion-border-dark/30'}`}
             >
               Mes
             </button>
@@ -281,7 +284,7 @@ export default function CalendarAgenda({
 
           <button
             onClick={() => setModalOpen(true)}
-            className="flex items-center justify-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-sm transition-all w-full sm:w-auto"
+            className="btn-primary px-3 py-1.5 font-bold w-full sm:w-auto"
           >
             <Plus size={14} className="flex-shrink-0" />
             <span>Agendar Evento</span>
@@ -439,13 +442,13 @@ export default function CalendarAgenda({
                   </div>
 
                   {/* Celda Evento/Click */}
-                  <div 
+                  <div
                     onClick={() => handleOpenTimeCell(dateStr, hour)}
-                    className="flex-1 p-1.5 min-h-[48px] cursor-pointer space-y-1 relative"
+                    className="flex-1 p-1.5 min-h-[48px] cursor-pointer space-y-1 relative group"
                   >
                     {dayEvents.length === 0 ? (
-                      <span className="absolute right-3 top-1/2 -translate-y-1/2 opacity-0 hover:opacity-100 text-[9px] font-bold text-indigo-500 flex items-center gap-1">
-                        <PlusCircle size={12} /> + Reservar Slot
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-[9px] font-bold text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
+                        <PlusCircle size={12} aria-hidden="true" /> Agendar en este horario
                       </span>
                     ) : (
                       dayEvents.map(ev => (
@@ -509,10 +512,10 @@ export default function CalendarAgenda({
                     onChange={(e) => setEvtTipo(e.target.value)}
                     className="w-full px-2 py-1.5 rounded border border-notion-border-light dark:border-notion-border-dark bg-notion-bg-light dark:bg-notion-bg-dark text-notion-text-light dark:text-notion-text-dark focus:outline-none"
                   >
-                    <option value="Reunión">📹 Reunión / Llamada</option>
-                    <option value="Seguimiento">📞 Seguimiento comercial</option>
-                    <option value="Tarea">📝 Tarea técnica</option>
-                    <option value="Cierre esperado">🤝 Cierre esperado</option>
+                    <option value="Reunión">Reunión / Llamada</option>
+                    <option value="Seguimiento">Seguimiento comercial</option>
+                    <option value="Tarea">Tarea técnica</option>
+                    <option value="Cierre esperado">Cierre esperado</option>
                   </select>
                 </div>
 
@@ -591,13 +594,13 @@ export default function CalendarAgenda({
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  className="px-3 py-1.5 border border-notion-border-light dark:border-notion-border-dark text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light/20 rounded-lg font-semibold"
+                  className="btn-ghost px-3 py-1.5 text-notion-text-muted-light dark:text-notion-text-muted-dark"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold shadow"
+                  className="btn-primary px-4 py-1.5 font-bold"
                 >
                   Agendar
                 </button>
@@ -671,7 +674,7 @@ export default function CalendarAgenda({
             <div className="flex justify-end pt-3 border-t border-notion-border-light dark:border-notion-border-dark">
               <button
                 onClick={() => setSelectedEvent(null)}
-                className="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold shadow"
+                className="btn-primary px-4 py-1.5 font-bold"
               >
                 Entendido
               </button>

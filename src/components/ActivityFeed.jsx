@@ -11,8 +11,8 @@ export default function ActivityFeed({ activities, clients, onClientClick }) {
   });
 
   return (
-    <div className="space-y-6">
-      
+    <div className="space-y-6 view-fade">
+
       {/* Controles de Filtros */}
       <div className="flex items-center justify-between p-4 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow">
         <div>
@@ -38,8 +38,10 @@ export default function ActivityFeed({ activities, clients, onClientClick }) {
       {/* Feed list */}
       <div className="border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark rounded-xl p-6 notion-shadow">
         {filtered.length === 0 ? (
-          <div className="text-center py-12 text-xs text-notion-text-muted-light dark:text-notion-text-muted-dark">
-            Sin registros de actividad con los filtros seleccionados.
+          <div className="flex flex-col items-center gap-2 text-center py-12 text-xs text-notion-text-muted-light dark:text-notion-text-muted-dark">
+            <Info size={18} className="opacity-50" aria-hidden="true" />
+            <span>Sin registros de actividad con los filtros seleccionados.</span>
+            <span className="text-[10px] opacity-70">Las acciones del equipo aparecerán aquí conforme sucedan.</span>
           </div>
         ) : (
           <div className="relative border-l border-notion-border-light dark:border-notion-border-dark ml-3.5 space-y-6">
@@ -83,7 +85,7 @@ export default function ActivityFeed({ activities, clients, onClientClick }) {
                       </span>
 
                       {/* Timestamp */}
-                      <span className="text-[10px] text-notion-text-muted-light dark:text-notion-text-muted-dark font-mono self-start sm:self-center">
+                      <span className="text-[10px] text-notion-text-muted-light dark:text-notion-text-muted-dark font-mono tabular-nums self-start sm:self-center">
                         {new Date(act.createdAt).toLocaleString('es-MX', {
                           day: 'numeric',
                           month: 'short',

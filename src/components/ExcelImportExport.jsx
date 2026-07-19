@@ -237,7 +237,7 @@ export default function ExcelImportExport({ clients, setClients, logEvent }) {
   };
 
   return (
-    <div className="space-y-6 text-xs max-w-4xl mx-auto">
+    <div className="space-y-6 text-xs max-w-4xl mx-auto view-fade">
       
       {/* SECCIÓN 1: IMPORTAR EXCEL */}
       <div className="p-6 rounded-xl border border-notion-border-light dark:border-notion-border-dark bg-notion-card-light dark:bg-notion-card-dark notion-shadow space-y-4">
@@ -253,7 +253,7 @@ export default function ExcelImportExport({ clients, setClients, logEvent }) {
         {/* Input file de Notion style */}
         <div className="flex items-center justify-center border border-dashed border-notion-border-light dark:border-notion-border-dark rounded-xl p-6 bg-[#fbfbfa]/40 dark:bg-[#1c1c1c]/40 hover:bg-[#fbfbfa]/75 dark:hover:bg-[#1c1c1c]/75 transition-all">
           <label className="flex flex-col items-center gap-2.5 cursor-pointer text-center">
-            <FileSpreadsheet size={28} className="text-indigo-500 animate-pulse" />
+            <FileSpreadsheet size={28} className="text-indigo-500" aria-hidden="true" />
             <span className="font-bold text-notion-text-light dark:text-notion-text-dark">
               {file ? file.name : 'Selecciona o arrastra tu archivo Excel'}
             </span>
@@ -298,7 +298,7 @@ export default function ExcelImportExport({ clients, setClients, logEvent }) {
 
             <button
               onClick={executeImport}
-              className="flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-sm transition-all w-fit"
+              className="btn-primary px-4 py-2 font-bold w-fit"
             >
               <Play size={12} />
               <span>Procesar Importación</span>
@@ -308,12 +308,12 @@ export default function ExcelImportExport({ clients, setClients, logEvent }) {
 
         {/* Resumen de Importación */}
         {importSummary && (
-          <div className="p-4 rounded-xl border border-emerald-500/20 bg-emerald-500/5 text-emerald-500 space-y-2">
+          <div role="status" className="p-4 rounded-xl border border-emerald-500/20 bg-emerald-500/5 text-emerald-600 dark:text-emerald-400 space-y-2">
             <div className="flex items-center gap-2 font-bold">
-              <CheckCircle size={16} />
-              <span>¡Importación completada con éxito!</span>
+              <CheckCircle size={16} aria-hidden="true" />
+              <span>Importación completada con éxito.</span>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center font-mono font-bold text-xs pt-1">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center tabular-nums font-bold text-xs pt-1">
               <div className="p-2.5 rounded bg-emerald-500/5 border border-emerald-500/10">
                 <div className="text-[10px] uppercase text-notion-text-muted-light dark:text-notion-text-muted-dark">Nuevos</div>
                 <div className="text-sm mt-0.5">{importSummary.nuevos}</div>
@@ -398,7 +398,7 @@ export default function ExcelImportExport({ clients, setClients, logEvent }) {
 
         <button
           onClick={executeExport}
-          className="flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-sm transition-all w-fit"
+          className="btn-primary px-4 py-2 font-bold w-fit"
         >
           <Download size={14} />
           <span>Generar y Exportar Excel</span>

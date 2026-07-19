@@ -243,13 +243,13 @@ export default function NewClientModal({ onClose, onCreateClient, currentUser })
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-lg border border-notion-border-light dark:border-notion-border-dark text-notion-text-muted-light dark:text-notion-text-muted-dark hover:bg-notion-border-light/20 text-xs font-semibold transition-all"
+              className="btn-ghost px-4 py-2 text-xs text-notion-text-muted-light dark:text-notion-text-muted-dark"
             >
               Cancelar
             </button>
             <button
               type="submit"
-              className="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-sm transition-all"
+              className="btn-primary px-4 py-2 text-xs"
             >
               Registrar Cliente
             </button>

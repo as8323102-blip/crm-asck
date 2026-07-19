@@ -145,19 +145,19 @@ export default function ConfigPanel({
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 pb-20 font-sans text-left">
-      
+    <div className="max-w-4xl mx-auto space-y-6 pb-20 font-sans text-left view-fade">
+
       {/* Mensajes de feedback */}
       {successMsg && (
-        <div className="p-3 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 text-xs rounded-lg border border-emerald-200 dark:border-emerald-900 flex items-center gap-2">
-          <CheckCircle size={14} />
+        <div role="status" className="p-3 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400 text-xs rounded-lg border border-emerald-200 dark:border-emerald-900 flex items-center gap-2">
+          <CheckCircle size={14} aria-hidden="true" />
           <span>{successMsg}</span>
         </div>
       )}
 
       {errorMsg && (
-        <div className="p-3 bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-400 text-xs rounded-lg border border-rose-200 dark:border-rose-900 flex items-center gap-2">
-          <X size={14} />
+        <div role="alert" className="p-3 bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-400 text-xs rounded-lg border border-rose-200 dark:border-rose-900 flex items-center gap-2">
+          <X size={14} aria-hidden="true" />
           <span>{errorMsg}</span>
         </div>
       )}
@@ -176,13 +176,13 @@ export default function ConfigPanel({
         <div className="flex flex-wrap gap-3 pt-2">
           <button
             onClick={handleBackup}
-            className="flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-sm transition-all"
+            className="btn-primary px-4 py-2 font-bold"
           >
             <Download size={14} />
             <span>Generar Respaldo</span>
           </button>
 
-          <label className="flex items-center gap-1.5 px-4 py-2 border border-notion-border-light dark:border-notion-border-dark text-notion-text-light dark:text-notion-text-dark hover:bg-notion-border-light/20 font-bold rounded-lg cursor-pointer transition-all">
+          <label className="btn-ghost px-4 py-2 font-bold cursor-pointer">
             <Upload size={14} />
             <span>Cargar Respaldo</span>
             <input 
@@ -212,9 +212,9 @@ export default function ConfigPanel({
             setSuccessMsg('Datos demostrativos de prueba cargados con éxito.');
             setTimeout(() => setSuccessMsg(''), 4000);
           }}
-          className="flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-sm transition-all w-fit"
+          className="btn-primary px-4 py-2 font-bold w-fit"
         >
-          <RefreshCw size={14} className="animate-spin-hover" />
+          <RefreshCw size={14} />
           <span>Cargar Datos de Ejemplo</span>
         </button>
       </div>
@@ -311,7 +311,7 @@ export default function ConfigPanel({
             </div>
 
             <p className="text-[10px] text-notion-text-muted-light dark:text-notion-text-muted-dark leading-relaxed">
-              💡 <strong>¿Cómo verlos en tu celular?</strong> Abre el CRM en tu celular, ve a esta sección de Configuración, introduce la clave <strong>{syncRoomId}</strong> y haz clic en Vincular. Los cambios se actualizarán de forma segura al instante en ambos dispositivos.
+              <strong>¿Cómo verlos en tu celular?</strong> Abre el CRM en tu celular, ve a esta sección de Configuración, introduce la clave <strong>{syncRoomId}</strong> y haz clic en Vincular. Los cambios se actualizarán de forma segura al instante en ambos dispositivos.
             </p>
 
             <div className="flex flex-wrap gap-2 pt-2 border-t border-emerald-500/10">
@@ -375,7 +375,7 @@ export default function ConfigPanel({
                     setTimeout(() => setSuccessMsg(''), 4000);
                   }}
                   disabled={syncing}
-                  className="flex items-center gap-1.5 px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg text-xs transition-all shadow-sm"
+                  className="btn-primary px-4 py-1.5 font-bold text-xs"
                 >
                   <Link2 size={13} />
                   <span>Vincular</span>

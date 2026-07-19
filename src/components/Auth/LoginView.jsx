@@ -12,13 +12,13 @@ export default function LoginView({ onLogin, errorMsg, loading }) {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-notion-bg-light dark:bg-notion-bg-dark px-4 font-sans transition-colors duration-200">
-      <div className="w-full max-w-md space-y-8 bg-white dark:bg-notion-sidebar-dark p-8 rounded-xl shadow-lg border border-gray-100 dark:border-notion-border-dark">
+      <div className="w-full max-w-md space-y-8 bg-white dark:bg-notion-card-dark p-8 rounded-xl shadow-lg border border-gray-100 dark:border-notion-border-dark">
         <div className="flex flex-col items-center text-center">
           <div className="flex items-center space-x-2 mb-2">
-            <svg className="w-8 h-8 text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.905 0-5.64-.506-8.157-1.418m16.314 0C19.645 11.754 16.03 12 12 12c-4.03 0-7.645-.246-9.157-.918" />
-            </svg>
-            <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">ASCK Software</span>
+            <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-gradient-to-br from-asck-violet/20 to-asck-cyan/10 border border-asck-violet/15 p-1 overflow-hidden">
+              <img src="/logo_asck.svg" alt="Logo de ASCK Software" className="w-full h-full object-contain dark:invert" />
+            </div>
+            <span className="font-heading text-xl font-bold tracking-tight text-gray-900 dark:text-white">ASCK Software</span>
           </div>
           <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Inicia sesión en el CRM</h2>
           <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Introduce tus credenciales para acceder al plan operativo</p>
@@ -60,7 +60,7 @@ export default function LoginView({ onLogin, errorMsg, loading }) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2 px-4 mt-6 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 disabled:opacity-50 rounded-lg shadow-sm transition duration-150 flex items-center justify-center space-x-2"
+            className="btn-primary w-full py-2 px-4 mt-6 text-sm gap-2"
           >
             {loading ? (
               <>

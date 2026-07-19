@@ -248,7 +248,7 @@ export default function ClientDetail({
                   <span className="absolute left-2 top-1/2 -translate-y-1/2 font-bold text-notion-text-muted-light dark:text-notion-text-muted-dark">$</span>
                 </div>
               ) : (
-                <span className="w-44 text-right font-extrabold text-notion-text-light dark:text-notion-text-dark pl-2">
+                <span className="w-44 text-right tabular-nums font-extrabold text-notion-text-light dark:text-notion-text-dark pl-2">
                   {formatMXN(client.valorEstimado)}
                 </span>
               )}
@@ -312,7 +312,7 @@ export default function ClientDetail({
               <span className="text-notion-text-muted-light dark:text-notion-text-muted-dark flex items-center gap-1.5 font-semibold">
                 <Clock size={13} /> Último Contacto
               </span>
-              <span className="w-44 text-right text-notion-text-muted-light dark:text-notion-text-muted-dark font-mono text-[10px]">
+              <span className="w-44 text-right text-notion-text-muted-light dark:text-notion-text-muted-dark font-mono tabular-nums text-[10px]">
                 {new Date(client.ultimoContacto).toLocaleString('es-MX')}
               </span>
             </div>
@@ -395,7 +395,7 @@ export default function ClientDetail({
                       <button
                         type="submit"
                         disabled={!newNote.trim()}
-                        className="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white text-xs font-semibold shadow-sm transition-all"
+                        className="btn-primary px-3 py-1.5 text-xs"
                       >
                         Añadir Nota Rápida
                       </button>
@@ -450,7 +450,8 @@ export default function ClientDetail({
                     <button
                       type="submit"
                       disabled={!newTaskTitle.trim()}
-                      className="px-3.5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white transition-all shadow-sm flex items-center justify-center font-bold text-xs"
+                      aria-label="Crear tarea"
+                      className="btn-primary px-3.5 py-2 font-bold text-xs"
                     >
                       <Plus size={14} />
                     </button>
@@ -500,10 +501,10 @@ export default function ClientDetail({
                   <button
                     type="button"
                     onClick={handleAddCustomField}
-                    className="w-full flex items-center justify-center gap-1.5 py-2 border border-dashed border-notion-border-light dark:border-notion-border-dark hover:border-indigo-500/50 rounded-lg text-[11px] font-bold text-notion-text-muted-light dark:text-notion-text-muted-dark hover:text-indigo-500 bg-transparent transition-all"
+                    className="w-full flex items-center justify-center gap-1.5 py-2 border border-dashed border-notion-border-light dark:border-notion-border-dark hover:border-indigo-500/50 rounded-lg text-[11px] font-bold text-notion-text-muted-light dark:text-notion-text-muted-dark hover:text-indigo-600 dark:hover:text-indigo-400 bg-transparent transition-all"
                   >
                     <FolderPlus size={14} />
-                    <span>+ Agregar Propiedad Customizada</span>
+                    <span>Agregar propiedad personalizada</span>
                   </button>
                 </div>
               )}
