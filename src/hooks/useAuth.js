@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase, isSupabaseConfigured } from '../services/supabase/supabaseClient';
+import { isDemoMode, demoSession, demoCurrentUser, exitDemoMode } from '../services/demoMode';
 
 // Deriva el perfil de UI (camelCase) a partir de la fila de `integrantes`
 // (tabla que cumple el rol de "profiles": id = auth.users.id, RLS activo).
@@ -52,6 +53,15 @@ export function useAuth() {
 
   useEffect(() => {
     let isMounted = true;
+
+    // MODO DEMO: sesion ficticia local, sin tocar Supabase Auth. El rol viene de
+    // demoCurrentUser (elegido en el login demo). Aislado del sistema real.
+    if (isDemoMode()) {
+      setSession(demoSession());
+      setCurrentUser(demoCurrentUser());
+      setLoading(false);
+      return;
+    }
 
     // FAIL-CLOSED: si Supabase no está configurado, no existe ningún mecanismo
     // de autenticación disponible. No hay sesión, no hay usuario, no hay acceso.
@@ -115,6 +125,15 @@ export function useAuth() {
   };
 
   const logout = async () => {
+    // En demo: salir del modo demo (limpia flag + datos demo) y recargar para
+    // volver al login real con Supabase habilitado.
+    if (isDemoMode()) {
+      exitDemoMode();
+      setSession(null);
+      setCurrentUser(null);
+      window.location.reload();
+      return;
+    }
     if (supabase) {
       await supabase.auth.signOut();
     }

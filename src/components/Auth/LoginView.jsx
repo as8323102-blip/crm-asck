@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { enterDemoMode } from '../../services/demoMode';
 
 export default function LoginView({ onLogin, errorMsg, loading }) {
   const [email, setEmail] = useState('');
@@ -8,6 +9,16 @@ export default function LoginView({ onLogin, errorMsg, loading }) {
     e.preventDefault();
     if (!email || !password) return;
     onLogin(email, password);
+  };
+
+  const entrarDemo = (rol) => {
+    // Activa el modo demo (datos ficticios, Supabase deshabilitado) y recarga
+    // para que el bootstrap namespacee el almacenamiento y siembre la demo.
+    // El reload se DIFIERE (setTimeout): llamar location.reload() de forma
+    // sincrona justo tras sessionStorage.setItem puede perder la escritura antes
+    // de navegar; un tick de diferencia garantiza que el flag quede persistido.
+    enterDemoMode(rol);
+    setTimeout(() => window.location.reload(), 30);
   };
 
   return (
@@ -72,6 +83,25 @@ export default function LoginView({ onLogin, errorMsg, loading }) {
             )}
           </button>
         </form>
+
+        <div className="mt-6 pt-5 border-t border-gray-100 dark:border-notion-border-dark">
+          <p className="text-center text-[11px] uppercase tracking-widest font-semibold text-gray-400 mb-1">Probar el sistema</p>
+          <p className="text-center text-xs text-gray-400 mb-3">Entorno de demostración · datos ficticios</p>
+          <div className="grid grid-cols-1 gap-2">
+            <button type="button" onClick={() => entrarDemo('admin')}
+              className="w-full py-2 px-3 text-sm rounded-lg border border-gray-200 dark:border-notion-border-dark text-gray-700 dark:text-gray-200 hover:border-indigo-400 hover:bg-gray-50 dark:hover:bg-notion-bg-dark transition-colors">
+              Entrar como Dirección (demo)
+            </button>
+            <button type="button" onClick={() => entrarDemo('gerente')}
+              className="w-full py-2 px-3 text-sm rounded-lg border border-gray-200 dark:border-notion-border-dark text-gray-700 dark:text-gray-200 hover:border-indigo-400 hover:bg-gray-50 dark:hover:bg-notion-bg-dark transition-colors">
+              Entrar como Gerente Comercial (demo)
+            </button>
+            <button type="button" onClick={() => entrarDemo('vendedor')}
+              className="w-full py-2 px-3 text-sm rounded-lg border border-gray-200 dark:border-notion-border-dark text-gray-700 dark:text-gray-200 hover:border-indigo-400 hover:bg-gray-50 dark:hover:bg-notion-bg-dark transition-colors">
+              Entrar como Vendedor (demo)
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

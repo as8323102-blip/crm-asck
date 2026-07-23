@@ -1,3 +1,6 @@
+// PRIMERO: activa el namespacing de localStorage + semilla si el modo demo esta
+// activo (debe correr antes de que cualquier servicio toque localStorage/Supabase).
+import './demoBootstrap';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
