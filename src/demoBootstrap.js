@@ -3,8 +3,29 @@
 // claves 'asck_crm_*' con el prefijo 'demo__' (aisla los datos demo del cache
 // real) y siembra el dataset ficticio si aun no existe. Fuera de demo, no hace
 // absolutamente nada (cero impacto en produccion).
-import { isDemoMode } from './services/demoMode';
+import { isDemoMode, enterDemoMode } from './services/demoMode';
 import { DEMO_CLIENTS } from './services/demoData';
+
+// Activacion del modo demo por URL: `?demo=admin|gerente|vendedor` (o `?demo=1`
+// -> admin). Sustituye a los botones "Probar el sistema" del login: la demo se
+// abre desde un enlace publicado en el portafolio y el login queda limpio.
+// Debe correr ANTES del gate isDemoMode() de abajo (este archivo es el primer
+// import de main.jsx, asi que el flag ya esta puesto cuando el resto arranca).
+try {
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('demo')) {
+    const raw = (params.get('demo') || '').toLowerCase();
+    const role = ['admin', 'gerente', 'vendedor'].includes(raw) ? raw : 'admin';
+    enterDemoMode(role);
+    // Quita el query param para que un refresh no reactive la demo y la URL
+    // quede limpia (la barra no muestra el ?demo).
+    params.delete('demo');
+    const qs = params.toString();
+    window.history.replaceState({}, '', window.location.pathname + (qs ? '?' + qs : '') + window.location.hash);
+  }
+} catch {
+  /* noop */
+}
 
 if (isDemoMode()) {
   const PREFIX = 'demo__';
