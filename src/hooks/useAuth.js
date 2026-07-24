@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase, isSupabaseConfigured } from '../services/supabase/supabaseClient';
-import { isDemoMode, demoSession, demoCurrentUser, exitDemoMode } from '../services/demoMode';
+import { isDemoMode, demoSession, demoCurrentUser, exitDemoMode, matchDemoCredentials, enterDemoMode } from '../services/demoMode';
 
 // Deriva el perfil de UI (camelCase) a partir de la fila de `integrantes`
 // (tabla que cumple el rol de "profiles": id = auth.users.id, RLS activo).
@@ -99,6 +99,17 @@ export function useAuth() {
   }, [loadProfile]);
 
   const login = async (email, password) => {
+    // Credencial DEMO → modo demo local (datos ficticios), sin tocar Supabase.
+    // Misma idea que el resto de sistemas ASCK: la credencial decide el entorno.
+    // Se recarga para que demoBootstrap namespacee el almacenamiento y siembre
+    // el dataset demo antes de que cualquier servicio lea datos.
+    const demoRole = matchDemoCredentials(email, password);
+    if (demoRole) {
+      enterDemoMode(demoRole);
+      window.location.reload();
+      return { success: true };
+    }
+
     // FAIL-CLOSED explícito: sin Supabase configurado, login siempre falla.
     // Nunca se busca el email en datos locales/mock ni se ignora la contraseña.
     if (!isSupabaseConfigured || !supabase) {

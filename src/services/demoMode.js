@@ -6,6 +6,23 @@
 const FLAG = 'asck_crm_demo';
 const ROLE = 'asck_crm_demo_role';
 
+// Credenciales DEMO publicadas (aparecen en el portafolio). Escribirlas en el
+// login normal activa el modo demo local; NO son cuentas de Supabase, así que
+// nunca tocan los datos reales. Son ficticias a propósito: no es un secreto.
+const DEMO_CREDENTIALS = {
+  'direccion.demo@asckcrm.example': { password: 'DemoCRM2026!', role: 'admin' },
+  'gerente.demo@asckcrm.example':   { password: 'DemoCRM2026!', role: 'gerente' },
+  'vendedor.demo@asckcrm.example':  { password: 'DemoCRM2026!', role: 'vendedor' },
+};
+
+// Devuelve el rol demo si (email, password) coinciden con una credencial demo
+// publicada; null en cualquier otro caso (→ el login sigue a Supabase real).
+export function matchDemoCredentials(email, password) {
+  const e = String(email || '').trim().toLowerCase();
+  const rec = DEMO_CREDENTIALS[e];
+  return rec && rec.password === password ? rec.role : null;
+}
+
 export function isDemoMode() {
   try {
     return sessionStorage.getItem(FLAG) === '1';
